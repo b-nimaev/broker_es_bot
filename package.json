@@ -1,8 +1,12 @@
 {
   "dependencies": {
     "@a2seven/yoo-checkout": "^1.1.2",
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
+    "email-validator": "^2.0.4",
     "mongodb": "^4.7.0",
+    "morgan": "^1.10.0",
     "telegraf": "^4.8.5",
     "yookassa": "^0.1.1"
   },
