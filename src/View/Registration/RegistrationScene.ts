@@ -2,7 +2,7 @@ import { Composer, Scenes } from "telegraf";
 import { MyContext } from "../../Model/Model";
 require("dotenv").config()
 import * as EmailValidator from 'email-validator';
-import { addDeposit, addEmail, getEmail, getUser } from "../../Controller/UserController";
+import { addDeposit, addEmail, add_coins, getEmail, getUser, lose_coins } from "../../Controller/UserController";
 
 const handler = new Composer<MyContext>();
 const registration = new Scenes.WizardScene(
@@ -46,6 +46,7 @@ const registration = new Scenes.WizardScene(
             if (ctx.update["callback_query"].data == 'next') {
 
                 await ctx.editMessageText("Лови свои первые 10000 IQCoins и добро пожаловать в игру! ;)")
+                await ctx.replyWithSticker("CAACAgIAAxkBAAIKrGLwmAoW3iFfEPhcYdD3JnFA6DCqAAJXBAACP5XMCj6R_XixcB-qKQQ")
                 await ctx.reply("Кстати, чтобы торговать бинарными опционами с телефона нужно специальное приложение IQ option Х.  Но если ты пользуешься веб версией то в ней уже есть нужный тебе инструмент. В меню есть специальная ссылка на приложение, устонавливай и возвращайся в игру :)")
 
 
@@ -78,14 +79,18 @@ const registration = new Scenes.WizardScene(
             }
 
             if (ctx.update["message"].text == "Я заработал!") {
+                await add_coins(ctx.from, 500, false)
                 // @ts-ignore
                 await ctx.reply('Поздравляю, твоя первая успешная сделка, которая принесла тебе виртуальную прибыль! Однако понми, что сейчас тебе просто повезло. Торговля это не казино и не азартная игра, это прежде всего финансовая деятельность основанная на знаниях. Именно знания я дам тебе в игре, которые помогут тебе анализировать движение графика и выбирать правильное направление. А сейчас лови еще 500 IQ coins за выполнение задания и совершение первой сделки.', extra)
+                await ctx.replyWithSticker("CAACAgIAAxkBAAIK4GLwmG_f9q6hNqLRAX_mNYI_NMopAAJVBAACP5XMCi-iLW04pRSXKQQ")
                 ctx.wizard.next()
             }
 
             if (ctx.update["message"].text == "Я потерял :(") {
+                await add_coins(ctx.from, 500, false)
                 // @ts-ignore
                 await ctx.reply("Так бывает, все потому, что торговля это не казино и не азартная игра, это прежде всего финансовая деятельность основанная на знаниях. Многие теряют в торговле, потому что открывают сделки без анализа ситуации, графика, без учета информации - без знаний. Именно знания я дам тебе в игре, которые помогут тебе анализировать движение графика и выбирать правильное направление. А сейчас лови еще 500 IQ coins за выполнение задания и совершение первой сделки.", extra)
+                await ctx.replyWithSticker("CAACAgIAAxkBAAIK5GLwmKEuwfKrr95QderXWhJeSDjOAAJSBAACP5XMCk0qTC6hfBCAKQQ")
                 ctx.wizard.next()
             }
 
@@ -143,6 +148,7 @@ const registration = new Scenes.WizardScene(
                 }
                 const message = `Валютная пара - это отношение цен двух валют. При покупке одной валюты продается другая. Например: EUR/USD \nEUR – базовая валюта, USD – котируемая. Движение графика происходит за счет изменения отношения базовой валюты и котируемой и величина которая влияет на движение графика называется котировкой. \nВалютная пара означает, что за USD – доллар США, мы покупаем EUR – евро.`
 
+                await ctx.replyWithSticker("CAACAgIAAxkBAAIK6GLwmMzjKT42FwVxott3Uvff8tQ8AAJRBAACP5XMCuERUT38lNp6KQQ")
                 // @ts-ignore
                 await ctx.reply(message, extra)
 
@@ -283,9 +289,11 @@ const registration = new Scenes.WizardScene(
                 }
 
                 const message = 'Какой красивый этот свечной график! Лови еще 500 IQ coins'
-
+                await add_coins(ctx.from, 500, false)
+                await ctx.replyWithSticker("CAACAgIAAxkBAAIK7GLwmPeBoVq6Bwc1mbdg7Vvg6caBAAJGBAACP5XMCstXCFgVL57DKQQ")
                 // @ts-ignore
                 await ctx.reply(message, extra)
+
                 ctx.wizard.next()
             } else {
                 await ctx.reply("Нет, нет, такое не подойдет")
@@ -355,6 +363,7 @@ const registration = new Scenes.WizardScene(
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
+                await ctx.replyWithPhoto("AgACAgIAAxkBAAIK7mLwmT-f3heeVXEXbSOfvk_h3QipAAIWvTEbzTuIS8GBmW-ENBUNAQADAgADeQADKQQ")
                 // await ctx.replyWithPhoto()
                 ctx.wizard.next()
             }
@@ -444,6 +453,7 @@ const registration = new Scenes.WizardScene(
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
+                await ctx.replyWithPhoto("AgACAgIAAxkBAAIK7mLwmT-f3heeVXEXbSOfvk_h3QipAAIWvTEbzTuIS8GBmW-ENBUNAQADAgADeQADKQQ")
                 ctx.wizard.next()
             }
         }
@@ -456,16 +466,18 @@ const registration = new Scenes.WizardScene(
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Забрать 425 IQ Coins']],
+                        keyboard: [['Забрать 455 IQ Coins']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
-
+                await add_coins(ctx.from, 500, true)
                 const message = 'Поздравляю! Ты сам выбрал правильное направление и заработал первые деньги на бинарных опционах. Да, они виртуальные, но ты можешь перенести свои знания на реальную торговлю и реальный счет. А знаешь почему ты заработал? Потому что ты использовал полученные знания. Теперь в твоем арсенале есть первая торговая стратения - Торговля по тренду.'
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
+                await ctx.replyWithPhoto("AgACAgIAAxkBAAIK7mLwmT-f3heeVXEXbSOfvk_h3QipAAIWvTEbzTuIS8GBmW-ENBUNAQADAgADeQADKQQ")
+
                 ctx.wizard.next()
             }
 
@@ -481,7 +493,7 @@ const registration = new Scenes.WizardScene(
                 }
 
                 const message = 'Вероятнее всего график пошел бы вверх потому как он встретил линию поддержки. Твой прогноз оказался не верным. На твоем счету ХХХ. Видишь как здорово, что твоя сделка была открыта на сумму не более 5% от  счета. Ты потерял совсем немного и это всего лишь виртуальные сделки. Зато приобрел опыт. Не расстраивайся мы еще потренеруемся.'
-
+                await lose_coins(ctx.from, 500, false)
                 // @ts-ignore
                 await ctx.reply(message, extra)
                 ctx.wizard.next()
@@ -581,6 +593,7 @@ const registration = new Scenes.WizardScene(
 
                 const message = 'Лови еще 500 IQCoins, ты отлично двигаешься!'
 
+                await add_coins(ctx.from, 500, false)
                 // @ts-ignore
                 await ctx.reply(message, extra)
                 await ctx.reply("Здорово! Ты быстро учишься. Давай теперь попробуем открыть сделку на демо счете на платформе, опираясь на полученную тобой информацию. Выбери актив: EUR/USD \nВыбери размер позиции: $100 \nВыбери время экспирации: 5 min \nВыбери выше или ниже.Возвращайся как получишь результат.")
@@ -607,9 +620,11 @@ const registration = new Scenes.WizardScene(
 
                 const message = 'Вау! Ты все схватываешь на лету! Ты смог заработать на демо счете, а ведь он устроен так же как и реальная торговля. Только деньги с демо счета ты не можешь вывести. Зато если ты перенесешь полученные знания на реальный счет ты сможешь торговать на реальные деньги и сможешь их выводить. Предлагаю не медлить и пополнить депозит. Кстати, за пополнение депозита я начислю тебе сразу 10000 IQ Coins, и это значит что ты сможешь выбрать себе самый дорогой приз в игре! И ксати лови 500 за совершение сделки на демо счете ;)'
 
+                await add_coins(ctx.from, 500, false)
+                await ctx.replyWithSticker("CAACAgIAAxkBAAINiGLw3mZJj-9vT1F9_KRyVN_hw454AAJDBAACP5XMCrPB96QaJA_TKQQ")
                 // @ts-ignore
                 await ctx.reply(message, extra)
-                ctx.wizard.next()
+                // ctx.wizard.next()
             }
 
             if (ctx.update["message"].text == 'Я потерял :(') {
@@ -624,9 +639,49 @@ const registration = new Scenes.WizardScene(
                 }
 
                 const message = 'Не беда, ты только учишся! Запомни, нет ни одной стратегии которая бы давала 100% результат. Иногда может произойти пробой линии сопротивления или поддержки, может смениться тренд.  Дальше я расскажу, почему это может происходит. Тренируйся еще и ты получишь получишь лучшие результаты.  И ксати лови 500 за совершение сделки на демо счете :)'
+                await ctx.replyWithSticker("CAACAgIAAxkBAAINjGLw4FsIsWDIECUejo7RaAvreJElAAI-BAACP5XMCmXGbS9Z4RFmKQQ")
+                await add_coins(ctx.from, 500, false)
+                // @ts-ignore
+                await ctx.reply(message, extra)
+            }
+
+            if (ctx.update["message"].text == 'Посмотреть видео про тренд') {
+
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Я заработал!', 'Я потерял :(']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+
+                const message = 'Посмотри видео еще раз, а потом можешь потренироваться на демо счете https://vimeo.com/channels/1002556/167268513'
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
+            }
+
+            if (ctx.update["message"].text == 'Играть дальше') {
+
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [
+                            [
+                                'Интересно, а как с его помощью можно заработать?'
+                            ]
+                        ],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+
+                const message = 'Здорово! Давай продолжать. И так теперь ты знаешь, что можешь использовать для принятия решений куда пойдет цена технический анализ и самую популярную стратегию торговлю по тренду.  Теперь давай разберемся как можно применять Фундаментальный анализ в торговле. Фундаментальный анализ - это анализ на основе новостей  и данных.'
+
+                // @ts-ignore
+                await ctx.reply(message, extra)
+                ctx.wizard.selectStep(ctx.session.__scenes.cursor + 2)
             }
 
         }
@@ -679,6 +734,24 @@ const registration = new Scenes.WizardScene(
                 ctx.wizard.next()
             }
 
+            if (ctx.update["message"].text == 'Я ещё потренируюсь') {
+
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Пополнить депозит', 'Я ещё потренируюсь']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+
+                const message = 'Хорошо! У тебя основательный подход и это правильно! Чем больше практики тем лучше результат'
+
+                // @ts-ignore
+                await ctx.reply(message, extra)
+                ctx.wizard.next()
+            }
+
         }
 
         if (ctx.update["callback_query"]) {
@@ -709,6 +782,7 @@ const registration = new Scenes.WizardScene(
                 const message = 'Ты не теряешь время зря. Посмотри это видео, которое подробнее рассказывает о том, как пополнить твой счет. Как только пополнишь депозит возвращайся и проверь на пополнение депозита. Я все проверю и начислю тебе 10000 IQ Coins https://vimeo.com/channels/1002556/327387627'
                 // const message = 'Уже сособираюсь на встречу в платформой, чтобы проверить твой депозит. Мне потребуется время. Знаешь, платформа такая занятая, я постоянно жду не дождусь, чтобы пообщаться. Но трейдеры для нее на первом месте. Иногда я ревную...Но как только мы встретимся, я вернусь с твоими IQ Coins'
 
+                // await ctx.replyWithSticker("CAACAgIAAxkBAAINkGLw4KY1njQpI5sm8nt94oewD_3-AAJlBAACP5XMClzVsXn7vWCCKQQ")
                 // @ts-ignore
                 await ctx.editMessageText(message, extra)
                 // ctx.wizard.next()
@@ -718,7 +792,7 @@ const registration = new Scenes.WizardScene(
                 ctx.answerCbQuery()
 
                 const message = 'Уже сособираюсь на встречу в платформой, чтобы проверить твой депозит. Мне потребуется время. Знаешь, платформа такая занятая, я постоянно жду не дождусь, чтобы пообщаться. Но трейдеры для нее на первом месте. Иногда я ревную...Но как только мы встретимся, я вернусь с твоими IQ Coins'
-
+                await ctx.replyWithSticker("CAACAgIAAxkBAAINkGLw4KY1njQpI5sm8nt94oewD_3-AAJlBAACP5XMClzVsXn7vWCCKQQ")
                 // @ts-ignore
                 await ctx.editMessageText(message)
                 // ctx.wizard.next()
@@ -803,6 +877,7 @@ const registration = new Scenes.WizardScene(
                     }
                 }
 
+                await ctx.replyWithSticker("CAACAgIAAxkBAAINlGLw4S3GrisSBakjyi6pw7kHEvpyAAJTBAACP5XMCpUsffVEA7pxKQQ")
                 // @ts-ignore
                 await ctx.reply(message, extra)
                 ctx.wizard.next()
@@ -823,6 +898,7 @@ const registration = new Scenes.WizardScene(
                     }
                 }
 
+                await ctx.replyWithSticker("CAACAgIAAxkBAAINlWLw4TfLvzsDawccQvPswpOo0xO7AAJGBAACP5XMCstXCFgVL57DKQQ")
                 // @ts-ignore
                 await ctx.reply(message, extra)
                 ctx.wizard.next()
@@ -967,7 +1043,7 @@ registration.enter((async (ctx) => {
                             {
                                 text: 'Зарегистрироваться',
                                 callback_data: 'register',
-                                url: 'https://vk.com'
+                                url: 'https://iqoption.com/ru/register'
                             },
                             {
                                 text: 'Авторизоваться',

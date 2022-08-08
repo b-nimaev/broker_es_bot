@@ -8,6 +8,8 @@ import home from './View/Home/HomeScene';
 import dashboard from './View/Dashboard/DashboardScene';
 import admin from './View/Admin/AdminScene';
 import registration from './View/Registration/RegistrationScene';
+import game from './View/Game/GameScene';
+import { getUser } from './Controller/UserController';
 
 // SSL
 const fs = require('fs');
@@ -33,7 +35,7 @@ if (token === undefined) {
 
 // Init scenes & set secretPath for requires from bot
 
-const scenes = [home, dashboard, admin, registration]
+const scenes = [home, dashboard, admin, registration, game]
 const bot = new Telegraf<MyContext>(token)
 export default bot
 const app = express()
@@ -52,14 +54,40 @@ if (process.env.mode === "development") {
         .then((status) => console.log('Webhook setted: ' + status))
 }
 
+bot.command("/profile", async (ctx) => {
+
+    let user = await getUser(ctx.from)
+    let message = ``
+
+    if (user) {
+        if (user.balance) {
+            message += `Ваш баланс: ${user.balance} IQCoins\n`
+        }
+
+        if (user.email) {
+            message += `Ваш e-mail: ${user.email}\n`
+        } else {
+            message += `Ваш E-mail: не указан`
+        }
+    }
+
+    ctx.reply(message)
+})
+
 bot.use(session())
 bot.use((ctx, next) => {
     const now = new Date()
     ctx.myContextProp = now.toString()
+    if (ctx.session) {
+        if (ctx.session.__scenes) {
+            if (ctx.session.__scenes.cursor) {
+                console.log(ctx.session.__scenes.cursor)
+            }
+        }
+    }
     return next()
 })
 bot.use(stage.middleware())
-
 app.use(cors());
 app.use(BodyParser.json());
 app.use(

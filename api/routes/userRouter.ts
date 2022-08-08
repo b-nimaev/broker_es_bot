@@ -93,7 +93,8 @@ userRouter.use("/removeProposal", async function (req, res) {
                 return console.log(err);
             }
             console.log(req.body.id)
-            await client.db("broker").collection("deposits").deleteOne({ username: req.body.id }).then((data) => {
+            // await client.db("broker").collection("deposits").findOn({ id: req.body.id }).then((data) => {
+            await client.db("broker").collection("deposits").deleteOne({ id: req.body.id }).then((data) => {
                 console.log(data)
             })
             const extra = {

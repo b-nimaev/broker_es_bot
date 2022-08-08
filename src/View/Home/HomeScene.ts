@@ -8,6 +8,7 @@ const home = new Scenes.WizardScene(
     "home",
     handler,
     (async (ctx) => {
+        // console.log(ctx.session.__scenes.current)
         if (ctx.update["message"]) {
 
             if (ctx.update["message"].text == 'Давай') {
@@ -46,7 +47,8 @@ const home = new Scenes.WizardScene(
                 }
 
                 // @ts-ignore
-                ctx.reply('Торговать бинарными опционами ты можешь на торговой платформе брокера. Я предлагаю тебе для этого зарегистрироваться на лучшей из них - IQ Option. Я ведь сама бот и просто влюблена в их технологичную, профессиональную платформу, на которой есть все для удобной торговли. Платформа IQ option отмечена множеством наград. Ну как не влюбиться.', extra)
+                await ctx.reply('Торговать бинарными опционами ты можешь на торговой платформе брокера. Я предлагаю тебе для этого зарегистрироваться на лучшей из них - IQ Option. Я ведь сама бот и просто влюблена в их технологичную, профессиональную платформу, на которой есть все для удобной торговли. Платформа IQ option отмечена множеством наград. Ну как не влюбиться.', extra)
+                await ctx.replyWithSticker("CAACAgIAAxkBAAIKnWLwltw9NWe3L9fe3uFCjJZzRRC7AAJGBAACP5XMCstXCFgVL57DKQQ")
             }
 
             if (ctx.update["message"].text == 'Зачем регистрироваться?') {
@@ -115,6 +117,7 @@ handler.on('text', async (ctx) => {
 })
 
 home.start((ctx) => greeting(ctx))
+home.command("/game", ctx => ctx.scene.enter('game'))
 
 home.command("admin", async (ctx) => {
     ctx.scene.enter('admin')
