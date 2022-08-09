@@ -1,4 +1,5 @@
-import { Composer, Markup, Scenes } from "telegraf";
+import { Composer, Scenes } from "telegraf";
+import { getInterface } from "../../Controller/UserController";
 import { MyContext } from "../../Model/Model";
 import { greeting } from "./HomeGreeting";
 require("dotenv").config();
@@ -100,7 +101,7 @@ home.enter((ctx) => greeting(ctx))
 // Давай попробуем
 handler.on('text', async (ctx) => {
     if (ctx.message.text == 'Давай попробуем') {
-
+        const data = await getInterface("rules", "Давай попробуем")
         const extra = {
             parse_mode: 'HTML',
             reply_markup: {
@@ -110,8 +111,12 @@ handler.on('text', async (ctx) => {
             }
         }
 
+        if (data.hasStick) {
+            await ctx.replyWithSticker(data.sticker)
+        }
+
         // @ts-ignore
-        ctx.reply("Отлично! Давай расскажу тебе об игре и ее правилах.", extra)
+        await ctx.reply(data.message, extra)
         ctx.wizard.next()
     }
 })

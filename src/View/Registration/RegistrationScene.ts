@@ -624,7 +624,7 @@ const registration = new Scenes.WizardScene(
                 await ctx.replyWithSticker("CAACAgIAAxkBAAINiGLw3mZJj-9vT1F9_KRyVN_hw454AAJDBAACP5XMCrPB96QaJA_TKQQ")
                 // @ts-ignore
                 await ctx.reply(message, extra)
-                // ctx.wizard.next()
+                ctx.wizard.next()
             }
 
             if (ctx.update["message"].text == 'Я потерял :(') {
@@ -749,7 +749,7 @@ const registration = new Scenes.WizardScene(
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
-                ctx.wizard.next()
+                // ctx.wizard.next()
             }
 
         }
@@ -978,38 +978,38 @@ const registration = new Scenes.WizardScene(
     (async (ctx) => {
         if (ctx.update["message"]) {
             if (ctx.update["message"].text == "Играть") {
-                return ctx.scene.enter("game")
+                await ctx.scene.enter("game")
             }
 
-            const message = 'Скорее возвращайся в игру, пора зарабатывать!';
-            const extra = {
-                parse_mode: 'HTML',
-                reply_markup: {
-                    keyboard: [
-                        [
-                            'Играть'
-                        ]
-                    ],
-                    one_time_keyboard: true,
-                    resize_keyboard: true
-                }
-            }
             if (ctx.update["message"].text == "Через 1 час", ctx.update["message"].text == "Через 8 часов", ctx.update["message"].text == "Через 12 часов", ctx.update["message"].text == "Через 24 часа") {
-
+                const message = 'Скорее возвращайся в игру, пора зарабатывать!';
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [
+                            [
+                                'Играть'
+                            ]
+                        ],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
                 // @ts-ignore
                 await ctx.reply(message, extra)
+                await ctx.scene.enter("game")
             }
 
-            return ctx.scene.enter("game")
         }
     }),
 
 );
 
+registration.leave(async (ctx) => console.log("registration scene leave"))
+
 registration.enter((async (ctx) => {
 
     const user = await getUser(ctx.from)
-
     if (user) {
         if (user.email) {
             const extra = {

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { Composer, Markup, Scenes, session, Telegraf } from 'telegraf'
+import { Scenes, session, Telegraf } from 'telegraf'
 import { MyContext } from './Model/Model'
-import { Request, Response } from 'express'
 
 // Scenes
 import home from './View/Home/HomeScene';
@@ -10,6 +9,8 @@ import admin from './View/Admin/AdminScene';
 import registration from './View/Registration/RegistrationScene';
 import game from './View/Game/GameScene';
 import { getUser } from './Controller/UserController';
+
+import { addDeposit, getEmail } from './Controller/UserController'
 
 // SSL
 const fs = require('fs');
@@ -20,7 +21,8 @@ const https = require('https');
 const morgan = require("morgan")
 const cors = require("cors")
 const BodyParser = require("body-parser")
-const user = require("../api/routes/userRouter.ts")
+import user = require("../api/routes/userRouter");
+import interface__ = require("../api/routes/interfaceRouter");
 
 // Server
 require("dotenv").config()
@@ -75,6 +77,32 @@ bot.command("/profile", async (ctx) => {
     ctx.reply(message)
 })
 
+bot.command("/check", async (ctx) => {
+    const message = 'Уже сособираюсь на встречу в платформой, чтобы проверить твой депозит. Мне потребуется время. Знаешь, платформа такая занятая, я постоянно жду не дождусь, чтобы пообщаться. Но трейдеры для нее на первом месте. Иногда я ревную...Но как только мы встретимся, я вернусь с твоими IQ Coins'
+    await ctx.replyWithSticker("CAACAgIAAxkBAAINkGLw4KY1njQpI5sm8nt94oewD_3-AAJlBAACP5XMClzVsXn7vWCCKQQ")
+
+    // запись заявки депозита
+    let update = ctx.from
+    // @ts-ignore
+    update.email = await getEmail(ctx.from)
+
+    await addDeposit(ctx.from)
+    ctx.reply(message)
+})
+
+bot.hears("/additional", async (ctx) => {
+    ctx.reply(`Риск менеджмнет \nКак выбрать время экспирации \nТипы трейдеров (психология торговли)`)
+})
+
+bot.hears("/trophies", async (ctx) => {
+    ctx.reply(`Консультация с аккаунт менеджером при депо от $1000 - 20000 коинов \nСтратегия 1 для торговли 3000 коинов \nСтратегия 2 для торговли 3000 коинов \nСтратегия 3 для торговли 3000 коинов`)
+})
+
+bot.hears("/getapp", async (ctx) => {
+    ctx.reply(`Для андроид \nДля айфон`)
+})
+
+
 bot.use(session())
 bot.use((ctx, next) => {
     const now = new Date()
@@ -98,6 +126,7 @@ app.use(
 );
 app.use(morgan("dev"));
 app.use("/user", user);
+app.use("/interface", interface__);
 // app.get("/", (req: Request, res: Response) => res.send("Hello!"))
 app.use(bot.webhookCallback(secretPath))
 const server = https.createServer({ key, cert }, app);

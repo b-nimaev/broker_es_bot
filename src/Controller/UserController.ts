@@ -127,3 +127,14 @@ export const lose_coins = async function (user, count, percentaly: boolean) {
 
     } catch (err) { return err }
 }
+
+export const getInterface = async function (field, name) {
+    try {
+        await client.connect()
+        return await client.db(dbname)
+            .collection("bin")
+            .findOne({ field: field, id: name })
+    } catch (err) {
+        return err
+    }
+}

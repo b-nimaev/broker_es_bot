@@ -2,7 +2,7 @@ import { Composer, Scenes } from "telegraf";
 import { MyContext } from "../../Model/Model";
 require("dotenv").config()
 import * as EmailValidator from 'email-validator';
-import { addDeposit, addEmail, add_coins, getEmail, getUser, lose_coins } from "../../Controller/UserController";
+import { add_coins, lose_coins } from "../../Controller/UserController";
 
 const handler = new Composer<MyContext>();
 const game = new Scenes.WizardScene(
@@ -11,6 +11,7 @@ const game = new Scenes.WizardScene(
 
     // Строка 128
     async (ctx) => {
+        console.log(128)
         if (ctx.update["message"]) {
 
             if (ctx.update["message"].text == 'Линия поддержки') {
@@ -53,8 +54,6 @@ const game = new Scenes.WizardScene(
                 await ctx.reply(message)
             }
 
-            // AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ
-
             if (ctx.update["message"].text == 'Ниже') {
                 const message = "Ты абсолютно прав, котировка достигла линии сопротивлени, и скорее всего пошла бы вниз. Лови свои 455 коинов. Мне нравится твоя ловкость!"
                 await add_coins(ctx.from, 455, false)
@@ -95,48 +94,9 @@ const game = new Scenes.WizardScene(
                 await ctx.reply(message)
                 // @ts-ignore
                 await ctx.replyWithPhoto("AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ", extra)
-            }
-
-            // AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ
-
-            if (ctx.update["message"].text == 'Позже') {
-                const message = "Хорошо. когда тебе напомнить?"
-                const extra = {
-                    parse_mode: 'HTML',
-                    reply_markup: {
-                        keyboard: [['Через 1 час', 'Через 8 часов', 'Через 12 часов', 'Через 24 часа']],
-                        one_time_keyboard: true,
-                        resize_keyboard: true
-                    }
-                }
-                // @ts-ignore
-                await ctx.reply(message, extra)
-            }
-
-            ctx.wizard.next()
-        }
-    },
-
-    // Строка 139
-    async (ctx) => {
-        if (ctx.update["message"]) {
-
-            if (ctx.update["message"].text == 'Конечно') {
-                const message = "Отлично! Смотри на еще один график. Теперь он без линий тренда. Попробуй провести линию визуально и оценить куда может пойти цена актива?"
-                const extra = {
-                    parse_mode: 'HTML',
-                    reply_markup: {
-                        keyboard: [['Выше', 'Ниже']],
-                        one_time_keyboard: true,
-                        resize_keyboard: true
-                    }
-                }
-
-                await ctx.reply(message)
-                // @ts-ignore
-                await ctx.replyWithPhoto("AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ", extra)
-
                 ctx.wizard.selectStep(ctx.session.__scenes.cursor + 2)
+                console.log('asdf')
+                // await ctx.wizard.next()
             }
 
             // AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ
@@ -153,7 +113,8 @@ const game = new Scenes.WizardScene(
                 }
                 // @ts-ignore
                 await ctx.reply(message, extra)
-                ctx.wizard.next()
+                await ctx.wizard.next()
+                // await ctx.wizard.selectStep(ctx.session.__scenes.cursor + 2)
             }
 
         }
@@ -170,29 +131,30 @@ const game = new Scenes.WizardScene(
                 }
             }
 
-            let message
+            let message = ``
 
-            if (ctx.update["message"] == "Через 1 час") {
-                message = `Хорошо, напишу через час`
+            if (ctx.update["message"].text == "Через 1 час") {
+                message += `Хорошо, напишу через час`
             }
-            if (ctx.update["message"] == "Через 8 часов") {
-                message = `Хорошо, напишу через 8 часов`
+            if (ctx.update["message"].text == "Через 8 часов") {
+                message += `Хорошо, напишу через 8 часов`
             }
-            if (ctx.update["message"] == "Через 12 часов") {
-                message = `Хорошо, напишу через 12 часов`
+            if (ctx.update["message"].text == "Через 12 часов") {
+                message += `Хорошо, напишу через 12 часов`
             }
-            if (ctx.update["message"] == "Через 24 часа") {
-                message = `Хорошо, напишу через сутки`
+            if (ctx.update["message"].text == "Через 24 часа") {
+                message += `Хорошо, напишу через сутки`
             }
 
             await ctx.replyWithSticker("CAACAgIAAxkBAAINjGLw4FsIsWDIECUejo7RaAvreJElAAI-BAACP5XMCmXGbS9Z4RFmKQQ")
             await ctx.reply(message, extra)
+            ctx.wizard.selectStep(ctx.session.__scenes.cursor + 2)
         }
     },
 
     async (ctx) => {
-        if (ctx.message) {
-
+        if (ctx.update["message"]) {
+            // console.log(ctx.message)
             const extra = {
                 parse_mode: 'HTML',
                 reply_markup: {
@@ -202,9 +164,9 @@ const game = new Scenes.WizardScene(
                 }
             }
 
-            if (ctx.update["message"] == "Выше") {
+            if (ctx.update["message"].text == "Выше") {
                 let message = `К сожалению это неверный ответ( Здесь видно, что цена достигла уровня сопротивления, а значит с большей вероятностью она пойдет вниз. Не отчаивайся, у меня еще много интересных заданий!`
-                // @ts-ignore
+                // @ts-ignore       
                 await ctx.reply(message)
                 await ctx.replyWithPhoto("AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ")
                 await ctx.replyWithSticker("CAACAgIAAxkBAAIPbWLw7QKCo0orkR8urtNwcJlXmR69AAJXBAACP5XMCj6R_XixcB-qKQQ")
@@ -214,7 +176,7 @@ const game = new Scenes.WizardScene(
                 ctx.wizard.next()
             }
 
-            if (ctx.update["message"] == "Ниже") {
+            if (ctx.update["message"].text == "Ниже") {
                 let message = `Ты абсолютно прав, котировка достигла линии сопротивления, и скорее всего пошла бы вниз. Лови свои 455 коинов. Мне нравится твоя ловкость!`
                 await add_coins(ctx.from, 455, false)
                 // @ts-ignore
@@ -231,8 +193,9 @@ const game = new Scenes.WizardScene(
     },
 
     async (ctx) => {
-        if (ctx.message) {
-            if (ctx.message["text"] == "Конечно") {
+        if (ctx.update["message"]) {
+            console.log(ctx.message["text"])
+            if (ctx.update["message"].text == "Конечно" || ctx.update["message"].text == "Играть") {
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
@@ -250,7 +213,7 @@ const game = new Scenes.WizardScene(
     },
 
     async (ctx) => {
-        if (ctx.message) {
+        if (ctx.update["message"]) {
             if (ctx.message["text"] == 'Понял, присылай новость') {
 
                 const extra = {
@@ -270,7 +233,7 @@ const game = new Scenes.WizardScene(
     },
 
     async (ctx) => {
-        if (ctx.message) {
+        if (ctx.update["message"]) {
 
             const extra = {
                 parse_mode: 'HTML',
@@ -282,18 +245,18 @@ const game = new Scenes.WizardScene(
             }
 
             let message: string
-
-            if (ctx.message["text"] == "Выше") {
+            console.log(ctx.message["text"])
+            if (ctx.update["message"].text == "Выше") {
                 message = `К сожалению ты выбрал неверное направление. Если бы наш актив был CFF/TEA то есть кофе был бы базовым товаром, то тогда бы котировка нашего актива пошла вверх, но так как кофе в нашей паре котируемый товар, соответственно его стоимость по отношению к чаю возрастет, то котировка нашего актива после такой новости скорее всего полетит вниз.`
                 await lose_coins(ctx.from, 500, false)
             }
 
-            if (ctx.message["text"] == 'Ниже') {
+            if (ctx.update["message"].text == 'Ниже') {
                 message = `Ты абсолютно прав! Вероятнее всего из-за большого спроса на кофе стоимость его возрастет, а так как это котируемый товар в нашей паре, то котировка актива скорее всего после этой новости полетит вниз. Лови свои 425 IQ Coin`
                 await add_coins(ctx.from, 455, false)
             }
 
-            if (ctx.message["text"] == "Воздержаться от сделки") {
+            if (ctx.update["message"].text == "Воздержаться от сделки") {
                 message = `Вероятнее всего из-за большого спроса на кофе стоимость его возрастет, а так как это котируемый товар в нашей паре, то котировка актива скорее всего после этой новости полетит вниз. Но если ты не уверен, лучше не рисковать. Мне нравиться твоя осторожность!`
             }
 
@@ -305,12 +268,13 @@ const game = new Scenes.WizardScene(
     },
 
     async (ctx) => {
-        if (ctx.message) {
+        if (ctx.update["message"]) {
             if (ctx.message["text"] == "Понял, присылай следующую новость") {
+
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Понял, присылай следующую новость']],
+                        keyboard: [['Выше', 'Ниже'], ['Воздержаться от сделки']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
@@ -325,38 +289,309 @@ const game = new Scenes.WizardScene(
     },
 
     async (ctx) => {
-        if (ctx.message) {
+        if (ctx.update["message"]) {
 
-            const extra = {
-                parse_mode: 'HTML',
-                reply_markup: {
-                    keyboard: [['Понял, присылай следующую новость']],
-                    one_time_keyboard: true,
-                    resize_keyboard: true
-                }
-            }
-
-            let message: string
 
             if (ctx.message["text"] == "Выше") {
-                message = `Ты абсолютно прав! Здесь ситуация изменилась в другую сторону. Так как данная поп звезда является инфлюенсером, который задает тренды ее заявление может повлиять на спрос на чай, а соответственно и на его стоимость. И так как чай в нашей паре базовый товар, то рост его цены, так же повлияет на рост котировки всего актива TEA/CFF. Возможно ты слышал как Илон Маск не раз влиял на стоимость криптовалюты Dogcoin своими твитами. Здесь в нашем игровом мире, похожая ситуация. Лови свои 425 IQ Coin`
+                let message = `Ты абсолютно прав! Здесь ситуация изменилась в другую сторону. Так как данная поп звезда является инфлюенсером, который задает тренды ее заявление может повлиять на спрос на чай, а соответственно и на его стоимость. И так как чай в нашей паре базовый товар, то рост его цены, так же повлияет на рост котировки всего актива TEA/CFF. Возможно ты слышал как Илон Маск не раз влиял на стоимость криптовалюты Dogcoin своими твитами. Здесь в нашем игровом мире, похожая ситуация. Лови свои 455 IQ Coin`
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Здорово, присылай следующую новость!']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
                 await add_coins(ctx.from, 455, false)
+                // @ts-ignore
+                await ctx.reply(message, extra)
             }
-            
+
             if (ctx.message["text"] == 'Ниже') {
-                message = `К сожалению ты выбрал неверное направление. Чай в нашей паре базовый актив, а соответственно повышенный спрос на чай повлияет на рост его цены, и котировка актива TEA/CFF будет вероятнее всего рости после этой новости.`
+                let message = `К сожалению ты выбрал неверное направление. Чай в нашей паре базовый актив, а соответственно повышенный спрос на чай повлияет на рост его цены, и котировка актива TEA/CFF будет вероятнее всего рости после этой новости.`
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Понял, хочу еще тренироваться']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
                 await lose_coins(ctx.from, 500, false)
+                // @ts-ignore
+                await ctx.reply(message, extra)
             }
 
             if (ctx.message["text"] == "Воздержаться от сделки") {
-                message = `Чай в нашей паре базовый актив, а соответственно повышенный спрос на чай повлияет на рост его цены, и котировка актива TEA/CFF будет вероятнее всего рости после этой новости. Но если ты не уверен, лучше не рисковать. Мне нравиться твоя осторожность!`
+                let message = `Чай в нашей паре базовый актив, а соответственно повышенный спрос на чай повлияет на рост его цены, и котировка актива TEA/CFF будет вероятнее всего рости после этой новости. Но если ты не уверен, лучше не рисковать. Мне нравиться твоя осторожность!`
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Я понял, присылай следующую новость!']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+                // @ts-ignore
+                await ctx.reply(message, extra)
             }
 
+            ctx.wizard.next()
+        }
+    },
+
+    async (ctx) => {
+        const message = "Из-за пандемии Бовидо-вируса ожидаются логистические задержки по всему миру. Особенно это скажется на продовольственных товарах: зерне, масле, чае, кофе и других."
+        const extra = {
+            parse_mode: 'HTML',
+            reply_markup: {
+                keyboard: [['Выше', 'Ниже'], ['Воздержаться от сделки']],
+                one_time_keyboard: true,
+                resize_keyboard: true
+            }
+        }
+
+        if (ctx.update["message"]) {
             // @ts-ignore
             ctx.reply(message, extra)
+            ctx.wizard.next()
+        }
 
-        }  
-    }
+    },
+
+    async (ctx) => {
+        if (ctx.update["message"]) {
+
+
+            if (ctx.message["text"] == "Выше") {
+                let message = `Эта новость неоднозначна и не понятно как она могла бы сказаться на движение котировки нашей пары. Эта сделка оказалась рисковой.`
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Я понял']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+                // @ts-ignore
+                await ctx.reply(message, extra)
+            }
+
+            if (ctx.message["text"] == 'Ниже') {
+                let message = `Эта новость неоднозначна и не понятно как она могла бы сказаться на движение котировки нашей пары. Эта сделка оказалась рисковой.`
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Я понял']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+                // @ts-ignore
+                await ctx.reply(message, extra)
+            }
+
+            if (ctx.message["text"] == "Воздержаться от сделки") {
+                let message = `Ты был прав! Эта новость неоднозначна и не понятно как она могла бы сказаться на движение котировки нашей пары.`
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Я понял']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+                // @ts-ignore
+                await ctx.reply(message, extra)
+            }
+
+            ctx.wizard.next()
+        }
+    },
+
+    async (ctx) => {
+        if (ctx.update["message"]) {
+            if (ctx.update["message"].text == 'Я понял') {
+                const message = "Ты отлично справился! Я уже начинаю сомневаться ты точно человек, а не бот? Хотя, если ты бот, напиши мне после игры, окей?"
+                const message2 = "Ой, что это я.. Давай поговорим о самом главном для трейдера. О финансовом результате. И как его вывести с платформы когда он положительный."
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Это очень интересно']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+                const sticker = null
+                await ctx.reply(message)
+                if (sticker) {
+                    await ctx.replyWithSticker(sticker)
+                }
+                // @ts-ignore
+                await ctx.reply(message2, extra)
+                ctx.wizard.next()
+            }
+        }
+    },
+
+    async (ctx) => {
+        if (ctx.update["message"]) {
+            if (ctx.update["message"].text == 'Это очень интересно') {
+                const message = "Когда ты заработаешь деньги на реальном счете ты сможешь вывести свою прибыль. Но перед выводом средств есть один важный шаг."
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Какой?']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+                const sticker = null
+                if (sticker) {
+                    await ctx.replyWithSticker(sticker)
+                }
+                // @ts-ignore
+                await ctx.reply(message, extra)
+                ctx.wizard.next()
+            }
+        }
+    },
+
+    async (ctx) => {
+        if (ctx.update["message"]) {
+            if (ctx.update["message"].text == 'Какой?') {
+                const message = "Поделиться прибылью со мной, конечно!"
+                const message2 = "Шучу! Прямо представила, как ты открыл рот от удивления. На самом деле, важный шаг это верефицировать твой аккаунт или подтвердить личность."
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['А для чего нужна верификация?']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+                const sticker = null
+                await ctx.reply(message)
+                if (sticker) {
+                    await ctx.replyWithSticker(sticker)
+                }
+                // @ts-ignore
+                await ctx.reply(message2, extra)
+                ctx.wizard.next()
+            }
+        }
+    },
+
+    async (ctx) => {
+        if (ctx.update["message"]) {
+            if (ctx.update["message"].text == 'А для чего нужна верификация?') {
+                const message = "Это требование международных стандартов и регуляторов. То есть тех органов, которые контралируют работу всех брокеров, в том числе и IQ option. Верификация помогает подтвердить твою личность и защитить финансовые интересы в случае возникновения споров, обезопасить твой счет, а так же не допустить до торговли на финансовых рынках людей, которые не могут ей заниматься, например несовершеннолетних. Для  верификации необходимо предоставление документов подтверждающих личность. Но не беспокойся, брокер надежно хранит эти данные и не передает информацию 3м лицам."
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Хорошо, я спокоен']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+                // @ts-ignore
+                await ctx.reply(message, extra)
+                ctx.wizard.next()
+            }
+        }
+    },
+
+    async (ctx) => {
+        if (ctx.update["message"]) {
+            if (ctx.update["message"].text == 'Хорошо, я спокоен') {
+                const message = "Отлично. Если ты уже внес депозит, то рекомендую пройти верефикацию, чтобы не откладывать на потом. Ведь она занимает 1-3 рабочих дня. Кстати, посмотри это полезное видео о том, как пройти верефикацию. https://vimeo.com/channels/1002556/331181006"
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Так как вывести деньги?']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+                // @ts-ignore
+                await ctx.reply(message, extra)
+                ctx.wizard.next()
+            }
+        }
+    },
+
+    async (ctx) => {
+        if (ctx.update["message"]) {
+            if (ctx.update["message"].text == 'Так как вывести деньги?') {
+                const message = "Если ты пополнял свой счет банковской картой, то вывод суммы первоначальной суммы депозита должен быть осуществлен на ту же самую карту, а оставшаяся сумма может быть выведена любым другим способом. Например ты пополнил депозит $100 с банковской карты, и заработал $50 торгуя, значит $100 тебе необходимо вывести на ту же карту, а заработанные деньги любым другим способом. "
+                const message2 = "Минимальная сумма доступная для вывода всего $2 (зависит от способа пополнения) максимальная $1000 000. Кстати, трейдеры IQ option ежемесячно выводят сыше $2 000 000 на свои счета!"
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Ух ты, здорово!']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+                await ctx.reply(message)
+
+                const sticker = null
+                if (sticker) {
+                    await ctx.replyWithSticker(sticker)
+                }
+
+                // @ts-ignore
+                await ctx.reply(message2, extra)
+                ctx.wizard.next()
+            }
+        }
+    },
+
+    async (ctx) => {
+        if (ctx.update["message"]) {
+            if (ctx.update["message"].text == 'Ух ты, здорово!') {
+                const message = "Ты просто красавчик! Нравишся мне все больше и больше. Ты блестяще прошел игру, освоил базовые навыки трейдинга и заработал Х коинов. Давай же скорее посмотрим что ты можешь купить за заработанные коины "
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Давай']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+
+                const sticker = null
+                if (sticker) {
+                    await ctx.replyWithSticker(sticker)
+                }
+
+                // @ts-ignore
+                await ctx.reply(message, extra)
+                ctx.wizard.next()
+            }
+        }
+    },
+
+    async (ctx) => {
+        if (ctx.update["message"]) {
+            if (ctx.update["message"].text == 'Давай') {
+                const message = `"Консультация с аккаунт менеджером 20000 коинов \nСтратегия 1 для торговли 3000 коинов \nСтратегия 2 для торговли 3000 коинов \nСтратегия 3 для торговли 3000 коинов"`
+                const message2 = `Главный трофей это консультация с аккаунт менеджером. И просто отличный начало в реальной торговле и вот почему: ПРЕИМУЩЕСТВА КОНСУЛЬТАЦИИ`
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Давай']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+
+                await ctx.reply(message)
+                // @ts-ignore
+                await ctx.reply(message, extra)
+            }
+        }
+    },
 
 )
 
@@ -375,10 +610,10 @@ game.enter(async (ctx) => {
     // @ts-ignore
     ctx.reply(message, extra)
     await ctx.replyWithPhoto("AgACAgIAAxkBAAIKTGLwY39wZ96uyo5BcCznP7x_QitCAALTvzEb-yWAS0lY_HT9BxMdAQADAgADbQADKQQ")
-    ctx.wizard.next()
+    ctx.wizard.selectStep(1)
 })
 
-game.on("sticker", ctx => console.log(ctx.message))
+// game.on("sticker", ctx => console.log(ctx.message))
 // game.on("sti", ctx => console.log(ctx.message))
 
 export default game

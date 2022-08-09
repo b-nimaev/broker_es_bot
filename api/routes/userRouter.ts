@@ -93,21 +93,54 @@ userRouter.use("/removeProposal", async function (req, res) {
                 return console.log(err);
             }
             console.log(req.body.id)
-            // await client.db("broker").collection("deposits").findOn({ id: req.body.id }).then((data) => {
-            await client.db("broker").collection("deposits").deleteOne({ id: req.body.id }).then((data) => {
+            // await client.db("broker").collection("deposits").findOne({ id: req.body.id }).then((data) => { }
+            await client.db("broker").collection("deposits").deleteOne({ username: req.body.username }).then((data) => {
                 console.log(data)
             })
-            const extra = {
-                parse_mode: 'HTML',
-                reply_markup: {
-                    keyboard: [['Играть дальше']],
-                    one_time_keyboard: true,
-                    resize_keyboard: true
-                }
-            }
+            // const extra = {
+            //     parse_mode: 'HTML',
+            //     reply_markup: {
+            //         keyboard: [['Играть дальше']],
+            //         one_time_keyboard: true,
+            //         resize_keyboard: true
+            //     }
+            // }
             const message = "Я все проверила! Ты делаешь первые шаги в реальном трейдинге. Лови еще 10000 IQ Coins"
             // @ts-ignore
-            bot.telegram.sendMessage(req.body.id, message, extra)
+            bot.telegram.sendMessage(req.body.id, message)
+        });
+
+    } catch (err) {
+
+        console.log(err)
+
+    }
+});
+
+userRouter.use("/declineProposal", async function (req, res) {
+    try {
+
+        mongoClient.connect(async function (err, client) {
+
+            if (err) {
+                return console.log(err);
+            }
+            console.log(req.body.id)
+            // await client.db("broker").collection("deposits").findOne({ id: req.body.id }).then((data) => { }
+            await client.db("broker").collection("deposits").deleteOne({ username: req.body.username }).then((data) => {
+                console.log(data)
+            })
+            // const extra = {
+            //     parse_mode: 'HTML',
+            //     reply_markup: {
+            //         keyboard: [['Играть дальше']],
+            //         one_time_keyboard: true,
+            //         resize_keyboard: true
+            //     }
+            // }
+            const message = "Я все проверила! Твой e-mail не найден в списке депозитов"
+            // @ts-ignore
+            bot.telegram.sendMessage(req.body.id, message)
         });
 
     } catch (err) {
