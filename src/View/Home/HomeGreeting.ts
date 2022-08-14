@@ -18,9 +18,14 @@ export async function greeting(ctx: MyContext) {
     const extra = {
         parse_mode: 'HTML',
         reply_markup: {
-            keyboard: [["Давай попробуем"]],
-            one_time_keyboard: true,
-            resize_keyboard: true
+            inline_keyboard: [
+                [
+                    {
+                        text: "Давай попробуем",
+                        callback_data: "letsgo"
+                    }
+                ]
+            ],
         }
     }
 

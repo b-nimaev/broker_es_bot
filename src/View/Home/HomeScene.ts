@@ -4,53 +4,62 @@ import { MyContext } from "../../Model/Model";
 import { greeting } from "./HomeGreeting";
 require("dotenv").config();
 
-const handler = new Composer<MyContext>();
+const handler = new Composer<MyContext>(); // function
 const home = new Scenes.WizardScene(
     "home",
-    handler,
-    (async (ctx) => {
-        // console.log(ctx.session.__scenes.current)
-        if (ctx.update["message"]) {
+    handler
+);
 
-            if (ctx.update["message"].text == 'Давай') {
-                ctx.scene.enter("registration")
-            }
+// @ts-ignore
+console.log(home.steps)
+home.steps.push((async (ctx) => {
+    // console.log(ctx.session.__scenes.current)
+    if (ctx.update["callback_query"]) {
 
-            if (ctx.update["message"].text == 'Погоди, что такое бинарные опционы?') {
-                const extra = {
-                    parse_mode: 'HTML',
-                    reply_markup: {
-                        keyboard: [['Интересно, а как с его помощью можно заработать?']],
-                        one_time_keyboard: true,
-                        resize_keyboard: true
-                    }
-                }
-                await ctx.reply('Классный вопрос!')
-                // @ts-ignore
-                await ctx.reply('Бинарный опцион - это выскодоходный финансовый инструмент, который дает возвожность получить прибыль до 91% минимум за 1 мин (В случае успешного закрытия сделки). Нужно лишь выбрать куда будет двигаться котировка на графике - вверх или вниз. Однако помни, там где высокий доход там и высокие риски. Бинарным он называется именно поэтому - все или ничего (ввех или вниз). Посмотри это видео, чтобы узнать подробнее: https://vimeo.com/channels/1002556/313147500', extra)
-                ctx.wizard.next()
-            }
-
+        if (ctx.update["callback_query"].data == 'lets') {
+            ctx.scene.enter("registration")
         }
-    }),
-    (async (ctx) => {
-        if (ctx.update["message"]) {
 
-            if (ctx.update["message"].text == 'Интересно, а как с его помощью можно заработать?') {
-
-                const extra = {
-                    parse_mode: 'HTML',
-                    reply_markup: {
-                        keyboard: [['Зачем регистрироваться?']],
-                        one_time_keyboard: true,
-                        resize_keyboard: true
-                    }
+        if (ctx.update["callback_query"].data == 'whats') {
+            const extra = {
+                parse_mode: 'HTML',
+                reply_markup: {
+                    inline_keyboard: [[{
+                        text: "Интересно, а как с его помощью можно заработать?",
+                        callback_data: "continue"
+                    }]],
                 }
-
-                // @ts-ignore
-                await ctx.reply('Торговать бинарными опционами ты можешь на торговой платформе брокера. Я предлагаю тебе для этого зарегистрироваться на лучшей из них - IQ Option. Я ведь сама бот и просто влюблена в их технологичную, профессиональную платформу, на которой есть все для удобной торговли. Платформа IQ option отмечена множеством наград. Ну как не влюбиться.', extra)
-                await ctx.replyWithSticker("CAACAgIAAxkBAAIKnWLwltw9NWe3L9fe3uFCjJZzRRC7AAJGBAACP5XMCstXCFgVL57DKQQ")
             }
+            await ctx.editMessageText('Классный вопрос!')
+            // @ts-ignore
+            await ctx.reply('Бинарный опцион - это выскодоходный финансовый инструмент, который дает возвожность получить прибыль до 91% минимум за 1 мин (В случае успешного закрытия сделки). Нужно лишь выбрать куда будет двигаться котировка на графике - вверх или вниз. Однако помни, там где высокий доход там и высокие риски. Бинарным он называется именно поэтому - все или ничего (ввех или вниз). Посмотри это видео, чтобы узнать подробнее: https://vimeo.com/channels/1002556/313147500', extra)
+            ctx.wizard.next()
+        }
+
+    }
+}),
+    (async (ctx) => {
+
+        if (ctx.update["callback_query"].data == 'continue') {
+
+            const extra = {
+                parse_mode: 'HTML',
+                reply_markup: {
+                    inline_keyboard: [[
+                        {
+                            text: "Зачем регистрироваться?",
+                            callback_data: "why"
+                        }
+                    ]],
+                }
+            }
+
+            // @ts-ignore
+            await ctx.reply('Торговать бинарными опционами ты можешь на торговой платформе брокера. Я предлагаю тебе для этого зарегистрироваться на лучшей из них - IQ Option. Я ведь сама бот и просто влюблена в их технологичную, профессиональную платформу, на которой есть все для удобной торговли. Платформа IQ option отмечена множеством наград. Ну как не влюбиться.', extra)
+            await ctx.replyWithSticker("CAACAgIAAxkBAAIKnWLwltw9NWe3L9fe3uFCjJZzRRC7AAJGBAACP5XMCstXCFgVL57DKQQ")
+        }
+
+        if (ctx.update["message"]) {
 
             if (ctx.update["message"].text == 'Зачем регистрироваться?') {
 
@@ -88,9 +97,8 @@ const home = new Scenes.WizardScene(
             }
 
         }
-    })
-);
-
+    }))
+console.log(home.steps)
 
 home.enter((ctx) => greeting(ctx))
 
@@ -99,26 +107,35 @@ home.enter((ctx) => greeting(ctx))
 
 
 // Давай попробуем
-handler.on('text', async (ctx) => {
-    if (ctx.message.text == 'Давай попробуем') {
-        const data = await getInterface("rules", "Давай попробуем")
-        const extra = {
-            parse_mode: 'HTML',
-            reply_markup: {
-                keyboard: [['Давай'], ['Погоди, что такое бинарные опционы?']],
-                one_time_keyboard: true,
-                resize_keyboard: true
-            }
+handler.action('letsgo', async (ctx) => {
+    const data = await getInterface("rules", "Давай попробуем")
+    const extra = {
+        parse_mode: 'HTML',
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    {
+                        text: "Давай",
+                        callback_data: "lets"
+                    }
+                ],
+                [
+                    {
+                        text: "Погоди, что такое бинарные опционы?",
+                        callback_data: "whats"
+                    }
+                ]
+            ]
         }
-
-        if (data.hasStick) {
-            await ctx.replyWithSticker(data.sticker)
-        }
-
-        // @ts-ignore
-        await ctx.reply(data.message, extra)
-        ctx.wizard.next()
     }
+
+    if (data.hasStick) {
+        await ctx.replyWithSticker(data.sticker)
+    }
+
+    // @ts-ignore
+    await ctx.editMessageText(data.message, extra)
+    ctx.wizard.next()
 })
 
 home.start((ctx) => greeting(ctx))

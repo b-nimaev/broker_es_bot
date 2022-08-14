@@ -49,8 +49,19 @@ const stage = new Scenes.Stage<MyContext>(scenes, {
 
 // Set webhook
 if (process.env.mode === "development") {
-    bot.telegram.setWebhook(`${process.env.ngrok}${secretPath}`)
+
+    const fetch = require('node-fetch')
+    fetch('http://localhost:4040/api/tunnels')
+        .then(res => res.json())
+        .then(json => json.tunnels.find(tunnel => tunnel.proto === 'https'))
+        .then(secureTunnel => bot.telegram.setWebhook(`${secureTunnel.public_url}${secretPath}`))
         .then((status) => console.log('Webhook setted: ' + status))
+        .catch(err => {
+            if (err.code === 'ECONNREFUSED') {
+                return console.error("Looks like you're not running ngrok.")
+            }
+            console.error(err)
+        })
 } else {
     bot.telegram.setWebhook(`https://say-an.ru${secretPath}`)
         .then((status) => console.log('Webhook setted: ' + status))
