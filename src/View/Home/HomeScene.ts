@@ -113,7 +113,7 @@ home.enter((ctx) => greeting(ctx))
 
 // Давай попробуем
 handler.action('letsgo', async (ctx) => {
-    const data = await getInterface("rules", "Давай попробуем")
+    // const data = await getInterface("rules", "Давай попробуем")
     const extra = {
         parse_mode: 'HTML',
         reply_markup: {
@@ -136,12 +136,10 @@ handler.action('letsgo', async (ctx) => {
 
     deleteprevmessage(ctx)
 
-    if (data.hasStick) {
-        await ctx.replyWithSticker(data.sticker)
-    }
+    // await ctx.replyWithSticker("CAACAgIAAxkBAAIeUGLyKvzcAj3CTjzoT_24XSmvBIDsAAI3BAACP5XMCkLU7Ai1u05wKQQ")
 
     // @ts-ignore
-    await ctx.editMessageText(data.message, extra)
+    await ctx.editMessageText("Отлично! Давай расскажу тебе об игре и ее правилах.", extra)
     ctx.wizard.next()
 })
 
