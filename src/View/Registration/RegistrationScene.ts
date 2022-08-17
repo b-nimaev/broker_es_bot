@@ -11,78 +11,6 @@ const handler = new Composer<MyContext>();
 const registration = new Scenes.WizardScene(
     "registration",
     handler,
-    (async (ctx) => {
-        if (ctx.update["message"]) {
-            if (ctx.update["message"].text) {
-                await EmailCheck(ctx)
-            }
-        }
-    }),
-    (async (ctx) => {
-        if (ctx.update["callback_query"]) {
-            if (ctx.update["callback_query"].data == 'next') {
-
-                await ctx.editMessageText("Лови свои первые 10000 IQCoins и добро пожаловать в игру! ;)")
-                await ctx.replyWithSticker("CAACAgIAAxkBAAIKrGLwmAoW3iFfEPhcYdD3JnFA6DCqAAJXBAACP5XMCj6R_XixcB-qKQQ")
-                await ctx.reply("Кстати, чтобы торговать бинарными опционами с телефона нужно специальное приложение IQ option Х.  Но если ты пользуешься веб версией то в ней уже есть нужный тебе инструмент. В меню есть специальная ссылка на приложение, устонавливай и возвращайся в игру :)")
-
-
-                const extra = {
-                    parse_mode: 'HTML',
-                    reply_markup: {
-                        keyboard: [['Я заработал!', 'Я потерял :(']],
-                        one_time_keyboard: true,
-                        resize_keyboard: true
-                    }
-                }
-
-                const message = 'Предлагаю не медлить и попробовать совершить свою первую сделку на демо счёте. \nВыбери актив: EUR / USD \nВыбери размер позиции: $100 \nВыбери время экспирации: 1 min \nВыбери выше или ниже.Посмотри это видео, в котором подробно рассказано как совершить сделку: Небойся ошибиться, это тренировочный счёт ;) https://vimeo.com/channels/1002556/313181589'
-                // @ts-ignore
-                await ctx.reply(message, extra)
-                ctx.wizard.next()
-            }
-
-            if (ctx.update["callback_query"].data == 'cancel') {
-
-                await ctx.answerCbQuery()
-                // await ctx.deleteMessage(ctx.update['callback_query'].message.message_id).then(res => console.log(res))
-                // await ctx.deleteMessage(ctx.update['callback_query'].message.message_id - 1).then(res => console.log(res))
-                await ctx.editMessageText("Пришлите мне email на который вы регистрировались и я начислю вам 10000 IQCoins.")
-                ctx.wizard.selectStep(ctx.session.__scenes.cursor - 1);
-            }
-        }
-    }),
-    (async (ctx) => {
-        if (ctx.update["message"]) {
-
-            const extra = {
-                parse_mode: 'HTML',
-                reply_markup: {
-                    keyboard: [['Спасибо!']],
-                    one_time_keyboard: true,
-                    resize_keyboard: true
-                }
-            }
-
-            if (ctx.update["message"].text == "Я заработал!") {
-                await add_coins(ctx.from, 500, false)
-                // @ts-ignore
-                await ctx.reply('Поздравляю, твоя первая успешная сделка, которая принесла тебе виртуальную прибыль! Однако понми, что сейчас тебе просто повезло. Торговля это не казино и не азартная игра, это прежде всего финансовая деятельность основанная на знаниях. Именно знания я дам тебе в игре, которые помогут тебе анализировать движение графика и выбирать правильное направление. А сейчас лови еще 500 IQ coins за выполнение задания и совершение первой сделки.', extra)
-                await ctx.replyWithSticker("CAACAgIAAxkBAAIK4GLwmG_f9q6hNqLRAX_mNYI_NMopAAJVBAACP5XMCi-iLW04pRSXKQQ")
-                ctx.wizard.next()
-            }
-
-            if (ctx.update["message"].text == "Я потерял :(") {
-                await add_coins(ctx.from, 500, false)
-                // @ts-ignore
-                await ctx.reply("Так бывает, все потому, что торговля это не казино и не азартная игра, это прежде всего финансовая деятельность основанная на знаниях. Многие теряют в торговле, потому что открывают сделки без анализа ситуации, графика, без учета информации - без знаний. Именно знания я дам тебе в игре, которые помогут тебе анализировать движение графика и выбирать правильное направление. А сейчас лови еще 500 IQ coins за выполнение задания и совершение первой сделки.", extra)
-                await ctx.replyWithSticker("CAACAgIAAxkBAAIK5GLwmKEuwfKrr95QderXWhJeSDjOAAJSBAACP5XMCk0qTC6hfBCAKQQ")
-                ctx.wizard.next()
-            }
-
-        }
-    }),
-
     // Обучение: О устройстве валютной пары. О двух видах анализа. О риске на сделку.
     (async (ctx) => {
         if (ctx.update["message"]) {
@@ -993,31 +921,39 @@ const registration = new Scenes.WizardScene(
 
 registration.leave(async (ctx) => console.log("registration scene leave"))
 registration.hears("/start", async (ctx) => ctx.scene.enter("home"))
-registration.enter(async (ctx) => await RegistrationGreeting(ctx))
+// registration.enter(async (ctx) => await RegistrationGreeting(ctx))
 
-handler.action("auth", async (ctx) => {
-    await ctx.answerCbQuery()
-    await ctx.deleteMessage(ctx.update['callback_query'].message.message_id).then(res => console.log(res))
-    await ctx.deleteMessage(ctx.update['callback_query'].message.message_id - 1).then(res => console.log(res))
-    await ctx.reply("Пришлите мне email на который вы регистрировались и я начислю вам 10000 IQCoins.")
-    ctx.wizard.next()
-})
 
-handler.action("continue", async (ctx) => {
-    await ctx.answerCbQuery()
-    const extra = {
-        parse_mode: 'HTML',
-        reply_markup: {
-            keyboard: [['Я заработал!', 'Я потерял :(']],
-            one_time_keyboard: true,
-            resize_keyboard: true
+
+handler.on("message", async (ctx) => {
+    if (ctx.update["message"]) {
+        console.log(ctx)
+
+        const extra = {
+            parse_mode: 'HTML',
+            reply_markup: {
+                keyboard: [['Спасибо!']],
+                one_time_keyboard: true,
+                resize_keyboard: true
+            }
+        }
+        // @ts-ignore
+        if (ctx.update.message.text == "Я заработал!") {
+            await add_coins(ctx.from, 500, false)
+            // @ts-ignore
+            await ctx.reply('Поздравляю, твоя первая успешная сделка, которая принесла тебе виртуальную прибыль! Однако понми, что сейчас тебе просто повезло. Торговля это не казино и не азартная игра, это прежде всего финансовая деятельность основанная на знаниях. Именно знания я дам тебе в игре, которые помогут тебе анализировать движение графика и выбирать правильное направление. А сейчас лови еще 500 IQ coins за выполнение задания и совершение первой сделки.', extra)
+            await ctx.replyWithSticker("CAACAgIAAxkBAAIK4GLwmG_f9q6hNqLRAX_mNYI_NMopAAJVBAACP5XMCi-iLW04pRSXKQQ")
+            ctx.wizard.next()
+        }
+        // @ts-ignore
+        if (ctx.update["message"].text == "Я потерял :(") {
+            await add_coins(ctx.from, 500, false)
+            // @ts-ignore
+            await ctx.reply("Так бывает, все потому, что торговля это не казино и не азартная игра, это прежде всего финансовая деятельность основанная на знаниях. Многие теряют в торговле, потому что открывают сделки без анализа ситуации, графика, без учета информации - без знаний. Именно знания я дам тебе в игре, которые помогут тебе анализировать движение графика и выбирать правильное направление. А сейчас лови еще 500 IQ coins за выполнение задания и совершение первой сделки.", extra)
+            await ctx.replyWithSticker("CAACAgIAAxkBAAIK5GLwmKEuwfKrr95QderXWhJeSDjOAAJSBAACP5XMCk0qTC6hfBCAKQQ")
+            ctx.wizard.next()
         }
     }
-
-    const message = 'Предлагаю не медлить и попробовать совершить свою первую сделку на демо счёте. \nВыбери актив: EUR / USD \nВыбери размер позиции: $100 \nВыбери время экспирации: 1 min \nВыбери выше или ниже.Посмотри это видео, в котором подробно рассказано как совершить сделку: Небойся ошибиться, это тренировочный счёт ;) https://vimeo.com/channels/1002556/313181589'
-    // @ts-ignore
-    await ctx.reply(message, extra)
-    ctx.wizard.selectStep(3)
 })
 
 handler.action("exit", async (ctx) => await RegistrationGreeting(ctx))

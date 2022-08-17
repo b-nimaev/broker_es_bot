@@ -5,6 +5,7 @@ import { MyContext } from './Model/Model'
 // Scenes
 import home from './View/Home/HomeScene';
 import dashboard from './View/Dashboard/DashboardScene';
+import _handler from './View/handlerScene';
 import admin from './View/Admin/AdminScene';
 import registration from './View/Registration/RegistrationScene';
 import game from './View/Game/GameScene';
@@ -37,7 +38,7 @@ if (token === undefined) {
 
 // Init scenes & set secretPath for requires from bot
 
-const scenes = [home, dashboard, admin, registration, game]
+const scenes = [home, dashboard, admin, registration, game, _handler]
 const bot = new Telegraf<MyContext>(token)
 export default bot
 const app = express()

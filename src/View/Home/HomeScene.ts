@@ -22,13 +22,14 @@ home.action("lets", async (ctx) => {
         }
     }
     // await ctx.editMessageText('Классный вопрос!')
+    ctx.answerCbQuery()
     // @ts-ignore
-    await ctx.editMessageText('Бинарный опцион - это выскодоходный финансовый инструмент, который дает возвожность получить прибыль до 91% минимум за 1 мин (В случае успешного закрытия сделки). Нужно лишь выбрать куда будет двигаться котировка на графике - вверх или вниз. Однако помни, там где высокий доход там и высокие риски. Бинарным он называется именно поэтому - все или ничего (ввех или вниз). Посмотри это видео, чтобы узнать подробнее: https://vimeo.com/channels/1002556/313147500', extra)
+    await ctx.reply('Бинарный опцион - это выскодоходный финансовый инструмент, который дает возвожность получить прибыль до 91% минимум за 1 мин (В случае успешного закрытия сделки). Нужно лишь выбрать куда будет двигаться котировка на графике - вверх или вниз. Однако помни, там где высокий доход там и высокие риски. Бинарным он называется именно поэтому - все или ничего (ввех или вниз). Посмотри это видео, чтобы узнать подробнее: https://vimeo.com/channels/1002556/313147500', extra)
     ctx.wizard.next()
 })
 
 home.action("continue", async (ctx) => {
-
+    ctx.answerCbQuery()
     const extra = {
         parse_mode: 'HTML',
         reply_markup: {
@@ -41,7 +42,7 @@ home.action("continue", async (ctx) => {
         }
     }
 
-    await ctx.deleteMessage(ctx.update['callback_query'].message.message_id).then(res => console.log(res))
+    // await ctx.deleteMessage(ctx.update['callback_query'].message.message_id).then(res => console.log(res))
     await ctx.replyWithSticker("CAACAgIAAxkBAAIKnWLwltw9NWe3L9fe3uFCjJZzRRC7AAJGBAACP5XMCstXCFgVL57DKQQ")
     // @ts-ignore
     await ctx.reply('Торговать бинарными опционами ты можешь на торговой платформе брокера. Я предлагаю тебе для этого зарегистрироваться на лучшей из них - IQ Option. Я ведь сама бот и просто влюблена в их технологичную, профессиональную платформу, на которой есть все для удобной торговли. Платформа IQ option отмечена множеством наград. Ну как не влюбиться.', extra)
@@ -49,7 +50,7 @@ home.action("continue", async (ctx) => {
 })
 
 home.action("why", async (ctx) => {
-
+    ctx.answerCbQuery()
 
     const extra = {
         parse_mode: 'HTML',
@@ -63,8 +64,8 @@ home.action("why", async (ctx) => {
         }
     }
 
-    await ctx.deleteMessage(ctx.update['callback_query'].message.message_id).then(res => console.log(res))
-    await ctx.deleteMessage(ctx.update['callback_query'].message.message_id - 1).then(res => console.log(res))
+    // await ctx.deleteMessage(ctx.update['callback_query'].message.message_id).then(res => console.log(res))
+    // await ctx.deleteMessage(ctx.update['callback_query'].message.message_id - 1).then(res => console.log(res))
     // @ts-ignore
     ctx.reply('Регистрация нужна для того, чтобы те знания которые ты получишь в игре, ты мог бы применить на тренировочном счете, а когда у тебя начнет получаться и в реальной торговле, на реальные деньги.', extra)
 
@@ -73,7 +74,7 @@ home.action("why", async (ctx) => {
 home.action("1", async (ctx) => {
 
 
-
+    ctx.answerCbQuery()
     const extra = {
         parse_mode: 'HTML',
         reply_markup: {
@@ -86,21 +87,54 @@ home.action("1", async (ctx) => {
         }
     }
 
-    await ctx.deleteMessage(ctx.update['callback_query'].message.message_id).then(res => console.log(res))
+    // await ctx.deleteMessage(ctx.update['callback_query'].message.message_id).then(res => console.log(res))
     // @ts-ignore
     ctx.reply('Итак правила игры просты. На протяжении игры ты будешь зарабатывать игровые монеты - IQ coin\'s.Ты сможешь их получать либо за выполнение заданий и обучение, или за то, что будешь открывать позиции на игровые бинарные опционы, да да, все как в реальности.Но самое главное, на заработанные монеты ты сможешь приобрести реальные полезные призы!', extra)
 
 })
 
+async function sentence(ctx) {
+    ctx.answerCbQuery()
+    const extra = {
+        parse_mode: 'HTML',
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    {
+                        text: 'Зарегистрироваться',
+                        callback_data: 'register',
+                        url: 'https://iqoption.com/ru'
+                    },
+                    {
+                        text: 'Я уже зарегистрирован',
+                        callback_data: 'auth'
+                    }
+                ]
+            ]
+        }
+    }
+    // await ctx.deleteMessage(ctx.update['callback_query'].message.message_id).then(res => console.log(res))
+    await ctx.reply("Предлагаю тебе получить твои первые игровые 10 000 IQCoins, они нужны будут для того чтобы открывать позиции в игре и зарабатывать еще больше монет, которые ты потом сможешь обменять на призы. Для их получения тебе нужно просто зарегистрироваться в IQ Option. Не беспокойся для регистрации тебе понадобиться минимум данных - твое имя и адрес электронной почты, никаких платежных данных и привязок карт. При регистрации ты получишь $10000 на свой демо счет, на них ты сможешь торговать на платформе, тренировать навык, а если они закончаться, то сможешь их бесплатно восполнить. Скорее переходи по ссылке внизу, регистрируйся, а потом возвращайся сюда и я дам тебе 10000 IQCoins.")
+    // @ts-ignore
+    await ctx.reply('Заходи на платформу нажимай кнопку "Регистрация" в верхнем правом углу.  Вводи свою электронную почту, придумай пароль и подтверди, что тебе есть 18 лет. Вот и всё!', extra)
+
+    // ctx.scene.enter("registration")
+}
+
 home.action("2", async (ctx) => {
+    await sentence(ctx)
+})
 
-
-
-    ctx.scene.enter("registration")
+home.action("auth", async (ctx) => {
+    ctx.answerCbQuery()
+    // await ctx.deleteMessage(ctx.update['callback_query'].message.message_id).then(res => console.log(res))
+    // await ctx.deleteMessage(ctx.update['callback_query'].message.message_id - 1).then(res => console.log(res))
+    await ctx.reply("Какой ты молодец! Тогда пришли мне скрин своего торгового счета и я начислю тебе 10000 IQCoins. \n\nДля отмены отправьте /back")
+    await ctx.scene.enter("screenshoot")
 })
 
 
-home.enter((ctx) => greeting(ctx))
+// home.enter((ctx) => greeting(ctx))
 
 // Обработка входящих
 // handler.on("start", async (ctx) => greeting(ctx))
@@ -135,12 +169,13 @@ home.action('letsgo', async (ctx) => {
         }
     }
 
-    deleteprevmessage(ctx)
+    // deleteprevmessage(ctx)
 
     // await ctx.replyWithSticker("CAACAgIAAxkBAAIeUGLyKvzcAj3CTjzoT_24XSmvBIDsAAI3BAACP5XMCkLU7Ai1u05wKQQ")
 
+    ctx.answerCbQuery()
     // @ts-ignore
-    await ctx.editMessageText("Отлично! Давай расскажу тебе об игре и ее правилах.", extra)
+    await ctx.reply("Отлично! Давай расскажу тебе об игре и ее правилах.", extra)
     ctx.wizard.selectStep(2)
 })
 
