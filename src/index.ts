@@ -13,17 +13,16 @@ import { getUser } from './Controller/UserController';
 import { addDeposit, getEmail } from './Controller/UserController'
 
 // SSL
-// const fs = require('fs');
-// const key = fs.readFileSync('./ssl/localhost.decrypted.key');
-// const cert = fs.readFileSync('./ssl/localhost.crt');
-// const https = require('https');
+const fs = require('fs');
+const key = fs.readFileSync('./ssl/localhost.decrypted.key');
+const cert = fs.readFileSync('./ssl/localhost.crt');
+const https = require('https');
 
 const morgan = require("morgan")
 const cors = require("cors")
 const BodyParser = require("body-parser")
 import user = require("../api/routes/userRouter");
 import interface__ = require("../api/routes/interfaceRouter");
-import { createServer } from 'http';
 
 // Server
 require("dotenv").config()
@@ -151,7 +150,7 @@ app.use("/user", user);
 app.use("/interface", interface__);
 // app.get("/", (req: Request, res: Response) => res.send("Hello!"))
 app.use(bot.webhookCallback(secretPath))
-const server = createServer(app);
+const server = https.createServer({ key, cert }, app);
 server.listen(port, () => console.log("telegram bot launched!"))
 
 // Enable graceful stop
