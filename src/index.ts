@@ -41,7 +41,7 @@ const scenes = [home, dashboard, admin, registration, game]
 const bot = new Telegraf<MyContext>(token)
 export default bot
 const app = express()
-const port = 8443
+const port = process.env.port
 const secretPath = `/telegraf/${bot.secretPathComponent()}`
 const stage = new Scenes.Stage<MyContext>(scenes, {
     default: 'home',

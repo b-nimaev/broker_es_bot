@@ -1,7 +1,6 @@
 import { Composer, Scenes } from "telegraf";
 import { MyContext } from "../../Model/Model";
 require("dotenv").config()
-import * as EmailValidator from 'email-validator';
 import { add_coins, lose_coins } from "../../Controller/UserController";
 
 const handler = new Composer<MyContext>();
@@ -40,7 +39,7 @@ const game = new Scenes.WizardScene(
             await ctx.reply("А теперь давай попробуем совершить сделку используя технический анализ")
             await ctx.reply("Посмотри на график нашей пары TEA/CFF, я уже добавила на график трендовую линию. Какую, я думаю ты уже знаешь) Как думаешь куда вероятнее всего пойдет котировка актива?")
             // @ts-ignore
-            await ctx.replyWithPhoto("AgACAgIAAxkBAAIKWGLwZaKcbl3WDApWbY4ZuTUEicM_AALgvzEb-yWASwABL_VxOtDT4QEAAwIAA3MAAykE", extra)
+            // await ctx.replyWithPhoto("AgACAgIAAxkBAAIKWGLwZaKcbl3WDApWbY4ZuTUEicM_AALgvzEb-yWASwABL_VxOtDT4QEAAwIAA3MAAykE", extra)
             ctx.wizard.next()
         }
     },
@@ -69,7 +68,7 @@ const game = new Scenes.WizardScene(
                 }
             }
 
-            await ctx.replyWithPhoto("AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ")
+            // await ctx.replyWithPhoto("AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ")
             // @ts-ignore
             await ctx.reply("Играем дальше?", extra)
             ctx.wizard.next()
@@ -93,7 +92,7 @@ const game = new Scenes.WizardScene(
 
                 await ctx.reply(message)
                 // @ts-ignore
-                await ctx.replyWithPhoto("AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ", extra)
+                // await ctx.replyWithPhoto("AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ", extra)
                 ctx.wizard.selectStep(ctx.session.__scenes.cursor + 2)
                 console.log('asdf')
                 // await ctx.wizard.next()
@@ -168,7 +167,7 @@ const game = new Scenes.WizardScene(
                 let message = `К сожалению это неверный ответ( Здесь видно, что цена достигла уровня сопротивления, а значит с большей вероятностью она пойдет вниз. Не отчаивайся, у меня еще много интересных заданий!`
                 // @ts-ignore       
                 await ctx.reply(message)
-                await ctx.replyWithPhoto("AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ")
+                // await ctx.replyWithPhoto("AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ")
                 await ctx.replyWithSticker("CAACAgIAAxkBAAIPbWLw7QKCo0orkR8urtNwcJlXmR69AAJXBAACP5XMCj6R_XixcB-qKQQ")
                 await ctx.reply(`Ты отлично справился с заданиями! И у тебя уже много практики, которую ты можешь перенести на реальную торговлю. Тренируй технический анализ на демо счете, а затем переходи на реальную торговлю \n\nЧтобы проверить баланс введи /profile`)
                 // @ts-ignore
@@ -181,7 +180,7 @@ const game = new Scenes.WizardScene(
                 await add_coins(ctx.from, 455, false)
                 // @ts-ignore
                 await ctx.reply(message)
-                await ctx.replyWithPhoto("AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ")
+                // await ctx.replyWithPhoto("AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ")
                 await ctx.replyWithSticker("CAACAgIAAxkBAAIPbWLw7QKCo0orkR8urtNwcJlXmR69AAJXBAACP5XMCj6R_XixcB-qKQQ")
                 await ctx.reply(`Ты отлично справился с заданиями! И у тебя уже много практики, которую ты можешь перенести на реальную торговлю. Тренируй технический анализ на демо счете, а затем переходи на реальную торговлю \n\nЧтобы проверить баланс введи /profile`)
                 // @ts-ignore
@@ -609,7 +608,7 @@ game.enter(async (ctx) => {
 
     // @ts-ignore
     ctx.reply(message, extra)
-    await ctx.replyWithPhoto("AgACAgIAAxkBAAIKTGLwY39wZ96uyo5BcCznP7x_QitCAALTvzEb-yWAS0lY_HT9BxMdAQADAgADbQADKQQ")
+    // await ctx.replyWithPhoto("AgACAgIAAxkBAAIKTGLwY39wZ96uyo5BcCznP7x_QitCAALTvzEb-yWAS0lY_HT9BxMdAQADAgADbQADKQQ")
     ctx.wizard.selectStep(1)
 })
 game.hears('/start', async (ctx) => ctx.scene.enter("home"))

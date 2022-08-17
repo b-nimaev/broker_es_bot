@@ -370,7 +370,7 @@ const registration = new Scenes.WizardScene(
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
-                await ctx.replyWithPhoto("AgACAgIAAxkBAAIK7mLwmT-f3heeVXEXbSOfvk_h3QipAAIWvTEbzTuIS8GBmW-ENBUNAQADAgADeQADKQQ")
+                // await ctx.replyWithPhoto("AgACAgIAAxkBAAIK7mLwmT-f3heeVXEXbSOfvk_h3QipAAIWvTEbzTuIS8GBmW-ENBUNAQADAgADeQADKQQ")
                 // await ctx.replyWithPhoto()
                 ctx.wizard.next()
             }
@@ -460,7 +460,7 @@ const registration = new Scenes.WizardScene(
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
-                await ctx.replyWithPhoto("AgACAgIAAxkBAAIK7mLwmT-f3heeVXEXbSOfvk_h3QipAAIWvTEbzTuIS8GBmW-ENBUNAQADAgADeQADKQQ")
+                // await ctx.replyWithPhoto("AgACAgIAAxkBAAIK7mLwmT-f3heeVXEXbSOfvk_h3QipAAIWvTEbzTuIS8GBmW-ENBUNAQADAgADeQADKQQ")
                 ctx.wizard.next()
             }
         }
@@ -483,7 +483,7 @@ const registration = new Scenes.WizardScene(
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
-                await ctx.replyWithPhoto("AgACAgIAAxkBAAIK7mLwmT-f3heeVXEXbSOfvk_h3QipAAIWvTEbzTuIS8GBmW-ENBUNAQADAgADeQADKQQ")
+                // await ctx.replyWithPhoto("AgACAgIAAxkBAAIK7mLwmT-f3heeVXEXbSOfvk_h3QipAAIWvTEbzTuIS8GBmW-ENBUNAQADAgADeQADKQQ")
 
                 ctx.wizard.next()
             }
