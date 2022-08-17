@@ -237,8 +237,9 @@ const registration = new Scenes.WizardScene(
                     }
                 }
 
-                const message = 'А теперь я расскажу тебе, какую информацию могут дать тебе японские свечи, да да, именно так они называются. Посмотри это видео и возвращайся: https://vimeo.com/channels/1002556/167268362'
+                const message = 'А теперь я расскажу тебе, какую информацию могут дать тебе японские свечи, да да, именно так они называются. Посмотри это видео и возвращайся'
 
+                await ctx.replyWithVideo({ source: "./src/assets/3.mp4" })
                 // @ts-ignore
                 await ctx.reply(message, extra)
                 ctx.wizard.next()
@@ -259,8 +260,8 @@ const registration = new Scenes.WizardScene(
                     }
                 }
 
-                const message = 'Ты быстро двигаешся! Самый популярный метод технического анализа - торговля по тренду. Для этого тебе нужно знать, что такое тренд, линия сопротивления, линия поддержки и пробой. Подготовила для тебя подробное видео тут: https://vimeo.com/channels/1002556/167268513'
-
+                const message = 'Ты быстро двигаешся! Самый популярный метод технического анализа - торговля по тренду. Для этого тебе нужно знать, что такое тренд, линия сопротивления, линия поддержки и пробой. Подготовила для тебя подробное видео тут'
+                await ctx.replyWithVideo({ source: "./src/assets/4.mp4" })
                 // @ts-ignore
                 await ctx.reply(message, extra)
                 ctx.wizard.next()
@@ -499,8 +500,9 @@ const registration = new Scenes.WizardScene(
                     }
                 }
 
-                const message = 'Посмотри еще раз видео про свечи: https://vimeo.com/channels/1002556/167268362'
+                const message = 'Посмотри еще раз видео про свечи'
 
+                await ctx.replyWithVideo({ source: "./src/assets/5.mp4" })
                 // @ts-ignore
                 await ctx.reply(message, extra)
             }
@@ -637,10 +639,11 @@ const registration = new Scenes.WizardScene(
                     }
                 }
 
-                const message = 'Ты не теряешь время зря. Посмотри это видео, которое подробнее рассказывает о том, как пополнить твой счет. Как только пополнишь депозит возвращайся и проверь на пополнение депозита. Я все проверю и начислю тебе 10000 IQ Coins https://vimeo.com/channels/1002556/327387627'
+                const message = 'Ты не теряешь время зря. Посмотри это видео, которое подробнее рассказывает о том, как пополнить твой счет. Как только пополнишь депозит возвращайся и проверь на пополнение депозита. Я все проверю и начислю тебе 10000 IQ Coins'
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
+                await ctx.replyWithVideo({ source: './src/assets/1.mp4' })
             }
 
             if (ctx.update["message"].text == 'Играть дальше') {
@@ -710,12 +713,13 @@ const registration = new Scenes.WizardScene(
                     }
                 }
 
-                const message = 'Ты не теряешь время зря. Посмотри это видео, которое подробнее рассказывает о том, как пополнить твой счет. Как только пополнишь депозит возвращайся и проверь на пополнение депозита. Я все проверю и начислю тебе 10000 IQ Coins https://vimeo.com/channels/1002556/327387627'
+                const message = 'Ты не теряешь время зря. Посмотри это видео, которое подробнее рассказывает о том, как пополнить твой счет. Как только пополнишь депозит возвращайся и проверь на пополнение депозита. Я все проверю и начислю тебе 10000 IQ Coins'
                 // const message = 'Уже сособираюсь на встречу в платформой, чтобы проверить твой депозит. Мне потребуется время. Знаешь, платформа такая занятая, я постоянно жду не дождусь, чтобы пообщаться. Но трейдеры для нее на первом месте. Иногда я ревную...Но как только мы встретимся, я вернусь с твоими IQ Coins'
 
                 // await ctx.replyWithSticker("CAACAgIAAxkBAAINkGLw4KY1njQpI5sm8nt94oewD_3-AAJlBAACP5XMClzVsXn7vWCCKQQ")
                 // @ts-ignore
                 await ctx.editMessageText(message, extra)
+                await ctx.replyWithVideo({ source: './src/assets/1.mp4' })
                 // ctx.wizard.next()
             }
 
