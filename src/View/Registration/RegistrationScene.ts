@@ -2,7 +2,9 @@ import { Composer, Scenes } from "telegraf";
 import { MyContext } from "../../Model/Model";
 require("dotenv").config()
 import * as EmailValidator from 'email-validator';
-import { addDeposit, addEmail, add_coins, getEmail, getUser, lose_coins } from "../../Controller/UserController";
+import { addDeposit, addEmail, add_coins, getEmail, lose_coins } from "../../Controller/UserController";
+import EmailCheck from "./Components/EmailCheck";
+import RegistrationGreeting from "./Components/RegistrationGreeting";
 
 const handler = new Composer<MyContext>();
 
@@ -11,40 +13,8 @@ const registration = new Scenes.WizardScene(
     handler,
     (async (ctx) => {
         if (ctx.update["message"]) {
-
-
             if (ctx.update["message"].text) {
-
-                // if (ctx.message["text"] == '/start') {
-                //     return ctx.scene.enter("home")
-                // }
-
-                if (EmailValidator.validate(ctx.update["message"].text)) {
-                    await addEmail(ctx.from, ctx.update["message"].text)
-                    const extra = {
-                        parse_mode: 'HTML',
-                        reply_markup: {
-                            inline_keyboard: [
-                                [
-                                    {
-                                        text: 'Да, продолжаем',
-                                        callback_data: 'next',
-                                    },
-                                    {
-                                        text: 'Изменить',
-                                        callback_data: 'cancel'
-                                    }
-                                ]
-                            ]
-                        }
-                    }
-
-                    // @ts-ignore
-                    await ctx.reply(`Проверьте правильность ввода e-mail ${ctx.update["message"].text}`, extra)
-                    ctx.wizard.next()
-                } else {
-                    ctx.reply("e-mail не валидный, повторите снова")
-                }
+                await EmailCheck(ctx)
             }
         }
     }),
@@ -70,6 +40,15 @@ const registration = new Scenes.WizardScene(
                 // @ts-ignore
                 await ctx.reply(message, extra)
                 ctx.wizard.next()
+            }
+
+            if (ctx.update["callback_query"].data == 'cancel') {
+
+                await ctx.answerCbQuery()
+                // await ctx.deleteMessage(ctx.update['callback_query'].message.message_id).then(res => console.log(res))
+                // await ctx.deleteMessage(ctx.update['callback_query'].message.message_id - 1).then(res => console.log(res))
+                await ctx.editMessageText("Пришлите мне email на который вы регистрировались и я начислю вам 10000 IQCoins.")
+                ctx.wizard.selectStep(ctx.session.__scenes.cursor - 1);
             }
         }
     }),
@@ -1014,32 +993,7 @@ const registration = new Scenes.WizardScene(
 
 registration.leave(async (ctx) => console.log("registration scene leave"))
 registration.hears("/start", async (ctx) => ctx.scene.enter("home"))
-registration.enter((async (ctx) => {
-
-    const extra = {
-        parse_mode: 'HTML',
-        reply_markup: {
-            inline_keyboard: [
-                [
-                    {
-                        text: 'Зарегистрироваться',
-                        callback_data: 'register',
-                        url: 'https://vk.com'
-                    },
-                    {
-                        text: 'Авторизоваться',
-                        callback_data: 'auth'
-                    }
-                ]
-            ]
-        }
-    }
-    await ctx.deleteMessage(ctx.update['callback_query'].message.message_id).then(res => console.log(res))
-    await ctx.reply("Предлагаю тебе получить твои первые игровые 10 000 IQCoins, они нужны будут для того чтобы открывать позиции в игре и зарабатывать еще больше монет, которые ты потом сможешь обменять на призы. Для их получения тебе нужно просто зарегистрироваться в IQ Option. Не беспокойся для регистрации тебе понадобиться минимум данных - твое имя и адрес электронной почты, никаких платежных данных и привязок карт. При регистрации ты получишь $10000 на свой демо счет, на них ты сможешь торговать на платформе, тренировать навык, а если они закончаться, то сможешь их бесплатно восполнить. Скорее переходи по ссылке внизу, регистрируйся, а потом возвращайся сюда и я дам тебе 10000 IQCoins.")
-    // @ts-ignore
-    await ctx.reply('Заходи на платформу нажимай кнопку "Регистрация" в верхнем правом углу.  Вводи свою электронную почту, придумай пароль и подтверди, что тебе есть 18 лет. Вот и всё!', extra)
-
-}))
+registration.enter(async (ctx) => await RegistrationGreeting(ctx))
 
 handler.action("auth", async (ctx) => {
     await ctx.answerCbQuery()
@@ -1066,32 +1020,7 @@ handler.action("continue", async (ctx) => {
     ctx.wizard.selectStep(3)
 })
 
-handler.action("exit", async (ctx) => {
-    await ctx.answerCbQuery()
-    const extra = {
-        parse_mode: 'HTML',
-        reply_markup: {
-            inline_keyboard: [
-                [
-                    {
-                        text: 'Зарегистрироваться',
-                        callback_data: 'register',
-                        url: 'https://vk.com'
-                    },
-                    {
-                        text: 'Авторизоваться',
-                        callback_data: 'auth'
-                    }
-                ]
-            ]
-        }
-    }
-
-    await ctx.editMessageText("Предлагаю тебе получить твои первые игровые 10 000 IQCoins, они нужны будут для того чтобы открывать позиции в игре и зарабатывать еще больше монет, которые ты потом сможешь обменять на призы. Для их получения тебе нужно просто зарегистрироваться в IQ Option. Не беспокойся для регистрации тебе понадобиться минимум данных - твое имя и адрес электронной почты, никаких платежных данных и привязок карт. При регистрации ты получишь $10000 на свой демо счет, на них ты сможешь торговать на платформе, тренировать навык, а если они закончаться, то сможешь их бесплатно восполнить. Скорее переходи по ссылке внизу, регистрируйся, а потом возвращайся сюда и я дам тебе 10000 IQCoins.")
-    // @ts-ignore
-    await ctx.reply('Заходи на платформу нажимай кнопку "Регистрация" в верхнем правом углу.  Вводи свою электронную почту, придумай пароль и подтверди, что тебе есть 18 лет. Вот и всё!', extra)
-})
-
+handler.action("exit", async (ctx) => await RegistrationGreeting(ctx))
 handler.hears("/start", async (ctx) => ctx.scene.enter("home"))
 
 

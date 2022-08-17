@@ -8,10 +8,13 @@ export async function greeting(ctx: MyContext) {
         let user = ctx.update["message"].from
 
         if (user) {
+
             let userData = await getUser(user)
+
             if (!userData) {
                 await registerUser(user)
             }
+
         }
     }
 
