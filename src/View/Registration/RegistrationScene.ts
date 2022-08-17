@@ -285,8 +285,7 @@ const registration = new Scenes.WizardScene(
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
-                // await ctx.replyWithPhoto("AgACAgIAAxkBAAIK7mLwmT-f3heeVXEXbSOfvk_h3QipAAIWvTEbzTuIS8GBmW-ENBUNAQADAgADeQADKQQ")
-                // await ctx.replyWithPhoto()
+                await ctx.replyWithPhoto({ url: 'https://telegra.ph/file/5fa845ef7a88860bf3cee.jpg' })
                 ctx.wizard.next()
             }
         }
@@ -375,7 +374,7 @@ const registration = new Scenes.WizardScene(
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
-                // await ctx.replyWithPhoto("AgACAgIAAxkBAAIK7mLwmT-f3heeVXEXbSOfvk_h3QipAAIWvTEbzTuIS8GBmW-ENBUNAQADAgADeQADKQQ")
+                await ctx.replyWithPhoto({ url: 'https://telegra.ph/file/5fa845ef7a88860bf3cee.jpg' })
                 ctx.wizard.next()
             }
         }
@@ -398,7 +397,7 @@ const registration = new Scenes.WizardScene(
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
-                // await ctx.replyWithPhoto("AgACAgIAAxkBAAIK7mLwmT-f3heeVXEXbSOfvk_h3QipAAIWvTEbzTuIS8GBmW-ENBUNAQADAgADeQADKQQ")
+                await ctx.replyWithPhoto({ url: "https://telegra.ph/file/2acb6a06e02fcb47ca5ad.jpg" })
 
                 ctx.wizard.next()
             }
@@ -418,6 +417,7 @@ const registration = new Scenes.WizardScene(
                 await lose_coins(ctx.from, 500, false)
                 // @ts-ignore
                 await ctx.reply(message, extra)
+                await ctx.replyWithPhoto({ url: "https://telegra.ph/file/2acb6a06e02fcb47ca5ad.jpg" })
                 ctx.wizard.next()
             }
         }
@@ -471,9 +471,18 @@ const registration = new Scenes.WizardScene(
         if (ctx.update["message"]) {
             if (ctx.update["message"].text == 'Сейчас попробую' || ctx.update["message"].text == 'Понял, сейчас попробую') {
 
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Загрузить скриншот']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
 
                 const message = 'Здорово! Теперь используя инструмент луч проведи линию сопротивления или поддержки на графике. Как сделаешь это загрузи скриншот и я начислю тебе еще 500  IQ Coins ;)'
 
+                ctx.replyWithPhoto({ url: "https://telegra.ph/file/4ffb2c0e06a0fc25d3786.jpg" })
                 // @ts-ignore
                 await ctx.reply(message)
                 ctx.wizard.next()
@@ -521,7 +530,7 @@ const registration = new Scenes.WizardScene(
                 await ctx.reply("Здорово! Ты быстро учишься. Давай теперь попробуем открыть сделку на демо счете на платформе, опираясь на полученную тобой информацию. Выбери актив: EUR/USD \nВыбери размер позиции: $100 \nВыбери время экспирации: 5 min \nВыбери выше или ниже.Возвращайся как получишь результат.")
                 ctx.wizard.next()
             } else {
-                await ctx.reply("Нет, нет, такое не подойдет")
+                await ctx.reply("Загрузи скриншот")
             }
         }
     }),

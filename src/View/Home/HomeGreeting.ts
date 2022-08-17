@@ -2,7 +2,6 @@ import { getUser, registerUser } from "../../Controller/UserController"
 import { MyContext } from "../../Model/Model"
 
 export async function greeting(ctx: MyContext) {
-
     if (ctx.update["message"]) {
 
         let user = ctx.update["message"].from
