@@ -118,13 +118,23 @@ bot.use(session())
 bot.use((ctx, next) => {
     const now = new Date()
     ctx.myContextProp = now.toString()
+
+    console.log(ctx.myContextProp)
+
     if (ctx.session) {
         if (ctx.session.__scenes) {
             if (ctx.session.__scenes.cursor) {
                 console.log(ctx.session.__scenes.cursor)
             }
+
+            if (ctx.session.__scenes.current) {
+                console.log(ctx.session.__scenes.current)
+            }
         }
     }
+
+    // console.log(ctx)
+
     return next()
 })
 bot.use(stage.middleware())

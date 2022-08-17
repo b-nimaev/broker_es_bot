@@ -1,4 +1,4 @@
-import { getInterface, getUser, registerUser } from "../../Controller/UserController"
+import { getUser, registerUser } from "../../Controller/UserController"
 import { MyContext } from "../../Model/Model"
 
 export async function greeting(ctx: MyContext) {
@@ -29,14 +29,11 @@ export async function greeting(ctx: MyContext) {
         }
     }
 
-    const data = await getInterface("greeting", "/start")
+    const message = `Привет, меня зовут Eva - я бот и я твой помощник в мире трейдинга. Я приготовила для тебя увлекательную обучающую игру, которая даст тебе основы для торговли бинарными опционами. Полученные знания ты сможешь применять на практике и зарабатывать с их помощью реальные деньги. Сыграешь со мной? 
 
-    ctx.wizard.selectStep(0)
+ПРЕДУПРЕЖДЕНИЕ: Ваши средства могут быть подвержены риску.`
 
-    if (data.hasStick) {
-        await ctx.replyWithSticker(data.sticker)
-    }
-
+    await ctx.replyWithSticker("CAACAgIAAxkBAAIeUGLyKvzcAj3CTjzoT_24XSmvBIDsAAI3BAACP5XMCkLU7Ai1u05wKQQ")
     // @ts-ignore
-    ctx.update["message"] ? ctx.reply(data.message, extra) : ctx.editMessageText(data.message, extra)
+    ctx.update["message"] ? ctx.reply(message, extra) : ctx.editMessageText(message, extra)
 }
