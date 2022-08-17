@@ -5,12 +5,19 @@ import * as EmailValidator from 'email-validator';
 import { addDeposit, addEmail, add_coins, getEmail, getUser, lose_coins } from "../../Controller/UserController";
 
 const handler = new Composer<MyContext>();
+
 const registration = new Scenes.WizardScene(
     "registration",
     handler,
     (async (ctx) => {
         if (ctx.update["message"]) {
+
+
             if (ctx.update["message"].text) {
+
+                // if (ctx.message["text"] == '/start') {
+                //     return ctx.scene.enter("home")
+                // }
 
                 if (EmailValidator.validate(ctx.update["message"].text)) {
                     await addEmail(ctx.from, ctx.update["message"].text)
@@ -1006,7 +1013,7 @@ const registration = new Scenes.WizardScene(
 );
 
 registration.leave(async (ctx) => console.log("registration scene leave"))
-
+registration.hears("/start", async (ctx) => ctx.scene.enter("home"))
 registration.enter((async (ctx) => {
 
     const extra = {
@@ -1084,5 +1091,8 @@ handler.action("exit", async (ctx) => {
     // @ts-ignore
     await ctx.reply('Заходи на платформу нажимай кнопку "Регистрация" в верхнем правом углу.  Вводи свою электронную почту, придумай пароль и подтверди, что тебе есть 18 лет. Вот и всё!', extra)
 })
+
+handler.hears("/start", async (ctx) => ctx.scene.enter("home"))
+
 
 export default registration

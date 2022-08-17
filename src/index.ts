@@ -145,6 +145,7 @@ app.use(
         extended: true,
     })
 );
+// bot.command("/start", async (ctx) => console.log('start'))
 app.use(morgan("dev"));
 app.use("/user", user);
 app.use("/interface", interface__);

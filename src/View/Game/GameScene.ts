@@ -612,8 +612,6 @@ game.enter(async (ctx) => {
     await ctx.replyWithPhoto("AgACAgIAAxkBAAIKTGLwY39wZ96uyo5BcCznP7x_QitCAALTvzEb-yWAS0lY_HT9BxMdAQADAgADbQADKQQ")
     ctx.wizard.selectStep(1)
 })
-
-// game.on("sticker", ctx => console.log(ctx.message))
-// game.on("sti", ctx => console.log(ctx.message))
+game.hears('/start', async (ctx) => ctx.scene.enter("home"))
 
 export default game
