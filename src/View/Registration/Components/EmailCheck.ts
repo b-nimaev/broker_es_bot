@@ -1,5 +1,5 @@
 import * as EmailValidator from 'email-validator';
-import { addDeposit, addEmail, add_coins, getEmail, lose_coins } from "../../../Controller/UserController";
+import { addDeposit, addEmail, add_coins, getEmail } from "../../../Controller/UserController";
 
 async function EmailCheck(ctx) {
     if (EmailValidator.validate(ctx.update["message"].text)) {
