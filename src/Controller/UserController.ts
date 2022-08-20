@@ -96,13 +96,13 @@ export const add_coins = async function (user, count: number, percentaly: boolea
                         if (percentaly) {
                             return await client.db(dbname)
                                 .collection("users")
-                                .findOneAndUpdate({ id: user.id }, { $set: { balance: res.balance + ((count / 100) * 91) } })
+                                .findOneAndUpdate({ id: user.id }, { $set: { "balance": res.balance + ((count / 100) * 91) } })
                                 .then(async (result) => console.log(result))
                         }
 
                         return await client.db(dbname)
                             .collection("users")
-                            .findOneAndUpdate({ id: user.id }, { $set: { balance: res.balance + count } })
+                            .findOneAndUpdate({ id: user.id }, { $set: { "balance": res.balance + count } })
                             .then(async (result) => console.log(result))
                     }
                 }
@@ -127,13 +127,13 @@ export const lose_coins = async function (user, count, percentaly: boolean) {
                         if (percentaly) {
                             return await client.db(dbname)
                                 .collection("users")
-                                .findOneAndUpdate({ id: user.id }, { $set: { balance: res.balance - ((count / 100) * 100) } })
+                                .findOneAndUpdate({ id: user.id }, { $set: { "balance": res.balance - ((count / 100) * 100) } })
                                 .then(async (result) => console.log(result))
                         }
 
                         return await client.db(dbname)
                             .collection("users")
-                            .findOneAndUpdate({ id: user.id }, { $set: { balance: res.balance - count } })
+                            .findOneAndUpdate({ id: user.id }, { $set: { "balance": res.balance - count } })
                             .then(async (result) => console.log(result))
                     }
                 }
