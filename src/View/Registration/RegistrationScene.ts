@@ -177,7 +177,7 @@ const registration = new Scenes.WizardScene(
 
             if (ctx.update["message"].text == "А можно пример?") {
 
-                const message = `Конечно! Давай разберемся подробнее с техническим анализом. Как я уже говорила, это анализ цены актива, которая представлена графиком. График можно отобразить линейным или так свечным. Для анализа чаще всего используют свечной график. Кстати, на платформе ты можешь изменить отображение графика в любой момент с линейного на свечной и наоборот. Давай попробуем сделать это прямо сейчас! Заходи на платформу и смени график, как показано на изображении. А потом загрузи скриншот с измененным графиком, и заработай еще 500 IQ coins. Помни, что в конце игры ты сможешь обменять игровые монеты на реальные призы!`
+                const message = `Конечно! Давай разберемся подробнее с техническим анализом. Как я уже говорила, это анализ цены актива, которая представлена графиком. График можно отобразить линейным или так свечным. Для анализа чаще всего используют свечной график. Кстати, на платформе ты можешь изменить отображение графика в любой момент с линейного на свечной и наоборот. Давай попробуем сделать это прямо сейчас! Заходи на платформу и смени график, как показано на изображении. А потом загрузи скриншот с измененным графиком, и заработай еще 500 IQ coins. Помни, что в конце игры ты сможешь обменять игровые монеты на реальные призы! И даже выиграть $1000 на свой реальный счет в IQ option!`
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
@@ -187,8 +187,9 @@ const registration = new Scenes.WizardScene(
                     }
                 }
 
+                await ctx.reply(message)
                 // @ts-ignore
-                await ctx.reply(message, extra)
+                await ctx.replyWithPhoto({ source: "./src/assets/12.jpg" }, extra)
                 ctx.wizard.next()
 
             }
@@ -351,6 +352,7 @@ const registration = new Scenes.WizardScene(
 
                 const message = 'Ты ведь не обманешь меня? Я хоть и бот, но я еще и девушка, и своим ИИ я понимаю, что ты можешь достичь отличных результатов применяя знания полученные в этой игре! Давай же скорее вернемся к графику и к нашей первой сделке.'
 
+                await ctx.replyWithSticker("CAACAgIAAxkBAAIHRmMAAUmpv50GE1nXerYteTIUJvdsLwACNQQAAj-VzAo8IRZc9lRTiSkE")
                 // @ts-ignore
                 await ctx.reply(message, extra)
                 ctx.wizard.next()
@@ -483,9 +485,9 @@ const registration = new Scenes.WizardScene(
 
                 const message = 'Здорово! Теперь используя инструмент луч проведи линию сопротивления или поддержки на графике. Как сделаешь это загрузи скриншот и я начислю тебе еще 500  IQ Coins ;)'
 
-                ctx.replyWithPhoto({ url: "https://telegra.ph/file/4ffb2c0e06a0fc25d3786.jpg" })
+                await ctx.replyWithPhoto({ url: "https://telegra.ph/file/4ffb2c0e06a0fc25d3786.jpg" })
                 // @ts-ignore
-                await ctx.reply(message)
+                await ctx.reply(message, extra)
                 ctx.wizard.next()
             }
 
@@ -551,7 +553,7 @@ const registration = new Scenes.WizardScene(
                     }
                 }
 
-                const message = 'Вау! Ты все схватываешь на лету! Ты смог заработать на демо счете, а ведь он устроен так же как и реальная торговля. Только деньги с демо счета ты не можешь вывести. Зато если ты перенесешь полученные знания на реальный счет ты сможешь торговать на реальные деньги и сможешь их выводить. Предлагаю не медлить и пополнить депозит. Кстати, за пополнение депозита я начислю тебе сразу 10000 IQ Coins, и это значит что ты сможешь выбрать себе самый дорогой приз в игре! И ксати лови 500 за совершение сделки на демо счете ;)'
+                const message = 'Вау! Ты все схватываешь на лету! Ты смог заработать на демо счете, а ведь он устроен так же как и реальная торговля. Только деньги с демо счета ты не можешь вывести. Зато если ты перенесешь полученные знания на реальный счет ты сможешь торговать на реальные деньги и сможешь их выводить. Предлагаю не медлить и пополнить депозит. Кстати, за пополнение депозита я начислю тебе сразу 10000 IQ Coins, и это значит что ты сможешь участвовать в розыгрыше $1000! И ксати лови 500 за совершение сделки на демо счете ;)'
 
                 await add_coins(ctx.from, 500, false)
                 await ctx.replyWithSticker("CAACAgIAAxkBAAINiGLw3mZJj-9vT1F9_KRyVN_hw454AAJDBAACP5XMCrPB96QaJA_TKQQ")
@@ -641,9 +643,9 @@ const registration = new Scenes.WizardScene(
 
                 const message = 'Ты не теряешь время зря. Посмотри это видео, которое подробнее рассказывает о том, как пополнить твой счет. Как только пополнишь депозит возвращайся и проверь на пополнение депозита. Я все проверю и начислю тебе 10000 IQ Coins'
 
+                await ctx.replyWithVideo({ source: './src/assets/1.mp4' })
                 // @ts-ignore
                 await ctx.reply(message, extra)
-                await ctx.replyWithVideo({ source: './src/assets/1.mp4' })
             }
 
             if (ctx.update["message"].text == 'Играть дальше') {
@@ -719,14 +721,14 @@ const registration = new Scenes.WizardScene(
                 // await ctx.replyWithSticker("CAACAgIAAxkBAAINkGLw4KY1njQpI5sm8nt94oewD_3-AAJlBAACP5XMClzVsXn7vWCCKQQ")
                 // @ts-ignore
                 await ctx.editMessageText(message, extra)
-                await ctx.replyWithVideo({ source: './src/assets/1.mp4' })
+                // await ctx.replyWithVideo({ source: './src/assets/1.mp4' })
                 // ctx.wizard.next()
             }
 
             if (ctx.update["callback_query"].data == 'check_deposit') {
                 ctx.answerCbQuery()
 
-                const message = 'Уже сособираюсь на встречу в платформой, чтобы проверить твой депозит. Мне потребуется время. Знаешь, платформа такая занятая, я постоянно жду не дождусь, чтобы пообщаться. Но трейдеры для нее на первом месте. Иногда я ревную...Но как только мы встретимся, я вернусь с твоими IQ Coins'
+                const message = 'Получила! Уже сособираюсь на встречу в платформой, чтобы проверить твой депозит. Мне потребуется время. Знаешь, платформа такая занятая, я постоянно жду не дождусь, чтобы пообщаться. Но трейдеры для нее на первом месте. Иногда я ревную...Но как только мы встретимся, я вернусь с твоими IQ Coins'
                 await ctx.replyWithSticker("CAACAgIAAxkBAAINkGLw4KY1njQpI5sm8nt94oewD_3-AAJlBAACP5XMClzVsXn7vWCCKQQ")
                 // @ts-ignore
                 await ctx.editMessageText(message)

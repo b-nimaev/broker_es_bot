@@ -1,16 +1,90 @@
 import { Composer, Scenes } from "telegraf";
-import { getInterface } from "../../Controller/UserController";
+import { addEmail, getInterface } from "../../Controller/UserController";
+import * as EmailValidator from 'email-validator';
 import { MyContext } from "../../Model/Model";
 import { greeting } from "./HomeGreeting";
 require("dotenv").config();
 
 const handler = new Composer<MyContext>(); // function
+const emailHandler = new Composer<MyContext>(); // function
 const home = new Scenes.WizardScene(
     "home",
-    handler
+    handler,
+    (async (ctx) => {
+        console.log(ctx.wizard.step)
+        if (ctx.update["message"]) {
+            if (EmailValidator.validate(ctx.update["message"].text)) {
+                await addEmail(ctx.from, ctx.update["message"].text)
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        inline_keyboard: [
+                            [
+                                {
+                                    text: 'Да, продолжаем',
+                                    callback_data: 'next',
+                                },
+                                {
+                                    text: 'Изменить',
+                                    callback_data: 'cancel'
+                                }
+                            ]
+                        ]
+                    }
+                }
+
+                // @ts-ignore
+                await ctx.reply(`Проверьте правильность ввода e-mail ${ctx.update["message"].text}`, extra)
+                ctx.wizard.next()
+            } else {
+                ctx.reply("e-mail не валидный, повторите снова")
+            }
+        } else if (ctx.update["callback_query"]) {
+            ctx.answerCbQuery('Пришлите e-mail')
+        }
+    }),
+    (async (ctx) => {
+
+
+        if (ctx.update["callback_query"]) {
+            if (ctx.update["callback_query"].data == 'cancel') {
+                ctx.answerCbQuery()
+                ctx.wizard.selectStep(ctx.session.__scenes.cursor - 1)
+                await ctx.editMessageText("https://iqoption.com/ru \n\nПришли мне свой emai, который ты использовал для регистрации и я начислю тебе 10000 IQCoins.")
+            }
+
+            if (ctx.update['callback_query'].data == 'next') {
+                ctx.answerCbQuery('next')
+                ctx.wizard.next()
+
+                await ctx.reply("Лови свои первые 10000 IQCoins и добро пожаловать в игру! ;)")
+                await ctx.replyWithSticker("CAACAgIAAxkBAAIKrGLwmAoW3iFfEPhcYdD3JnFA6DCqAAJXBAACP5XMCj6R_XixcB-qKQQ")
+                await ctx.reply("Кстати, чтобы торговать бинарными опционами на Android нужно специальное приложение IQ option Х.  Но если ты пользуешься веб версией то в ней уже есть нужный тебе инструмент. В меню есть специальная ссылка на приложение, устонавливай и возвращайся в игру :)")
+
+
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Я заработал!', 'Я потерял :(']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+
+                const message = 'Предлагаю не медлить и попробовать совершить свою первую сделку на демо счёте. \nВыбери актив: EUR / USD \nВыбери размер позиции: $100 \nВыбери время экспирации: 1 min \nВыбери выше или ниже.Посмотри это видео, в котором подробно рассказано как совершить сделку: Небойся ошибиться, это тренировочный счёт ;)'
+
+                await ctx.replyWithVideo({ source: "./src/assets/6.mp4" })
+                // @ts-ignore
+                await ctx.reply(message, extra)
+                ctx.scene.enter("registration")
+
+            }
+        }
+    })
 );
 
-home.action("lets", async (ctx) => {
+
+home.action("lets1", async (ctx) => {
     // ctx.scene.enter("registration")
     const extra = {
         parse_mode: 'HTML',
@@ -21,7 +95,7 @@ home.action("lets", async (ctx) => {
             }]],
         }
     }
-    // await ctx.editMessageText('Классный вопрос!')
+    await ctx.reply('Классный вопрос!')
     await ctx.replyWithVideo({ source: './src/assets/2.mp4' })
     ctx.answerCbQuery()
     // @ts-ignore
@@ -94,7 +168,7 @@ home.action("1", async (ctx) => {
 
 })
 
-async function sentence(ctx) {
+home.action("2", async (ctx) => {
     ctx.answerCbQuery()
     const extra = {
         parse_mode: 'HTML',
@@ -104,7 +178,7 @@ async function sentence(ctx) {
                     {
                         text: 'Зарегистрироваться',
                         callback_data: 'register',
-                        url: 'https://iqoption.com/ru'
+                        // url: 'https://iqoption.com/ru'
                     },
                     {
                         text: 'Я уже зарегистрирован',
@@ -115,26 +189,33 @@ async function sentence(ctx) {
         }
     }
     // await ctx.deleteMessage(ctx.update['callback_query'].message.message_id).then(res => console.log(res))
-    await ctx.reply("Предлагаю тебе получить твои первые игровые 10 000 IQCoins, они нужны будут для того чтобы открывать позиции в игре и зарабатывать еще больше монет, которые ты потом сможешь обменять на призы. Для их получения тебе нужно просто зарегистрироваться в IQ Option. Не беспокойся для регистрации тебе понадобиться минимум данных - твое имя и адрес электронной почты, никаких платежных данных и привязок карт. При регистрации ты получишь $10000 на свой демо счет, на них ты сможешь торговать на платформе, тренировать навык, а если они закончаться, то сможешь их бесплатно восполнить. Скорее переходи по ссылке внизу, регистрируйся, а потом возвращайся сюда и я дам тебе 10000 IQCoins.")
+    await ctx.reply("Предлагаю тебе получить твои первые игровые 10 000 IQCoins, они нужны будут для того чтобы торговать прямо в игре, а затем ты сможешь обменять IQCoins на ценные призы. А главный приз это $1000 на твой реальный счет в IQ option.")
+    await ctx.reply('Классный приз')
     // @ts-ignore
-    await ctx.reply('Заходи на платформу нажимай кнопку "Регистрация" в верхнем правом углу.  Вводи свою электронную почту, придумай пароль и подтверди, что тебе есть 18 лет. Вот и всё!', extra)
-
-    // ctx.scene.enter("registration")
-}
-
-home.action("2", async (ctx) => {
-    await sentence(ctx)
+    await ctx.reply('Для их получения тебе нужно просто зарегистрироваться в IQ Option. Понадобиться минимум данных - твое имя и адрес электронной почты, никаких платежных данных и привязок карт. При регистрации ты получишь $10000 на свой демо счет, на них ты сможешь торговать на платформе, тренироваться. Скорее переходи по ссылке внизу, регистрируйся, а потом возвращайся сюда и я дам тебе 10000 IQCoins. ', extra)
+    ctx.wizard.selectStep(0)
 })
 
-home.action("auth", async (ctx) => {
+handler.action("register", async (ctx) => {
+    await ctx.reply("https://iqoption.com/ru \n\Пришли мне свой emai, который ты использовал для регистрации и я начислю тебе 10000 IQCoins. \n\nДля того чтобы вернуться нажать, отправьте /back")
+    await ctx.reply("Ввести email")
+    ctx.answerCbQuery()
+    // await ctx.answerCbQuery()
+    ctx.wizard.next()
+})
+
+handler.action("auth", async (ctx) => {
     ctx.answerCbQuery()
     // await ctx.deleteMessage(ctx.update['callback_query'].message.message_id).then(res => console.log(res))
     // await ctx.deleteMessage(ctx.update['callback_query'].message.message_id - 1).then(res => console.log(res))
-    await ctx.reply("Какой ты молодец! Тогда пришли мне скрин своего торгового счета и я начислю тебе 10000 IQCoins. \n\nДля отмены отправьте /back")
-    await ctx.scene.enter("screenshoot")
+    await ctx.reply("Какой ты молодец! Тогда пришли мне свой emai, который ты использовал для регистрации и я начислю тебе 10000 IQCoins. \n\nДля того чтобы вернуться нажать, отправьте /back")
+    await ctx.reply("Ввести email")
+    // await ctx.scene.enter("screenshoot")
+    ctx.wizard.next()
 })
 
-
+handler.on("message", async (ctx) => console.log('handler'))
+emailHandler.on("message", async (ctx) => console.log(ctx.update["messsage"]["text"]))
 // home.enter((ctx) => greeting(ctx))
 
 // Обработка входящих
@@ -151,13 +232,13 @@ home.action('letsgo', async (ctx) => {
                 [
                     {
                         text: "Давай",
-                        callback_data: "lets"
+                        callback_data: "1"
                     }
                 ],
                 [
                     {
                         text: "Погоди, что такое бинарные опционы?",
-                        callback_data: "lets"
+                        callback_data: "lets1"
                     }
                 ]
                 // [
@@ -177,20 +258,9 @@ home.action('letsgo', async (ctx) => {
     ctx.answerCbQuery()
     // @ts-ignore
     await ctx.reply("Отлично! Давай расскажу тебе об игре и ее правилах.", extra)
-    ctx.wizard.selectStep(2)
 })
 
 home.start((ctx) => greeting(ctx))
-home.command("/game", ctx => ctx.scene.enter('game'))
-
-home.command("admin", async (ctx) => {
-    ctx.scene.enter('admin')
-})
-
-async function deleteprevmessage(ctx) {
-    let prev_message = ctx.update['callback_query'].message.message_id - 1
-    await ctx.deleteMessage(prev_message)
-}
-
+// home.command("/game", async (ctx) => ctx.scene.enter("game"))
 // 
 export default home
