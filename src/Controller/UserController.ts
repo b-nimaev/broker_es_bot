@@ -125,11 +125,6 @@ export const lose_coins = async function (user, count: number, percentaly: boole
                                 .findOneAndUpdate({ id: user.id }, { $set: { "balance": parseFloat(current_balance.balance) - ((count / 100) * 100) } }, { upsert: true })
                                 .then(async (result) => console.log(result))
                         }
-
-                        return await client.db(dbname)
-                            .collection("users")
-                            .findOneAndUpdate({ id: user.id }, { $set: { "balance": parseFloat(current_balance.balance) - count } }, { upsert: true })
-                            .then(async (result) => console.log(result))
                     }
                 })
 
