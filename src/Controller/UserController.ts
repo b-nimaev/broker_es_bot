@@ -1,9 +1,13 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, WithId } from "mongodb";
 require("dotenv").config();
 
 const dbname = process.env.DB_NAME;
 let uri = <string>process.env.DB_CONN_STRING;
 const client = new MongoClient(uri);
+
+interface DocumentForCoins extends WithId<Document> {
+    balance: number
+}
 
 export const registerUser = async function (update) {
     try {
@@ -40,7 +44,7 @@ export const addEmail = async function (update, email) {
         await client.connect()
         return await client.db(dbname)
             .collection("users")
-            .updateOne({ id: update.id }, { $set: { "balance": "10000", "email": email } }, { upsert: true })
+            .updateOne({ id: update.id }, { $set: { "balance": 10000, "email": email } }, { upsert: true })
     } catch (err) {
     }
 }
@@ -86,19 +90,19 @@ export const add_coins = async function (user, count: number, percentaly: boolea
             .db(dbname)
             .collection("users")
             .findOne({ id: user.id })
-            .then(async res => {
+            .then(async (res: DocumentForCoins) => {
                 if (res) {
                     if (res.balance) {
                         if (percentaly) {
                             return await client.db(dbname)
                                 .collection("users")
-                                .findOneAndUpdate({ id: user.id }, { $set: { balance: parseFloat(res.balance) + ((count / 100) * 91) } })
+                                .findOneAndUpdate({ id: user.id }, { $set: { balance: res.balance + ((count / 100) * 91) } })
                                 .then(async (result) => console.log(result))
                         }
 
                         return await client.db(dbname)
                             .collection("users")
-                            .findOneAndUpdate({ id: user.id }, { $set: { balance: parseFloat(res.balance) + count } })
+                            .findOneAndUpdate({ id: user.id }, { $set: { balance: res.balance + count } })
                             .then(async (result) => console.log(result))
                     }
                 }
@@ -109,6 +113,7 @@ export const add_coins = async function (user, count: number, percentaly: boolea
 }
 
 export const lose_coins = async function (user, count, percentaly: boolean) {
+
     try {
         await client.connect()
 
@@ -116,19 +121,19 @@ export const lose_coins = async function (user, count, percentaly: boolean) {
             .db(dbname)
             .collection("users")
             .findOne({ id: user.id })
-            .then(async res => {
+            .then(async (res: DocumentForCoins) => {
                 if (res) {
                     if (res.balance) {
                         if (percentaly) {
                             return await client.db(dbname)
                                 .collection("users")
-                                .findOneAndUpdate({ id: user.id }, { $set: { balance: parseFloat(res.balance) - ((count / 100) * 100) } })
+                                .findOneAndUpdate({ id: user.id }, { $set: { balance: res.balance - ((count / 100) * 100) } })
                                 .then(async (result) => console.log(result))
                         }
 
                         return await client.db(dbname)
                             .collection("users")
-                            .findOneAndUpdate({ id: user.id }, { $set: { balance: parseFloat(res.balance) - count } })
+                            .findOneAndUpdate({ id: user.id }, { $set: { balance: res.balance - count } })
                             .then(async (result) => console.log(result))
                     }
                 }
