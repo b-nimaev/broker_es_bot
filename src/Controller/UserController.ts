@@ -128,13 +128,13 @@ export const lose_coins = async function (user, count: number, percentaly: boole
                         let fin = <number>res.balance - ((count / 100) * 100)
 
                         if (percentaly) {
-                            return await client.db(dbname)
+                            await client.db(dbname)
                                 .collection("users")
                                 .findOneAndUpdate({ "id": user.id }, { "$set": { "balance": fin } })
                                 .then(async (result) => console.log(result))
                         }
 
-                        return await client.db(dbname)
+                        await client.db(dbname)
                             .collection("users")
                             .findOneAndUpdate({ "id": user.id }, { "$set": { "balance": fin } })
                             .then(async (result) => console.log(result))

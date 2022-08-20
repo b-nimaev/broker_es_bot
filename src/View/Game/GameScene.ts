@@ -39,7 +39,7 @@ const game = new Scenes.WizardScene(
             await ctx.reply("А теперь давай попробуем совершить сделку используя технический анализ")
             await ctx.reply("Посмотри на график нашей пары TEA/CFF, я уже добавила на график трендовую линию. Какую, я думаю ты уже знаешь) Как думаешь куда вероятнее всего пойдет котировка актива?")
             // @ts-ignore
-            // await ctx.replyWithPhoto("AgACAgIAAxkBAAIKWGLwZaKcbl3WDApWbY4ZuTUEicM_AALgvzEb-yWASwABL_VxOtDT4QEAAwIAA3MAAykE", extra)
+            await ctx.replyWithPhoto({ source: './src/assets/131.jpeg' }, extra)
             ctx.wizard.next()
         }
     },
@@ -79,7 +79,7 @@ const game = new Scenes.WizardScene(
     async (ctx) => {
         if (ctx.update["message"]) {
 
-            if (ctx.update["message"].text == 'Конечно') {
+            if (ctx.update["message"].text == 'Конечно' || (ctx.update['message'].text == 'Играть')) {
                 const message = "Отлично! Смотри на еще один график. Теперь он без линий тренда. Попробуй провести линию визуально и оценить куда может пойти цена актива?"
                 const extra = {
                     parse_mode: 'HTML',
@@ -92,7 +92,7 @@ const game = new Scenes.WizardScene(
 
                 await ctx.reply(message)
                 // @ts-ignore
-                // await ctx.replyWithPhoto("AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ", extra)
+                await ctx.replyWithPhoto({ source: './src/assets/139.jpeg' }, extra)
                 ctx.wizard.selectStep(ctx.session.__scenes.cursor + 2)
                 console.log('asdf')
                 // await ctx.wizard.next()
@@ -112,7 +112,7 @@ const game = new Scenes.WizardScene(
                 }
                 // @ts-ignore
                 await ctx.reply(message, extra)
-                await ctx.wizard.next()
+                ctx.wizard.next()
                 // await ctx.wizard.selectStep(ctx.session.__scenes.cursor + 2)
             }
 
@@ -147,7 +147,7 @@ const game = new Scenes.WizardScene(
 
             await ctx.replyWithSticker("CAACAgIAAxkBAAINjGLw4FsIsWDIECUejo7RaAvreJElAAI-BAACP5XMCmXGbS9Z4RFmKQQ")
             await ctx.reply(message, extra)
-            ctx.wizard.selectStep(ctx.session.__scenes.cursor + 2)
+            ctx.wizard.selectStep(ctx.session.__scenes.cursor - 1)
         }
     },
 
@@ -167,7 +167,7 @@ const game = new Scenes.WizardScene(
                 let message = `К сожалению это неверный ответ( Здесь видно, что цена достигла уровня сопротивления, а значит с большей вероятностью она пойдет вниз. Не отчаивайся, у меня еще много интересных заданий!`
                 // @ts-ignore       
                 await ctx.reply(message)
-                // await ctx.replyWithPhoto("AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ")
+                await ctx.replyWithPhoto({ source: './src/assets/141-2.jpeg' })
                 await ctx.replyWithSticker("CAACAgIAAxkBAAIPbWLw7QKCo0orkR8urtNwcJlXmR69AAJXBAACP5XMCj6R_XixcB-qKQQ")
                 await ctx.reply(`Ты отлично справился с заданиями! И у тебя уже много практики, которую ты можешь перенести на реальную торговлю. Тренируй технический анализ на демо счете, а затем переходи на реальную торговлю \n\nЧтобы проверить баланс введи /profile`)
                 // @ts-ignore
@@ -180,9 +180,9 @@ const game = new Scenes.WizardScene(
                 await add_coins(ctx.from, 455, false)
                 // @ts-ignore
                 await ctx.reply(message)
-                // await ctx.replyWithPhoto("AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ")
+                await ctx.replyWithPhoto({ source: './src/assets/141-2.jpeg' })
                 await ctx.replyWithSticker("CAACAgIAAxkBAAIPbWLw7QKCo0orkR8urtNwcJlXmR69AAJXBAACP5XMCj6R_XixcB-qKQQ")
-                await ctx.reply(`Ты отлично справился с заданиями! И у тебя уже много практики, которую ты можешь перенести на реальную торговлю. Тренируй технический анализ на демо счете, а затем переходи на реальную торговлю \n\nЧтобы проверить баланс введи /profile`)
+                await ctx.reply(`Ты отлично справился с заданиями! И у тебя уже много практики, которую ты можешь перенести на реальную торговлю. Тренируй технический анализ на демо счете, а затем переходи на реальную торговлю. Помнишь, что за пополнение депозита я начисляю сразу 10000 коинов, и ты на шаг ближе к $1000 для торговли на реальном счете! Нажимай на кнопку в меню внизу, а затем присылай свой Trader ID. `)
                 // @ts-ignore
                 await ctx.reply("Как насчет того, чтобы потренировать фундаментальный анализ?", extra)
                 ctx.wizard.next()
@@ -257,8 +257,9 @@ const game = new Scenes.WizardScene(
                 message = `Вероятнее всего из-за большого спроса на кофе стоимость его возрастет, а так как это котируемый товар в нашей паре, то котировка актива скорее всего после этой новости полетит вниз. Но если ты не уверен, лучше не рисковать. Мне нравиться твоя осторожность!`
             }
 
+            await ctx.replyWithVideo({ source: './src/assets/higher.mp4' })
             // @ts-ignore
-            ctx.reply(message, extra)
+            await ctx.reply(message, extra)
             ctx.wizard.next()
 
         }
@@ -300,6 +301,7 @@ const game = new Scenes.WizardScene(
                     }
                 }
                 await add_coins(ctx.from, 455, false)
+                await ctx.replyWithVideo({ source: './src/assets/higher.mp4' })
                 // @ts-ignore
                 await ctx.reply(message, extra)
             }
@@ -510,6 +512,8 @@ const game = new Scenes.WizardScene(
                         resize_keyboard: true
                     }
                 }
+
+                await ctx.replyWithVideo({ source: './src/assets/last.mp4' })
                 // @ts-ignore
                 await ctx.reply(message, extra)
                 ctx.wizard.next()
@@ -572,18 +576,16 @@ const game = new Scenes.WizardScene(
     async (ctx) => {
         if (ctx.update["message"]) {
             if (ctx.update["message"].text == 'Давай') {
-                const message = `"Консультация с аккаунт менеджером 20000 коинов \nСтратегия 1 для торговли 3000 коинов \nСтратегия 2 для торговли 3000 коинов \nСтратегия 3 для торговли 3000 коинов"`
-                const message2 = `Главный трофей это консультация с аккаунт менеджером. И просто отличный начало в реальной торговле и вот почему: ПРЕИМУЩЕСТВА КОНСУЛЬТАЦИИ`
+                const message = "Участие в розыгрыше $1000 на реальный счет в IQ option - 22000 коинов \n\Консультация с аккаунт менеджером 20000 коинов \nСтратегия 1 для торговли 3000 коинов \nСтратегия 2 для торговли 3000 коинов \nСтратегия 3 для торговли 3000 коинов"
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Давай']],
+                        keyboard: [['Здорово!']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                await ctx.reply(message)
                 // @ts-ignore
                 await ctx.reply(message, extra)
             }
@@ -604,11 +606,12 @@ game.enter(async (ctx) => {
         }
     }
 
+    await ctx.replyWithPhoto({ source: './src/assets/126.jpeg' })
     // @ts-ignore
-    ctx.reply(message, extra)
-    // await ctx.replyWithPhoto("AgACAgIAAxkBAAIKTGLwY39wZ96uyo5BcCznP7x_QitCAALTvzEb-yWAS0lY_HT9BxMdAQADAgADbQADKQQ")
+    await ctx.reply(message, extra)
     ctx.wizard.selectStep(1)
 })
 game.hears('/start', async (ctx) => ctx.scene.enter("home"))
+game.hears('/register', async (ctx) => ctx.scene.enter("registration"))
 
 export default game

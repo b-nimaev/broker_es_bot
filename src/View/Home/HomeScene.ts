@@ -55,13 +55,25 @@ const home = new Scenes.WizardScene(
 
             if (ctx.update['callback_query'].data == 'next') {
                 ctx.answerCbQuery('next')
-                ctx.wizard.next()
-
                 await ctx.reply("Лови свои первые 10000 IQCoins и добро пожаловать в игру! ;)")
                 await ctx.replyWithSticker("CAACAgIAAxkBAAIKrGLwmAoW3iFfEPhcYdD3JnFA6DCqAAJXBAACP5XMCj6R_XixcB-qKQQ")
-                await ctx.reply("Кстати, чтобы торговать бинарными опционами на Android нужно специальное приложение IQ option Х.  Но если ты пользуешься веб версией то в ней уже есть нужный тебе инструмент. В меню есть специальная ссылка на приложение, устонавливай и возвращайся в игру :)")
 
+                const extra2 = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Понял']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+                // @ts-ignore
+                await ctx.reply("Кстати, чтобы торговать бинарными опционами на Android нужно специальное приложение IQ option Х.  Но если ты пользуешься веб версией то в ней уже есть нужный тебе инструмент. В меню есть специальная ссылка на приложение, устонавливай и возвращайся в игру :)", extra2)
+            }
+        }
 
+        if (ctx.update["message"]) {
+
+            if (ctx.update['message'].text == 'Понял') {
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
@@ -77,7 +89,7 @@ const home = new Scenes.WizardScene(
                 // @ts-ignore
                 await ctx.reply(message, extra)
                 ctx.scene.enter("registration")
-
+                ctx.wizard.next()
             }
         }
     })
@@ -188,9 +200,46 @@ home.action("2", async (ctx) => {
             ]
         }
     }
-    // await ctx.deleteMessage(ctx.update['callback_query'].message.message_id).then(res => console.log(res))
-    await ctx.reply("Предлагаю тебе получить твои первые игровые 10 000 IQCoins, они нужны будут для того чтобы торговать прямо в игре, а затем ты сможешь обменять IQCoins на ценные призы. А главный приз это $1000 на твой реальный счет в IQ option.")
-    await ctx.reply('Классный приз')
+
+    const extra2 = {
+        parse_mode: 'HTML',
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    {
+                        text: 'Классный приз',
+                        callback_data: 'cool',
+                        // url: 'https://iqoption.com/ru'
+                    }
+                ]
+            ]
+        }
+    }
+    // @ts-ignore
+    await ctx.reply("Предлагаю тебе получить твои первые игровые 10 000 IQCoins, они нужны будут для того чтобы торговать прямо в игре, а затем ты сможешь обменять IQCoins на ценные призы. А главный приз это $1000 на твой реальный счет в IQ option.", extra2)
+})
+
+home.action("cool", async (ctx) => {
+    ctx.answerCbQuery()
+    const extra = {
+        parse_mode: 'HTML',
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    {
+                        text: 'Зарегистрироваться',
+                        callback_data: 'register',
+                        // url: 'https://iqoption.com/ru'
+                    },
+                    {
+                        text: 'Я уже зарегистрирован',
+                        callback_data: 'auth'
+                    }
+                ]
+            ]
+        }
+    }
+
     // @ts-ignore
     await ctx.reply('Для их получения тебе нужно просто зарегистрироваться в IQ Option. Понадобиться минимум данных - твое имя и адрес электронной почты, никаких платежных данных и привязок карт. При регистрации ты получишь $10000 на свой демо счет, на них ты сможешь торговать на платформе, тренироваться. Скорее переходи по ссылке внизу, регистрируйся, а потом возвращайся сюда и я дам тебе 10000 IQCoins. ', extra)
     ctx.wizard.selectStep(0)
@@ -261,6 +310,6 @@ home.action('letsgo', async (ctx) => {
 })
 
 home.start((ctx) => greeting(ctx))
-// home.command("/game", async (ctx) => ctx.scene.enter("game"))
+home.command("/game", async (ctx) => ctx.scene.enter("game"))
 // 
 export default home

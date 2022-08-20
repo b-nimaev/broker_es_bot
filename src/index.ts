@@ -111,7 +111,22 @@ bot.hears("/trophies", async (ctx) => {
 })
 
 bot.hears("/getapp", async (ctx) => {
-    ctx.reply(`Для андроид \nДля айфон`)
+    const extra = {
+        parse_mode: 'HTML',
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    {
+                        text: 'Скачать',
+                        url: 'https://app.appsflyer.com/com.iqoption.x-install?af_r=https%3A%2F%2Fstatic.cdnpub.info%2Ffiles%2Fstorage%2Fpublic%2F5a%2Fe3%2F5de74a883.apk'
+                    }
+                ]
+            ]
+        }
+    }
+
+    // @ts-ignore
+    ctx.reply(`Для андроид`, extra)
 })
 
 

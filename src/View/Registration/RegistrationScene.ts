@@ -398,9 +398,9 @@ const registration = new Scenes.WizardScene(
                 await add_coins(ctx.from, 500, true)
                 const message = 'Поздравляю! Ты сам выбрал правильное направление и заработал первые деньги на бинарных опционах. Да, они виртуальные, но ты можешь перенести свои знания на реальную торговлю и реальный счет. А знаешь почему ты заработал? Потому что ты использовал полученные знания. Теперь в твоем арсенале есть первая торговая стратения - Торговля по тренду.'
 
+                await ctx.reply(message)
                 // @ts-ignore
-                await ctx.reply(message, extra)
-                await ctx.replyWithPhoto({ url: "https://telegra.ph/file/2acb6a06e02fcb47ca5ad.jpg" })
+                await ctx.replyWithVideo({ source: "./src/assets/higher.mp4" }, extra)
 
                 ctx.wizard.next()
             }
@@ -591,8 +591,8 @@ const registration = new Scenes.WizardScene(
                     }
                 }
 
-                const message = 'Посмотри видео еще раз, а потом можешь потренироваться на демо счете https://vimeo.com/channels/1002556/167268513'
-
+                const message = 'Посмотри видео еще раз, а потом можешь потренироваться на демо счете'
+                await ctx.replyWithVideo({ source: "./src/assets/50.mp4" })
                 // @ts-ignore
                 await ctx.reply(message, extra)
             }
@@ -648,7 +648,7 @@ const registration = new Scenes.WizardScene(
                 await ctx.reply(message, extra)
             }
 
-            if (ctx.update["message"].text == 'Играть дальше') {
+            if (ctx.update["message"].text == 'Играть дальше' || (ctx.update['message'].text == 'Я ещё потренируюсь')) {
 
                 const extra = {
                     parse_mode: 'HTML',
@@ -668,24 +668,6 @@ const registration = new Scenes.WizardScene(
                 // @ts-ignore
                 await ctx.reply(message, extra)
                 ctx.wizard.next()
-            }
-
-            if (ctx.update["message"].text == 'Я ещё потренируюсь') {
-
-                const extra = {
-                    parse_mode: 'HTML',
-                    reply_markup: {
-                        keyboard: [['Пополнить депозит', 'Я ещё потренируюсь']],
-                        one_time_keyboard: true,
-                        resize_keyboard: true
-                    }
-                }
-
-                const message = 'Хорошо! У тебя основательный подход и это правильно! Чем больше практики тем лучше результат'
-
-                // @ts-ignore
-                await ctx.reply(message, extra)
-                // ctx.wizard.next()
             }
 
         }
@@ -918,7 +900,7 @@ const registration = new Scenes.WizardScene(
                 await ctx.scene.enter("game")
             }
 
-            if (ctx.update["message"].text == "Через 1 час", ctx.update["message"].text == "Через 8 часов", ctx.update["message"].text == "Через 12 часов", ctx.update["message"].text == "Через 24 часа") {
+            if (ctx.update["message"].text == "Через 1 час" || ctx.update["message"].text == "Через 8 часов" || ctx.update["message"].text == "Через 12 часов" || ctx.update["message"].text == "Через 24 часа") {
                 const message = 'Скорее возвращайся в игру, пора зарабатывать!';
                 const extra = {
                     parse_mode: 'HTML',
