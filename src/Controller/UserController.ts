@@ -83,9 +83,10 @@ export const add_coins = async function (user, count: number, percentaly: boolea
         await client.connect()
 
         return await client
-                .db(dbname)
-                .collection("users")
-                .findOne({ id: user.id }).then(async (res) => {
+            .db(dbname)
+            .collection("users")
+            .findOne({ id: user.id }).then(async (res) => {
+                if (res) {
                     if (res.balance) {
                         let current_balance = res.balance
 
@@ -102,7 +103,8 @@ export const add_coins = async function (user, count: number, percentaly: boolea
                             .then(async (result) => console.log(result))
 
                     }
-                })
+                }
+            })
 
 
     } catch (err) { return err }

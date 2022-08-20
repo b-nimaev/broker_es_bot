@@ -193,7 +193,6 @@ const game = new Scenes.WizardScene(
 
     async (ctx) => {
         if (ctx.update["message"]) {
-            console.log(ctx.message["text"])
             if (ctx.update["message"].text == "Конечно" || ctx.update["message"].text == "Играть") {
                 const extra = {
                     parse_mode: 'HTML',
@@ -213,7 +212,7 @@ const game = new Scenes.WizardScene(
 
     async (ctx) => {
         if (ctx.update["message"]) {
-            if (ctx.message["text"] == 'Понял, присылай новость') {
+            if (ctx.update["message"].text == 'Понял, присылай новость') {
 
                 const extra = {
                     parse_mode: 'HTML',
@@ -244,7 +243,6 @@ const game = new Scenes.WizardScene(
             }
 
             let message: string
-            console.log(ctx.message["text"])
             if (ctx.update["message"].text == "Выше") {
                 message = `К сожалению ты выбрал неверное направление. Если бы наш актив был CFF/TEA то есть кофе был бы базовым товаром, то тогда бы котировка нашего актива пошла вверх, но так как кофе в нашей паре котируемый товар, соответственно его стоимость по отношению к чаю возрастет, то котировка нашего актива после такой новости скорее всего полетит вниз.`
                 // await lose_coins(ctx.from, 500, false)
@@ -268,7 +266,7 @@ const game = new Scenes.WizardScene(
 
     async (ctx) => {
         if (ctx.update["message"]) {
-            if (ctx.message["text"] == "Понял, присылай следующую новость") {
+            if (ctx.update['message'].text == "Понял, присылай следующую новость") {
 
                 const extra = {
                     parse_mode: 'HTML',
@@ -291,7 +289,7 @@ const game = new Scenes.WizardScene(
         if (ctx.update["message"]) {
 
 
-            if (ctx.message["text"] == "Выше") {
+            if (ctx.update['message'].text == "Выше") {
                 let message = `Ты абсолютно прав! Здесь ситуация изменилась в другую сторону. Так как данная поп звезда является инфлюенсером, который задает тренды ее заявление может повлиять на спрос на чай, а соответственно и на его стоимость. И так как чай в нашей паре базовый товар, то рост его цены, так же повлияет на рост котировки всего актива TEA/CFF. Возможно ты слышал как Илон Маск не раз влиял на стоимость криптовалюты Dogcoin своими твитами. Здесь в нашем игровом мире, похожая ситуация. Лови свои 455 IQ Coin`
                 const extra = {
                     parse_mode: 'HTML',
@@ -306,7 +304,7 @@ const game = new Scenes.WizardScene(
                 await ctx.reply(message, extra)
             }
 
-            if (ctx.message["text"] == 'Ниже') {
+            if (ctx.update['message'].text == 'Ниже') {
                 let message = `К сожалению ты выбрал неверное направление. Чай в нашей паре базовый актив, а соответственно повышенный спрос на чай повлияет на рост его цены, и котировка актива TEA/CFF будет вероятнее всего рости после этой новости.`
                 const extra = {
                     parse_mode: 'HTML',
@@ -321,7 +319,7 @@ const game = new Scenes.WizardScene(
                 await ctx.reply(message, extra)
             }
 
-            if (ctx.message["text"] == "Воздержаться от сделки") {
+            if (ctx.update['message'].text == "Воздержаться от сделки") {
                 let message = `Чай в нашей паре базовый актив, а соответственно повышенный спрос на чай повлияет на рост его цены, и котировка актива TEA/CFF будет вероятнее всего рости после этой новости. Но если ты не уверен, лучше не рисковать. Мне нравиться твоя осторожность!`
                 const extra = {
                     parse_mode: 'HTML',
@@ -362,7 +360,7 @@ const game = new Scenes.WizardScene(
         if (ctx.update["message"]) {
 
 
-            if (ctx.message["text"] == "Выше") {
+            if (ctx.update['message'].text == "Выше") {
                 let message = `Эта новость неоднозначна и не понятно как она могла бы сказаться на движение котировки нашей пары. Эта сделка оказалась рисковой.`
                 const extra = {
                     parse_mode: 'HTML',
@@ -376,7 +374,7 @@ const game = new Scenes.WizardScene(
                 await ctx.reply(message, extra)
             }
 
-            if (ctx.message["text"] == 'Ниже') {
+            if (ctx.update['message'].text == 'Ниже') {
                 let message = `Эта новость неоднозначна и не понятно как она могла бы сказаться на движение котировки нашей пары. Эта сделка оказалась рисковой.`
                 const extra = {
                     parse_mode: 'HTML',
@@ -390,7 +388,7 @@ const game = new Scenes.WizardScene(
                 await ctx.reply(message, extra)
             }
 
-            if (ctx.message["text"] == "Воздержаться от сделки") {
+            if (ctx.update['message'].text == "Воздержаться от сделки") {
                 let message = `Ты был прав! Эта новость неоднозначна и не понятно как она могла бы сказаться на движение котировки нашей пары.`
                 const extra = {
                     parse_mode: 'HTML',
