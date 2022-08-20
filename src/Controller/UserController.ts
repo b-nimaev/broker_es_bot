@@ -40,7 +40,7 @@ export const addEmail = async function (update, email) {
         await client.connect()
         return await client.db(dbname)
             .collection("users")
-            .updateOne({ id: update.id }, { $set: { "balance": 10000, "email": email } }, { upsert: true })
+            .updateOne({ id: update.id }, { $set: { "balance": "10000", "email": email } }, { upsert: true })
     } catch (err) {
     }
 }
@@ -85,23 +85,21 @@ export const add_coins = async function (user, count: number, percentaly: boolea
         return await client
             .db(dbname)
             .collection("users")
-            .findOne({ id: user.id }).then(async (res) => {
+            .findOne({ id: user.id })
+            .then(async res => {
                 if (res) {
                     if (res.balance) {
-                        let current_balance = res.balance
-
                         if (percentaly) {
                             return await client.db(dbname)
                                 .collection("users")
-                                .findOneAndUpdate({ id: user.id }, { $set: { "balance": parseFloat(current_balance.balance) + ((count / 100) * 91) } }, { upsert: true })
+                                .findOneAndUpdate({ id: user.id }, { $set: { balance: parseFloat(res.balance) + ((count / 100) * 91) } })
                                 .then(async (result) => console.log(result))
                         }
 
                         return await client.db(dbname)
                             .collection("users")
-                            .findOneAndUpdate({ id: user.id }, { $set: { "balance": parseFloat(current_balance.balance) + count } }, { upsert: true })
+                            .findOneAndUpdate({ id: user.id }, { $set: { balance: parseFloat(res.balance) + count } })
                             .then(async (result) => console.log(result))
-
                     }
                 }
             })
@@ -110,30 +108,36 @@ export const add_coins = async function (user, count: number, percentaly: boolea
     } catch (err) { return err }
 }
 
-// export const lose_coins = async function (user, count: number, percentaly: boolean) {
-//     try {
-//         await client.connect()
+export const lose_coins = async function (user, count, percentaly: boolean) {
+    try {
+        await client.connect()
 
-//         return await client
-//                 .db(dbname)
-//                 .collection("users")
-//                 .findOne({ id: user.id })
-//                 .then(async (res) => {
-//                     if (res.balance) {
-//                         let current_balance = res.balance
-//                         if (percentaly) {
-//                             return await client.db(dbname)
-//                                 .collection("users")
-//                                 .findOneAndUpdate({ id: user.id }, { $set: { "balance": parseFloat(current_balance.balance) - ((count / 100) * 100) } })
-//                                 .then(async (result) => console.log(result))
-//                         }
-//                     }
-//                 })
+        return await client
+            .db(dbname)
+            .collection("users")
+            .findOne({ id: user.id })
+            .then(async res => {
+                if (res) {
+                    if (res.balance) {
+                        if (percentaly) {
+                            return await client.db(dbname)
+                                .collection("users")
+                                .findOneAndUpdate({ id: user.id }, { $set: { balance: parseFloat(res.balance) - ((count / 100) * 100) } })
+                                .then(async (result) => console.log(result))
+                        }
+
+                        return await client.db(dbname)
+                            .collection("users")
+                            .findOneAndUpdate({ id: user.id }, { $set: { balance: parseFloat(res.balance) - count } })
+                            .then(async (result) => console.log(result))
+                    }
+                }
+            })
 
 
 
-//     } catch (err) { return err }
-// }
+    } catch (err) { return err }
+}
 
 export const getInterface = async function (field, name) {
     try {

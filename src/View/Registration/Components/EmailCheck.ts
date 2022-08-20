@@ -1,8 +1,9 @@
 import * as EmailValidator from 'email-validator';
 import { addDeposit, addEmail, add_coins, getEmail } from "../../../Controller/UserController";
+import { MyContext } from '../../../Model/Model';
 
-async function EmailCheck(ctx) {
-    if (EmailValidator.validate(ctx.update["message"].text)) {
+async function EmailCheck(ctx: MyContext) {
+    if (EmailValidator.validate(ctx.update['message'].text)) {
         await addEmail(ctx.from, ctx.update["message"].text)
         const extra = {
             parse_mode: 'HTML',

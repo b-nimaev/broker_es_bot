@@ -44,5 +44,6 @@ export interface MyContext extends Context {
     // declare scene type
     scene: Scenes.SceneContextScene<MyContext, MyWizardSession>
     // declare wizard type
-    wizard: Scenes.WizardContextWizard<MyContext>
+    wizard: Scenes.WizardContextWizard<MyContext>,
+    message: Context["message"],
 }
