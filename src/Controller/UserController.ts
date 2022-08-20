@@ -82,7 +82,7 @@ export const add_coins = async function (user, count, percentaly: boolean) {
     try {
         await client.connect()
 
-        let current_balance =
+        let current_balance: any =
             await client
                 .db(dbname)
                 .collection("users")
@@ -91,15 +91,13 @@ export const add_coins = async function (user, count, percentaly: boolean) {
         if (percentaly) {
             return await client.db(dbname)
                 .collection("users")
-                // @ts-ignore
-                .findOneAndUpdate({ id: user.id }, { $set: { "balance": parseFloat(current_balance.balance) + ((count / 100) * 91) } })
+                .findOneAndUpdate({ id: user.id }, { $set: { balance: parseFloat(current_balance.balance) + ((count / 100) * 91) } })
                 .then(async (result) => console.log(result))
         }
 
         return await client.db(dbname)
             .collection("users")
-            // @ts-ignore
-            .findOneAndUpdate({ id: user.id }, { $set: { "balance": parseFloat(current_balance.balance) + count } })
+            .findOneAndUpdate({ id: user.id }, { $set: { balance: parseFloat(current_balance.balance) + count } })
             .then(async (result) => console.log(result))
 
     } catch (err) { return err }
@@ -109,7 +107,7 @@ export const lose_coins = async function (user, count, percentaly: boolean) {
     try {
         await client.connect()
 
-        let current_balance =
+        let current_balance: any =
             await client
                 .db(dbname)
                 .collection("users")
@@ -118,15 +116,13 @@ export const lose_coins = async function (user, count, percentaly: boolean) {
         if (percentaly) {
             return await client.db(dbname)
                 .collection("users")
-                // @ts-ignore
-                .findOneAndUpdate({ id: user.id }, { $set: { "balance": parseFloat(current_balance.balance) - ((count / 100) * 100) } })
+                .findOneAndUpdate({ id: user.id }, { $set: { balance: parseFloat(current_balance.balance) - ((count / 100) * 100) } })
                 .then(async (result) => console.log(result))
         }
 
         return await client.db(dbname)
             .collection("users")
-            // @ts-ignore
-            .findOneAndUpdate({ id: user.id }, { $set: { "balance": parseFloat(current_balance.balance) - count } })
+            .findOneAndUpdate({ id: user.id }, { $set: { balance: parseFloat(current_balance.balance) - count } })
             .then(async (result) => console.log(result))
 
     } catch (err) { return err }
