@@ -40,7 +40,7 @@ export const addEmail = async function (update, email) {
         await client.connect()
         return await client.db(dbname)
             .collection("users")
-            .updateOne({ id: update.id }, { $set: { "balance": "10000", "email": email } }, { upsert: true })
+            .updateOne({ id: update.id }, { $set: { "balance": 10000, "email": email } }, { upsert: true })
     } catch (err) {
     }
 }
@@ -78,15 +78,17 @@ export const getEmail = async function (update) {
     }
 }
 
-export const add_coins = async function (user, count, percentaly: boolean) {
+export const add_coins = async function (user, count: number, percentaly: boolean) {
     try {
         await client.connect()
 
-        let current_balance: any =
+        let current_balance =
             await client
                 .db(dbname)
                 .collection("users")
                 .findOne({ id: user.id })
+
+        console.log(current_balance)
 
         if (percentaly) {
             return await client.db(dbname)
@@ -103,11 +105,11 @@ export const add_coins = async function (user, count, percentaly: boolean) {
     } catch (err) { return err }
 }
 
-export const lose_coins = async function (user, count, percentaly: boolean) {
+export const lose_coins = async function (user, count: number, percentaly: boolean) {
     try {
         await client.connect()
 
-        let current_balance: any =
+        let current_balance =
             await client
                 .db(dbname)
                 .collection("users")
