@@ -91,12 +91,14 @@ export const add_coins = async function (user, count, percentaly: boolean) {
         if (percentaly) {
             return await client.db(dbname)
                 .collection("users")
+                // @ts-ignore
                 .findOneAndUpdate({ id: user.id }, { $set: { "balance": parseFloat(current_balance.balance) + ((count / 100) * 91) } })
                 .then(async (result) => console.log(result))
         }
 
         return await client.db(dbname)
             .collection("users")
+            // @ts-ignore
             .findOneAndUpdate({ id: user.id }, { $set: { "balance": parseFloat(current_balance.balance) + count } })
             .then(async (result) => console.log(result))
 
@@ -116,12 +118,14 @@ export const lose_coins = async function (user, count, percentaly: boolean) {
         if (percentaly) {
             return await client.db(dbname)
                 .collection("users")
+                // @ts-ignore
                 .findOneAndUpdate({ id: user.id }, { $set: { "balance": parseFloat(current_balance.balance) - ((count / 100) * 100) } })
                 .then(async (result) => console.log(result))
         }
 
         return await client.db(dbname)
             .collection("users")
+            // @ts-ignore
             .findOneAndUpdate({ id: user.id }, { $set: { "balance": parseFloat(current_balance.balance) - count } })
             .then(async (result) => console.log(result))
 
