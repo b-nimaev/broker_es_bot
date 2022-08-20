@@ -1,7 +1,7 @@
 import { Composer, Scenes } from "telegraf";
 import { MyContext } from "../../Model/Model";
 require("dotenv").config()
-import { add_coins, lose_coins } from "../../Controller/UserController";
+import { add_coins } from "../../Controller/UserController";
 
 const handler = new Composer<MyContext>();
 const game = new Scenes.WizardScene(
@@ -247,7 +247,7 @@ const game = new Scenes.WizardScene(
             console.log(ctx.message["text"])
             if (ctx.update["message"].text == "Выше") {
                 message = `К сожалению ты выбрал неверное направление. Если бы наш актив был CFF/TEA то есть кофе был бы базовым товаром, то тогда бы котировка нашего актива пошла вверх, но так как кофе в нашей паре котируемый товар, соответственно его стоимость по отношению к чаю возрастет, то котировка нашего актива после такой новости скорее всего полетит вниз.`
-                await lose_coins(ctx.from, 500, false)
+                // await lose_coins(ctx.from, 500, false)
             }
 
             if (ctx.update["message"].text == 'Ниже') {
@@ -316,7 +316,7 @@ const game = new Scenes.WizardScene(
                         resize_keyboard: true
                     }
                 }
-                await lose_coins(ctx.from, 500, false)
+                // await lose_coins(ctx.from, 500, false)
                 // @ts-ignore
                 await ctx.reply(message, extra)
             }

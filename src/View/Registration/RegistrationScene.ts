@@ -2,7 +2,7 @@ import { Composer, Scenes } from "telegraf";
 import { MyContext } from "../../Model/Model";
 require("dotenv").config()
 import * as EmailValidator from 'email-validator';
-import { addDeposit, addEmail, add_coins, getEmail, lose_coins } from "../../Controller/UserController";
+import { addDeposit, addEmail, add_coins, getEmail, } from "../../Controller/UserController";
 import EmailCheck from "./Components/EmailCheck";
 import RegistrationGreeting from "./Components/RegistrationGreeting";
 
@@ -417,7 +417,7 @@ const registration = new Scenes.WizardScene(
                 }
 
                 const message = 'Вероятнее всего график пошел бы вверх потому как он встретил линию поддержки. Твой прогноз оказался не верным. На твоем счету ХХХ. Видишь как здорово, что твоя сделка была открыта на сумму не более 5% от  счета. Ты потерял совсем немного и это всего лишь виртуальные сделки. Зато приобрел опыт. Не расстраивайся мы еще потренеруемся.'
-                await lose_coins(ctx.from, 500, false)
+                // await lose_coins(ctx.from, 500, false)
                 // @ts-ignore
                 await ctx.reply(message, extra)
                 await ctx.replyWithPhoto({ url: "https://telegra.ph/file/2acb6a06e02fcb47ca5ad.jpg" })
