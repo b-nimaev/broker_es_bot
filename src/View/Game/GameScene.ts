@@ -1,7 +1,7 @@
 import { Composer, Scenes } from "telegraf";
 import { MyContext } from "../../Model/Model";
 require("dotenv").config()
-import { add_coins } from "../../Controller/UserController";
+import { add_coins, getUser, lose_coins } from "../../Controller/UserController";
 
 const handler = new Composer<MyContext>();
 const game = new Scenes.WizardScene(
@@ -16,6 +16,7 @@ const game = new Scenes.WizardScene(
             if (ctx.update["message"].text == 'Линия поддержки') {
                 const message = "Ты абсолютно прав, это линия поддержки. так как она проходит по нижним точкам графика цены. Лови свои 500 коинов"
                 await add_coins(ctx.from, 500, false)
+                await ctx.replyWithVideo({ source: './src/assets/higher.mp4' })
                 await ctx.replyWithSticker("CAACAgIAAxkBAAINlWLw4TfLvzsDawccQvPswpOo0xO7AAJGBAACP5XMCstXCFgVL57DKQQ")
                 await ctx.reply(message)
             }
@@ -55,6 +56,7 @@ const game = new Scenes.WizardScene(
 
             if (ctx.update["message"].text == 'Ниже') {
                 const message = "Ты абсолютно прав, котировка достигла линии сопротивлени, и скорее всего пошла бы вниз. Лови свои 455 коинов. Мне нравится твоя ловкость!"
+                await ctx.replyWithVideo({ source: './src/assets/higher.mp4' })
                 await add_coins(ctx.from, 455, false)
                 await ctx.reply(message)
             }
@@ -179,6 +181,7 @@ const game = new Scenes.WizardScene(
                 let message = `Ты абсолютно прав, котировка достигла линии сопротивления, и скорее всего пошла бы вниз. Лови свои 455 коинов. Мне нравится твоя ловкость!`
                 await add_coins(ctx.from, 455, false)
                 // @ts-ignore
+                await ctx.replyWithVideo({ source: './src/assets/higher.mp4' })
                 await ctx.reply(message)
                 await ctx.replyWithPhoto({ source: './src/assets/141-2.jpeg' })
                 await ctx.replyWithSticker("CAACAgIAAxkBAAIPbWLw7QKCo0orkR8urtNwcJlXmR69AAJXBAACP5XMCj6R_XixcB-qKQQ")
@@ -250,6 +253,7 @@ const game = new Scenes.WizardScene(
 
             if (ctx.update["message"].text == 'Ниже') {
                 message = `Ты абсолютно прав! Вероятнее всего из-за большого спроса на кофе стоимость его возрастет, а так как это котируемый товар в нашей паре, то котировка актива скорее всего после этой новости полетит вниз. Лови свои 425 IQ Coin`
+                await ctx.replyWithVideo({ source: './src/assets/higher.mp4' })
                 await add_coins(ctx.from, 455, false)
             }
 
@@ -316,7 +320,8 @@ const game = new Scenes.WizardScene(
                         resize_keyboard: true
                     }
                 }
-                // await lose_coins(ctx.from, 500, false)
+                await lose_coins(ctx.from, 500, false)
+                await ctx.replyWithSticker("CAACAgIAAxkBAAIHUmMAAbQ52FmwwPuJE-bOVYMpqj_27QACPQQAAj-VzAq6TgWWNfDg2ykE")
                 // @ts-ignore
                 await ctx.reply(message, extra)
             }
@@ -421,7 +426,7 @@ const game = new Scenes.WizardScene(
                         resize_keyboard: true
                     }
                 }
-                const sticker = null
+                const sticker = "CAACAgIAAxkBAAIHUGMAAbQCd6Skju0odY_N5RgPg3yVlgACXAQAAj-VzApRofnwhTO6ASkE"
                 await ctx.reply(message)
                 if (sticker) {
                     await ctx.replyWithSticker(sticker)
@@ -469,7 +474,7 @@ const game = new Scenes.WizardScene(
                         resize_keyboard: true
                     }
                 }
-                const sticker = null
+                const sticker = "CAACAgIAAxkBAAIHTmMAAbPqrbWQAAGQUdQ925SlS3fE0f4AAjQEAAI_lcwKIspAoTBLsuopBA"
                 await ctx.reply(message)
                 if (sticker) {
                     await ctx.replyWithSticker(sticker)
@@ -513,7 +518,7 @@ const game = new Scenes.WizardScene(
                     }
                 }
 
-                await ctx.replyWithVideo({ source: './src/assets/last.mp4' })
+                // await ctx.replyWithVideo({ source: './src/assets/last.mp4' })
                 // @ts-ignore
                 await ctx.reply(message, extra)
                 ctx.wizard.next()
@@ -536,7 +541,8 @@ const game = new Scenes.WizardScene(
                 }
                 await ctx.reply(message)
 
-                const sticker = null
+                const sticker = "CAACAgIAAxkBAAIHTGMAAbO43uyvSB9-30zjLEpCga3pKwACTwQAAj-VzArpOg_MthLpGikE"
+
                 if (sticker) {
                     await ctx.replyWithSticker(sticker)
                 }
@@ -561,7 +567,7 @@ const game = new Scenes.WizardScene(
                     }
                 }
 
-                const sticker = null
+                const sticker = "CAACAgIAAxkBAAIHRmMAAUmpv50GE1nXerYteTIUJvdsLwACNQQAAj-VzAo8IRZc9lRTiSkE"
                 if (sticker) {
                     await ctx.replyWithSticker(sticker)
                 }
@@ -588,9 +594,29 @@ const game = new Scenes.WizardScene(
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
+                ctx.wizard.next()
             }
         }
     },
+
+    async (ctx) => {
+        if (ctx.update['message'].text == 'Здорово!') {
+
+            let user = await getUser(ctx.from)
+
+            if (user) {
+                if (user.balance) {
+                    if (user.balance < 22000) {
+                        await ctx.reply('К сожалению, тебе не хватает коинов на главные, и ты не сможешь выиграть $1000 для реальной торговли, но это не беда, ты можешь заработать 10000 коинов всего лишь пополнив депозит. Нажимай на кнопку внизу а потом отправляй свой email на проверку. Я начислю тебе 10 000 коинов.')
+                    } else {
+                        await ctx.reply("Переходи в меню, кликай на \"Ценные трофеи \" и обменивай заработанные IQ Coins на ценные призы! Ты просто космос, отлично прошел все испытания и выполнил все задания! ")
+                    }
+                } else {
+                    await ctx.reply('К сожалению, тебе не хватает коинов на главные, и ты не сможешь выиграть $1000 для реальной торговли, но это не беда, ты можешь заработать 10000 коинов всего лишь пополнив депозит. Нажимай на кнопку внизу а потом отправляй свой email на проверку. Я начислю тебе 10 000 коинов.')
+                }
+            }
+        }
+    }
 
 )
 

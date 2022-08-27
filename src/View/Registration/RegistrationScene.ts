@@ -776,6 +776,8 @@ const registration = new Scenes.WizardScene(
                     }
                 }
 
+                await ctx.replyWithSticker("CAACAgIAAxkBAAIHY2MB3kwxaemAXPw2d7NA1oo35CA8AAJRBAACP5XMCuERUT38lNp6KQQ")
+                await ctx.replyWithPhoto({ source: './src/assets/66-74.jpeg' })
                 // @ts-ignore
                 await ctx.reply(message, extra)
             }
@@ -926,7 +928,9 @@ const registration = new Scenes.WizardScene(
 
 registration.leave(async (ctx) => console.log("registration scene leave"))
 registration.hears("/start", async (ctx) => ctx.scene.enter("home"))
-// registration.enter(async (ctx) => await RegistrationGreeting(ctx))
+
+// @ts-ignore
+registration.enter(async (ctx) => console.log(ctx))
 
 
 
@@ -962,7 +966,10 @@ handler.on("message", async (ctx) => {
 })
 
 handler.action("exit", async (ctx) => await RegistrationGreeting(ctx))
-handler.hears("/start", async (ctx) => ctx.scene.enter("home"))
+registration.command("/start", async (ctx) => ctx.scene.enter("home"))
+registration.command("/trophies", async (ctx) => {
+    console.log(ctx)
+})
 
 
 export default registration

@@ -23,6 +23,7 @@ const morgan = require("morgan")
 const cors = require("cors")
 const BodyParser = require("body-parser")
 import user = require("../api/routes/userRouter");
+import steps = require("../api/routes/stepsRouter");
 import interface__ = require("../api/routes/interfaceRouter");
 
 // Server
@@ -106,10 +107,6 @@ bot.hears("/additional", async (ctx) => {
     ctx.reply(`Риск менеджмнет \nКак выбрать время экспирации \nТипы трейдеров (психология торговли)`)
 })
 
-bot.hears("/trophies", async (ctx) => {
-    ctx.reply(`Консультация с аккаунт менеджером при депо от $1000 - 20000 коинов \nСтратегия 1 для торговли 3000 коинов \nСтратегия 2 для торговли 3000 коинов \nСтратегия 3 для торговли 3000 коинов`)
-})
-
 bot.hears("/getapp", async (ctx) => {
     const extra = {
         parse_mode: 'HTML',
@@ -129,26 +126,31 @@ bot.hears("/getapp", async (ctx) => {
     ctx.reply(`Для андроид`, extra)
 })
 
+bot.command("/deposit", async (ctx) => {
+    const extra = {
+        parse_mdoe: 'HTML',
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    {
+                        text: 'Пополнить депозит',
+                        url: 'https://iqoption.com/es/counting/'
+                    }
+                ]
+            ]
+        }
+    }
+
+    const message = "Переходи на платформу, и пополняй свой счёт. \nСделай первый шаг на пути к реальной торговле."
+
+    // @ts-ignore
+    await ctx.reply(message, extra)
+})
 
 bot.use(session())
 bot.use((ctx, next) => {
     const now = new Date()
     ctx.myContextProp = now.toString()
-
-    console.log(ctx.myContextProp)
-
-    if (ctx.session) {
-        if (ctx.session.__scenes) {
-            if (ctx.session.__scenes.cursor) {
-                console.log(ctx.session.__scenes.cursor)
-            }
-
-            if (ctx.session.__scenes.current) {
-                console.log(ctx.session.__scenes.current)
-            }
-        }
-    }
-
     // console.log(ctx)
 
     return next()
@@ -164,6 +166,7 @@ app.use(
 // bot.command("/start", async (ctx) => console.log('start'))
 app.use(morgan("dev"));
 app.use("/user", user);
+app.use("/steps", steps);
 app.use("/interface", interface__);
 // app.get("/", (req: Request, res: Response) => res.send("Hello!"))
 app.use(bot.webhookCallback(secretPath))

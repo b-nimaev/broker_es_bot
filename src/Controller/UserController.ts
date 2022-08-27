@@ -147,12 +147,52 @@ export const lose_coins = async function (user, count: number, percentaly: boole
     } catch (err) { return err }
 }
 
-export const getInterface = async function (field, name) {
+export const removeBalance = async function (user) {
+
     try {
         await client.connect()
-        return await client.db(dbname)
-            .collection("bin")
-            .findOne({ field: field, id: name })
+
+        return await client
+            .db(dbname)
+            .collection("users")
+            .findOne({ id: user.id })
+            .then(async (res: DocumentForCoins) => {
+                if (res) {
+                    if (res.balance) {
+
+                        await client.db(dbname)
+                            .collection("users")
+                            .findOneAndUpdate({ "id": user.id }, { "$set": { "balance": 0, "email": '' } })
+                            .then(async (result) => console.log(result))
+                    }
+                }
+            })
+
+
+
+    } catch (err) { return err }
+}
+
+
+export const getInterface = async function (ctx) {
+
+    try {
+        await client.connect().then(() => console.log("connected to db"))
+
+        if (ctx.update["message"]) {
+            if (ctx.update["message"].text) {
+                if (ctx.update["message"].text == '/start') {
+                    return await client.db("broker_dev").collection("steps").findOne({ id: 0 })
+                }
+            }
+        }
+
+        if (ctx.update["callback_query"]) {
+            if (ctx.update["callback_query"].data) {
+                return await client.db("broker_dev").collection("steps").findOne({ id: parseInt(ctx.update["callback_query"].data) })
+            }
+        }
+
     } catch (err) {
         return err
     }

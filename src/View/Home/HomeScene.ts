@@ -265,7 +265,7 @@ handler.action("auth", async (ctx) => {
 
 handler.on("message", async (ctx) => console.log('handler'))
 emailHandler.on("message", async (ctx) => console.log(ctx.update["messsage"]["text"]))
-// home.enter((ctx) => greeting(ctx))
+home.enter((ctx) => greeting(ctx))
 
 // Обработка входящих
 // handler.on("start", async (ctx) => greeting(ctx))
@@ -274,42 +274,100 @@ emailHandler.on("message", async (ctx) => console.log(ctx.update["messsage"]["te
 // Давай попробуем
 home.action('letsgo', async (ctx) => {
     // const data = await getInterface("rules", "Давай попробуем")
-    const extra = {
-        parse_mode: 'HTML',
-        reply_markup: {
-            inline_keyboard: [
-                [
-                    {
-                        text: "Давай",
-                        callback_data: "1"
-                    }
-                ],
-                [
-                    {
-                        text: "Погоди, что такое бинарные опционы?",
-                        callback_data: "lets1"
-                    }
-                ]
-                // [
-                //     {
-                //         text: "Погоди, что такое бинарные опционы?",
-                //         callback_data: "whats"
-                //     }
-                // ]
-            ]
-        }
-    }
 
     // deleteprevmessage(ctx)
-
     // await ctx.replyWithSticker("CAACAgIAAxkBAAIeUGLyKvzcAj3CTjzoT_24XSmvBIDsAAI3BAACP5XMCkLU7Ai1u05wKQQ")
-
-    ctx.answerCbQuery()
-    // @ts-ignore
-    await ctx.reply("Отлично! Давай расскажу тебе об игре и ее правилах.", extra)
 })
 
 home.start((ctx) => greeting(ctx))
 home.command("/game", async (ctx) => ctx.scene.enter("game"))
-// 
+home.command("/trophies", async (ctx) => ctx.scene.enter("trophies"))
+home.command("/reg", async (ctx) => {
+    console.log(ctx)
+    ctx.telegram.copyMessage(ctx.from.id, ctx.from.id, ctx.update["message"].message_id - 1)
+})
+home.action(/./, async (ctx) => {
+    let data = ctx.update.callback_query.data
+    console.log(data)
+    return await messageRenderFunction(ctx)
+})
+// home.use((ctx) => console.log(ctx))
+//
+
+export const messageRenderFunction = async function (ctx) {
+    console.log('home')
+    if (ctx.update) {
+        if (ctx.update["callback_query"]) {
+            if (ctx.update["callback_query"].data) {
+                console.log(ctx.update["callback_query"].data)
+                await childMessageRenderFunction(ctx.update["callback_query"].data, ctx)
+            }
+        }
+
+        if (ctx.update["message"]) {
+            if (ctx.update["message"].text) {
+                await childMessageRenderFunction(ctx.update["message"].text, ctx)
+            }
+        }
+    }
+}
+
+async function childMessageRenderFunction(data: number, ctx) {
+
+    await getInterface(ctx).then(async (step) => {
+        console.log(step)
+        let index = 0
+
+        let extra = {
+            parse_mode: 'HTML',
+            reply_markup: {
+                inline_keyboard: []
+            }
+        }
+
+        let button_counter = 0
+        console.log(step)
+        if (step.callback_buttons) {
+            for (const element of step.callback_buttons) {
+                button_counter++
+                extra.reply_markup.inline_keyboard.push([{
+                    // @ts-ignore
+                    text: element.text,
+                    // @ts-ignore
+                    callback_data: element.id
+                }])
+            }
+        }
+
+        for (const element of step.messages) {
+            index++
+
+            if (element.type == "text" || element.type == "message") {
+                console.log(index)
+                if (step.messages.length == index) {
+                    // @ts-ignore
+                    await ctx.reply(element.text, extra)
+                } else {
+                    // @ts-ignore
+                    await ctx.reply(element.text)
+                }
+            }
+
+            if (element.type == "sticker") {
+                if (step.messages.length == index) {
+                    // @ts-ignore
+                    await ctx.replyWithSticker(element.text, extra)
+                } else {
+                    await ctx.replyWithSticker(element.text)
+                }
+            }
+        }
+
+        if (ctx.update) {
+            if (ctx.update["callback_query"]) {
+            ctx.answerCbQuery()
+            }
+        }
+    })
+}
 export default home

@@ -11,6 +11,26 @@ const userRouter = express.Router();
 // создаем объект MongoClient и передаем ему строку подключения
 const mongoClient = new MongoClient(process.env.DB_CONN_STRING);
 
+userRouter.use("/getdb", async function (req, res) {
+    try {
+        return mongoClient.connect(async function (err, client) {
+            if (err) {
+                return res.send(err);
+            }
+
+            let data = await client.db("broker_dev")
+                .collection("steps")
+                .find().toArray()
+
+            return res.send(data)
+        });
+    } catch (err) {
+        console.log(err)
+        return false
+    }
+});
+
+
 userRouter.use("/register", async function (req, res) {
     try {
         mongoClient.connect(function (err, client) {
@@ -45,7 +65,7 @@ userRouter.use("/auth", async function (req, res) {
 
             console.log(req.body)
 
-            client.db("broker").collection("admins").findOne({
+            client.db("broker_dev").collection("admins").findOne({
                 username: req.body.username,
                 password: req.body.password
             }).then(async (document) => {
@@ -71,7 +91,7 @@ userRouter.use("/getUsers", async function (req, res) {
                 return console.log(err);
             }
 
-            await client.db("broker").collection("deposits").find({}).toArray().then(async (document) => {
+            await client.db("broker_dev").collection("users").find({}).toArray().then(async (document) => {
                 res.send(document)
             })
 
@@ -94,7 +114,7 @@ userRouter.use("/removeProposal", async function (req, res) {
             }
             console.log(req.body.id)
             // await client.db("broker").collection("deposits").findOne({ id: req.body.id }).then((data) => { }
-            await client.db("broker").collection("deposits").deleteOne({ username: req.body.username }).then((data) => {
+            await client.db("broker_dev").collection("deposits").deleteOne({ username: req.body.username }).then((data) => {
                 console.log(data)
             })
             // const extra = {
@@ -107,7 +127,9 @@ userRouter.use("/removeProposal", async function (req, res) {
             // }
             const message = "Я все проверила! Ты делаешь первые шаги в реальном трейдинге. Лови еще 10000 IQ Coins"
             // @ts-ignore
-            bot.telegram.sendMessage(req.body.id, message)
+            await bot.telegram.sendMessage(req.body.id, message).then((res) => {
+                console.log(res)
+            })
         });
 
     } catch (err) {
@@ -127,7 +149,7 @@ userRouter.use("/declineProposal", async function (req, res) {
             }
             console.log(req.body.id)
             // await client.db("broker").collection("deposits").findOne({ id: req.body.id }).then((data) => { }
-            await client.db("broker").collection("deposits").deleteOne({ username: req.body.username }).then((data) => {
+            await client.db("broker_dev").collection("deposits").deleteOne({ username: req.body.username }).then((data) => {
                 console.log(data)
             })
             // const extra = {
@@ -149,5 +171,38 @@ userRouter.use("/declineProposal", async function (req, res) {
 
     }
 });
+
+userRouter.use("/state", async function (req, res) {
+    try {
+
+        mongoClient.connect(async function (err, client) {
+
+            if (err) {
+                return console.log(err);
+            }
+            let data: { id: number } = req.body
+            // await client.db("broker").collection("deposits").findOne({ id: req.body.id }).then((data) => { }
+            // await client.db("broker_dev").collection("steps").drop()
+            return await client.db("broker_dev")
+                .collection("steps")
+                .updateOne({ id: data.id }, { $set: data }, { upsert: true })
+                .then((succes) => {
+                    console.log('Стейт добавлен')
+                    console.log(succes)
+                    res.send(succes)
+                })
+                .catch(err => {
+                    console.log("Стейт не добавлен")
+                    console.log(err)
+                })
+        });
+
+    } catch (err) {
+
+        console.log(err)
+
+    }
+});
+
 
 module.exports = userRouter;
