@@ -398,6 +398,7 @@ const registration = new Scenes.WizardScene(
                 await add_coins(ctx.from, 500, true)
                 const message = 'Поздравляю! Ты сам выбрал правильное направление и заработал первые деньги на бинарных опционах. Да, они виртуальные, но ты можешь перенести свои знания на реальную торговлю и реальный счет. А знаешь почему ты заработал? Потому что ты использовал полученные знания. Теперь в твоем арсенале есть первая торговая стратения - Торговля по тренду.'
 
+
                 await ctx.reply(message)
                 // @ts-ignore
                 await ctx.replyWithVideo({ source: "./src/assets/higher.mp4" }, extra)
@@ -819,6 +820,7 @@ const registration = new Scenes.WizardScene(
                     }
                 }
 
+                await ctx.replyWithVideo({ source: './src/assets/higher.mp4' })
                 await ctx.replyWithSticker("CAACAgIAAxkBAAINlWLw4TfLvzsDawccQvPswpOo0xO7AAJGBAACP5XMCstXCFgVL57DKQQ")
                 // @ts-ignore
                 await ctx.reply(message, extra)
@@ -930,7 +932,7 @@ registration.leave(async (ctx) => console.log("registration scene leave"))
 registration.hears("/start", async (ctx) => ctx.scene.enter("home"))
 
 // @ts-ignore
-registration.enter(async (ctx) => console.log(ctx))
+// registration.enter(async (ctx) => ctx.wizard.next())
 
 
 
@@ -947,7 +949,7 @@ handler.on("message", async (ctx) => {
             }
         }
         // @ts-ignore
-        if (ctx.update.message.text == "Я заработал!") {
+        if (ctx.update["message"].text == "Я заработал!") {
             await add_coins(ctx.from, 500, false)
             // @ts-ignore
             await ctx.reply('Поздравляю, твоя первая успешная сделка, которая принесла тебе виртуальную прибыль! Однако понми, что сейчас тебе просто повезло. Торговля это не казино и не азартная игра, это прежде всего финансовая деятельность основанная на знаниях. Именно знания я дам тебе в игре, которые помогут тебе анализировать движение графика и выбирать правильное направление. А сейчас лови еще 500 IQ coins за выполнение задания и совершение первой сделки.', extra)
@@ -967,9 +969,7 @@ handler.on("message", async (ctx) => {
 
 handler.action("exit", async (ctx) => await RegistrationGreeting(ctx))
 registration.command("/start", async (ctx) => ctx.scene.enter("home"))
-registration.command("/trophies", async (ctx) => {
-    console.log(ctx)
-})
+registration.command("/trophies", async (ctx) => ctx.scene.enter("trophies"))
 
 
 export default registration

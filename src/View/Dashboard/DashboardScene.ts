@@ -120,6 +120,7 @@ handler.action('3', async (ctx) => {
     if (balance > 3000) {
         ctx.answerCbQuery('Отличный выбор!')
         await ctx.reply('Отличный выбор! Лови стратегию')
+        await ctx.replyWithDocument({ source: './src/assets/Estrategia 1.pdf' })
         await lose_coins(ctx.from, 3000, false)
     } else {
         await ctx.reply(`К сожалению, тебе не хватает ${3000 - balance} коинов. Но это не беда, ты можешь заработать 10000 коинов всего лишь пополнив депозит. Нажимай на кнопку внизу а потом отправляй свой email на проверку. Я начислю тебе 10 000 коинов.`)
@@ -132,6 +133,7 @@ handler.action('4', async (ctx) => {
     if (balance > 3000) {
         ctx.answerCbQuery('Отличный выбор!')
         await ctx.reply('Отличный выбор! Лови стратегию')
+        await ctx.replyWithDocument({ source: './src/assets/Estrategia 2.pdf' })
         await lose_coins(ctx.from, 3000, false)
     } else {
         await ctx.reply(`К сожалению, тебе не хватает ${3000 - balance} коинов. Но это не беда, ты можешь заработать 10000 коинов всего лишь пополнив депозит. Нажимай на кнопку внизу а потом отправляй свой email на проверку. Я начислю тебе 10 000 коинов.`)
@@ -144,6 +146,7 @@ handler.action('5', async (ctx) => {
     if (balance > 3000) {
         ctx.answerCbQuery('Отличный выбор!')
         await ctx.reply('Отличный выбор! Лови стратегию')
+        await ctx.replyWithDocument({ source: './src/assets/Estrategia 3.pdf' })
         await lose_coins(ctx.from, 3000, false)
     } else {
         await ctx.reply(`К сожалению, тебе не хватает ${3000 - balance} коинов. Но это не беда, ты можешь заработать 10000 коинов всего лишь пополнив депозит. Нажимай на кнопку внизу а потом отправляй свой email на проверку. Я начислю тебе 10 000 коинов.`)

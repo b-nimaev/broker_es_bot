@@ -16,7 +16,7 @@ const game = new Scenes.WizardScene(
             if (ctx.update["message"].text == 'Линия поддержки') {
                 const message = "Ты абсолютно прав, это линия поддержки. так как она проходит по нижним точкам графика цены. Лови свои 500 коинов"
                 await add_coins(ctx.from, 500, false)
-                await ctx.replyWithVideo({ source: './src/assets/higher.mp4' })
+                // await ctx.replyWithVideo({ source: './src/assets/higher.mp4' })
                 await ctx.replyWithSticker("CAACAgIAAxkBAAINlWLw4TfLvzsDawccQvPswpOo0xO7AAJGBAACP5XMCstXCFgVL57DKQQ")
                 await ctx.reply(message)
             }
@@ -56,8 +56,8 @@ const game = new Scenes.WizardScene(
 
             if (ctx.update["message"].text == 'Ниже') {
                 const message = "Ты абсолютно прав, котировка достигла линии сопротивлени, и скорее всего пошла бы вниз. Лови свои 455 коинов. Мне нравится твоя ловкость!"
-                await ctx.replyWithVideo({ source: './src/assets/higher.mp4' })
                 await add_coins(ctx.from, 455, false)
+                await ctx.replyWithVideo({ source: './src/assets/higher.mp4' })
                 await ctx.reply(message)
             }
 
@@ -81,7 +81,21 @@ const game = new Scenes.WizardScene(
     async (ctx) => {
         if (ctx.update["message"]) {
 
-            if (ctx.update["message"].text == 'Конечно' || (ctx.update['message'].text == 'Играть')) {
+            if (ctx.update["message"].text == 'Играть') {
+                const message = "Давай тренировать твое знание технического анализа! Буду показывать тебе графики в момент совершения сделки а ты выбирай, куда пойдет цена."
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Давай']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+                // @ts-ignore
+                await ctx.reply(message, extra)
+            }
+
+            if (ctx.update["message"].text == 'Конечно' || (ctx.update['message'].text == 'Давай')) {
                 const message = "Отлично! Смотри на еще один график. Теперь он без линий тренда. Попробуй провести линию визуально и оценить куда может пойти цена актива?"
                 const extra = {
                     parse_mode: 'HTML',
@@ -178,12 +192,23 @@ const game = new Scenes.WizardScene(
             }
 
             if (ctx.update["message"].text == "Ниже") {
+                let extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [['Забрать 455 IQ Coins']],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
                 let message = `Ты абсолютно прав, котировка достигла линии сопротивления, и скорее всего пошла бы вниз. Лови свои 455 коинов. Мне нравится твоя ловкость!`
                 await add_coins(ctx.from, 455, false)
-                // @ts-ignore
-                await ctx.replyWithVideo({ source: './src/assets/higher.mp4' })
-                await ctx.reply(message)
                 await ctx.replyWithPhoto({ source: './src/assets/141-2.jpeg' })
+                await ctx.reply(message)
+                // @ts-ignore
+                await ctx.replyWithVideo({ source: './src/assets/higher.mp4' }, extra)
+            }
+
+            if (ctx.update["message"].text == "Забрать 455 IQ Coins") {
                 await ctx.replyWithSticker("CAACAgIAAxkBAAIPbWLw7QKCo0orkR8urtNwcJlXmR69AAJXBAACP5XMCj6R_XixcB-qKQQ")
                 await ctx.reply(`Ты отлично справился с заданиями! И у тебя уже много практики, которую ты можешь перенести на реальную торговлю. Тренируй технический анализ на демо счете, а затем переходи на реальную торговлю. Помнишь, что за пополнение депозита я начисляю сразу 10000 коинов, и ты на шаг ближе к $1000 для торговли на реальном счете! Нажимай на кнопку в меню внизу, а затем присылай свой Trader ID. `)
                 // @ts-ignore
@@ -252,7 +277,7 @@ const game = new Scenes.WizardScene(
             }
 
             if (ctx.update["message"].text == 'Ниже') {
-                message = `Ты абсолютно прав! Вероятнее всего из-за большого спроса на кофе стоимость его возрастет, а так как это котируемый товар в нашей паре, то котировка актива скорее всего после этой новости полетит вниз. Лови свои 425 IQ Coin`
+                message = `Ты абсолютно прав! Вероятнее всего из-за большого спроса на кофе стоимость его возрастет, а так как это котируемый товар в нашей паре, то котировка актива скорее всего после этой новости полетит вниз. Лови свои 455 IQ Coin`
                 await ctx.replyWithVideo({ source: './src/assets/higher.mp4' })
                 await add_coins(ctx.from, 455, false)
             }
@@ -261,7 +286,7 @@ const game = new Scenes.WizardScene(
                 message = `Вероятнее всего из-за большого спроса на кофе стоимость его возрастет, а так как это котируемый товар в нашей паре, то котировка актива скорее всего после этой новости полетит вниз. Но если ты не уверен, лучше не рисковать. Мне нравиться твоя осторожность!`
             }
 
-            await ctx.replyWithVideo({ source: './src/assets/higher.mp4' })
+            // await ctx.replyWithVideo({ source: './src/assets/higher.mp4' })
             // @ts-ignore
             await ctx.reply(message, extra)
             ctx.wizard.next()
@@ -508,7 +533,7 @@ const game = new Scenes.WizardScene(
     async (ctx) => {
         if (ctx.update["message"]) {
             if (ctx.update["message"].text == 'Хорошо, я спокоен') {
-                const message = "Отлично. Если ты уже внес депозит, то рекомендую пройти верефикацию, чтобы не откладывать на потом. Ведь она занимает 1-3 рабочих дня. Кстати, посмотри это полезное видео о том, как пройти верефикацию. https://vimeo.com/channels/1002556/331181006"
+                const message = "Отлично. Если ты уже внес депозит, то рекомендую пройти верефикацию, чтобы не откладывать на потом. Ведь она занимает 1-3 рабочих дня. Кстати, посмотри это полезное видео о том, как пройти верефикацию. <a href='https://vimeo.com/channels/1002556/331181006'>.</a>"
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
@@ -639,5 +664,6 @@ game.enter(async (ctx) => {
 })
 game.hears('/start', async (ctx) => ctx.scene.enter("home"))
 game.hears('/register', async (ctx) => ctx.scene.enter("registration"))
+game.command("/trophies", async (ctx) => ctx.scene.enter("trophies"))
 
 export default game

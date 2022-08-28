@@ -6,6 +6,7 @@ import { MyContext } from './Model/Model'
 import home from './View/Home/HomeScene';
 import dashboard from './View/Dashboard/DashboardScene';
 import _handler from './View/handlerScene';
+import mailset from './View/mailset';
 import admin from './View/Admin/AdminScene';
 import registration from './View/Registration/RegistrationScene';
 import game from './View/Game/GameScene';
@@ -39,7 +40,7 @@ if (token === undefined) {
 
 // Init scenes & set secretPath for requires from bot
 
-const scenes = [home, dashboard, admin, registration, game, _handler]
+const scenes = [home, dashboard, admin, registration, game, _handler, mailset]
 const bot = new Telegraf<MyContext>(token)
 export default bot
 const app = express()
@@ -73,6 +74,7 @@ if (process.env.mode === "development") {
 bot.command("/profile", async (ctx) => {
 
     let user = await getUser(ctx.from)
+    console.log(user)
     let message = ``
 
     if (user) {
@@ -83,7 +85,7 @@ bot.command("/profile", async (ctx) => {
         if (user.email) {
             message += `Ваш e-mail: ${user.email}\n`
         } else {
-            message += `Ваш E-mail: не указан`
+            message += `Ваш E-mail: не указан \n\nЧтобы указать e-mail наберите /set`
         }
     }
 
@@ -104,7 +106,10 @@ bot.command("/check", async (ctx) => {
 })
 
 bot.hears("/additional", async (ctx) => {
-    ctx.reply(`Риск менеджмнет \nКак выбрать время экспирации \nТипы трейдеров (психология торговли)`)
+    await ctx.reply(`1. Риск менеджмнет \n2. Как выбрать время экспирации \n3. Типы трейдеров (психология торговли)`)
+    await ctx.replyWithDocument({ source: './src/assets/Estrategia 1.pdf' })
+    await ctx.replyWithDocument({ source: './src/assets/Estrategia 2.pdf' })
+    await ctx.replyWithDocument({ source: './src/assets/Estrategia 3.pdf' })
 })
 
 bot.hears("/getapp", async (ctx) => {
@@ -146,6 +151,27 @@ bot.command("/deposit", async (ctx) => {
     // @ts-ignore
     await ctx.reply(message, extra)
 })
+
+// bot.command("/trophies", async (ctx) => {
+//     const extra = {
+//         parse_mdoe: 'HTML',
+//         reply_markup: {
+//             inline_keyboard: [
+//                 [
+//                     {
+//                         text: 'Пополнить депозит',
+//                         url: 'https://iqoption.com/es/counting/'
+//                     }
+//                 ]
+//             ]
+//         }
+//     }
+
+//     const message = "Переходи на платформу, и пополняй свой счёт. \nСделай первый шаг на пути к реальной торговле."
+
+//     // @ts-ignore
+//     await ctx.reply(message, extra)
+// })
 
 bot.use(session())
 bot.use((ctx, next) => {

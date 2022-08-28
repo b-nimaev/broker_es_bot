@@ -44,7 +44,7 @@ export const addEmail = async function (update, email) {
         await client.connect()
         return await client.db(dbname)
             .collection("users")
-            .updateOne({ id: update.id }, { $set: { "balance": 10000, "email": email } }, { upsert: true })
+            .updateOne({ id: update.id }, { $set: { "balance": 0, "email": email } }, { upsert: true })
     } catch (err) {
     }
 }
@@ -82,7 +82,7 @@ export const getEmail = async function (update) {
     }
 }
 
-export const add_coins = async function (user, count: number, percentaly: boolean) {
+export const add_coins = async function (user, count, percentaly: boolean) {
     try {
         await client.connect()
 
@@ -90,9 +90,10 @@ export const add_coins = async function (user, count: number, percentaly: boolea
             .db(dbname)
             .collection("users")
             .findOne({ id: user.id })
-            .then(async (res: DocumentForCoins) => {
+            .then(async (res) => {
                 if (res) {
-                    if (res.balance) {
+                    console.log(count)
+                    if (res.balance || res.balance == 0) {
                         if (percentaly) {
                             return await client.db(dbname)
                                 .collection("users")
@@ -102,8 +103,11 @@ export const add_coins = async function (user, count: number, percentaly: boolea
 
                         return await client.db(dbname)
                             .collection("users")
-                            .findOneAndUpdate({ id: user.id }, { "$set": { "balance": <number>res.balance + <number>count } }, { upsert: true })
-                            .then(async (result) => console.log(result))
+                            .findOneAndUpdate({ id: user.id }, { "$set": { "balance": parseInt(res.balance) + parseInt(count) } }, { upsert: true })
+                            .then(res => {
+                                console.log("s^ " + count)
+                                return res
+                            })
                     }
                 }
             })
