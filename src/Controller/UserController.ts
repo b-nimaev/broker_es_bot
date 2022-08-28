@@ -1,4 +1,4 @@
-import { MongoClient, WithId } from "mongodb";
+import { MongoClient, PushOperator, WithId } from "mongodb";
 require("dotenv").config();
 
 const dbname = process.env.DB_NAME;
@@ -97,7 +97,13 @@ export const add_coins = async function (user, count, percentaly: boolean) {
                         if (percentaly) {
                             return await client.db(dbname)
                                 .collection("users")
-                                .findOneAndUpdate({ id: user.id }, { "$set": { "balance": <number>res.balance + ((<number>count / 100) * 91) } }, { upsert: true })
+                                .findOneAndUpdate({
+                                    id: user.id
+                                }, {
+                                    "$set": {
+                                        "balance": <number>res.balance + ((<number>count / 100) * 91)
+                                    } as unknown as PushOperator<Document>
+                                }, { upsert: true })
                                 .then(async (result) => console.log(result))
                         }
 
