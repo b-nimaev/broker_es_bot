@@ -140,7 +140,13 @@ export const lose_coins = async function (user, count: number, percentaly: boole
                         if (percentaly) {
                             await client.db(dbname)
                                 .collection("users")
-                                .findOneAndUpdate({ "id": user.id }, { "$set": { "balance": fin } })
+                                .findOneAndUpdate({
+                                    "id": user.id
+                                }, {
+                                    "$set": {
+                                        "balance": fin
+                                    } as unknown as PushOperator<Document>
+                                })
                                 .then(async (result) => console.log(result))
                         }
 
