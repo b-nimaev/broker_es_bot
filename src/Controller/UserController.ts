@@ -152,7 +152,13 @@ export const lose_coins = async function (user, count: number, percentaly: boole
 
                         await client.db(dbname)
                             .collection("users")
-                            .findOneAndUpdate({ "id": user.id }, { "$set": { "balance": fin } })
+                            .findOneAndUpdate({
+                                "id": user.id
+                            }, {
+                                "$set": {
+                                    "balance": fin
+                                } as unknown as PushOperator<Document>
+                            })
                             .then(async (result) => console.log(result))
                     }
                 }
@@ -178,7 +184,13 @@ export const removeBalance = async function (user) {
 
                         await client.db(dbname)
                             .collection("users")
-                            .findOneAndUpdate({ "id": user.id }, { "$set": { "balance": 0, "email": '' } })
+                            .findOneAndUpdate({
+                                "id": user.id
+                            }, {
+                                "$set": {
+                                    "balance": 0, "email": ''
+                                } as unknown as PushOperator<Document>
+                            })
                             .then(async (result) => console.log(result))
                     }
                 }
