@@ -109,7 +109,13 @@ export const add_coins = async function (user, count, percentaly: boolean) {
 
                         return await client.db(dbname)
                             .collection("users")
-                            .findOneAndUpdate({ id: user.id }, { "$set": { "balance": parseInt(res.balance) + parseInt(count) } }, { upsert: true })
+                            .findOneAndUpdate({
+                                id: user.id
+                            }, {
+                                "$set": {
+                                    "balance": parseInt(res.balance) + parseInt(count)
+                                } as unknown as PushOperator<Document>
+                            }, { upsert: true })
                             .then(res => {
                                 console.log("s^ " + count)
                                 return res
