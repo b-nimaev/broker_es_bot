@@ -18,7 +18,7 @@ async function greeting(ctx) {
         balance = 0
     }
 
-    const message = "<b>Ценные трофей (за IQ Coins)</b> \n\n1. Участие в розыгрыше $1000 на реальный счет в IQ option - 22000 коинов \n2. Консультация с аккаунт менеджером при депо от $1000 - 20000 коинов \n3. Стратегия 1 для торговли 3000 коинов \n4. Стратегия 2 для торговли 3000 коинов \n5. Стратегия 3 для торговли 3000 коинов \n\n<b>Ваш баланс " + balance + " IQ Coins \n\nВыберите необходимый пункт</b> \nЧтобы вернуться на главную, отправьте /back"
+    const message = "<b>Trofeos valiosos (por IQ Coins)</b> \n\n1. Participación en el sorteo de $1000 para la cuenta real en IQ option - 22000 coins \n2. Consulta con el gerente de cuenta con el deposito a partir de $1000 - 20000 Coins \n3. Estrategía de trading 1 3000 coins \n4. Estrategía de trading 2 3000 coins \n5. Estrategía de trading 3 3000 coins \n\n<b>Tu balance " + balance + " IQ Coins \n\nSeleccione el elemento deseado</b> \nPara volver a la página de inicio, envíe /back"
     const extra = {
         parse_mode: 'HTML',
         reply_markup: {
@@ -90,13 +90,13 @@ handler.action('1', async (ctx) => {
     let balance: number = await getBalance(ctx)
 
     if (balance > 22000) {
-        await ctx.reply('Поздравляю, ты становишся участником розыгрыша $1000 на реальный счет в IQ option! За результатами розыгрыша ты можешь следить на сайте игры  qevagame.com')
+        await ctx.reply('¡Felicidades, te conviertes en un participante del sorteo de $1000 para una cuenta real en la IQ option! Puedes verificar los resultados del sorteo en el sitio web qevagame.com')
         await lose_coins(ctx.from, 22000, false)
         // await greeting(ctx)
-        ctx.answerCbQuery('Отличный выбор!')
+        ctx.answerCbQuery()
     } else {
-        const message2 = `К сожалению, тебе не хватает ${22000 - balance} коинов на участие в розыгрыше $1000 для реальной торговли, но это не беда, ты можешь заработать 10000 коинов всего лишь пополнив депозит. Нажимай на кнопку внизу а потом отправляй свой email на проверку. Я начислю тебе 10 000 коинов.`
-        ctx.answerCbQuery(`Не хватает ${22000 - balance} коинов`)
+        const message2 = `Por desgracia, careces de las monedas para participar en el sorteo de $ 1.000 para el comercio real, pero eso no es problema, puedes ganar 10.000 coins por solo hacer un depósito. Presiona el botón en la parte inferior y luego envía tu correo electrónico para verificar. Te daré 10.000 coins.`
+        ctx.answerCbQuery()
         await ctx.reply(message2)
         // await greeting(ctx)
     }
@@ -106,51 +106,51 @@ handler.action('2', async (ctx) => {
     let balance: number = await getBalance(ctx)
 
     if (balance > 20000) {
-        await ctx.reply("Отличный выбор! Я записала тебя на консультацию с Гуру торговли. Мне только нужно время проверить размер твоего депозита и я вернусь.")
-        ctx.answerCbQuery('Отличный выбор!')
+        await ctx.reply("Gran elección! Te he inscrito para una consulta con el Gurú del Comercio. Sólo necesito tiempo para comprobar el tamaño de tu depósito y volveré.")
+        ctx.answerCbQuery()
         await lose_coins(ctx.from, 20000, false)
     } else {
-        await ctx.reply(`К сожалению, тебе не хватает ${20000 - balance} коинов на консультацию с аккаунт менеджером, но это не беда, ты можешь заработать 10000 коинов всего лишь пополнив депозит. Нажимай на кнопку внизу а потом отправляй свой email на проверку. Я начислю тебе 10 000 коинов. И не забудь, что для сопровождения аккаунт менеджера на твоем счету должно быть не менее $1000`)
-        ctx.answerCbQuery(`Не хватает ${20000 - balance} коинов`)
+        await ctx.reply(`Desafortunadamente, no tienes suficientes coins para consultar con sun gerente de cuenta, pero eso está bien, puedes ganar 10,000 IQ coins por solo hacer un depósito. Presiona el botón en la parte inferior y luego envía tu correo electrónico para verificar. Te daré 10.000 coins. Y no te olvides que para el acompañamiento a la cuenta de un gerente en su cuenta debe haber al menos $1,000`)
+        ctx.answerCbQuery()
     }
 })
 handler.action('3', async (ctx) => {
     let balance: number = await getBalance(ctx)
 
     if (balance > 3000) {
-        ctx.answerCbQuery('Отличный выбор!')
-        await ctx.reply('Отличный выбор! Лови стратегию')
+        ctx.answerCbQuery()
+        await ctx.reply('Gran elección! Toma la estrategia')
         await ctx.replyWithDocument({ source: './src/assets/Estrategia 1.pdf' })
         await lose_coins(ctx.from, 3000, false)
     } else {
-        await ctx.reply(`К сожалению, тебе не хватает ${3000 - balance} коинов. Но это не беда, ты можешь заработать 10000 коинов всего лишь пополнив депозит. Нажимай на кнопку внизу а потом отправляй свой email на проверку. Я начислю тебе 10 000 коинов.`)
-        ctx.answerCbQuery(`Не хватает ${3000 - balance} коинов`)
+        await ctx.reply(`Desafortunadamente, no tienes suficientes coins ${3000 - balance}`)
+        ctx.answerCbQuery()
     }
 })
 handler.action('4', async (ctx) => {
     let balance: number = await getBalance(ctx)
 
     if (balance > 3000) {
-        ctx.answerCbQuery('Отличный выбор!')
-        await ctx.reply('Отличный выбор! Лови стратегию')
+        ctx.answerCbQuery()
+        await ctx.reply('Gran elección! Toma la estrategia')
         await ctx.replyWithDocument({ source: './src/assets/Estrategia 2.pdf' })
         await lose_coins(ctx.from, 3000, false)
     } else {
-        await ctx.reply(`К сожалению, тебе не хватает ${3000 - balance} коинов. Но это не беда, ты можешь заработать 10000 коинов всего лишь пополнив депозит. Нажимай на кнопку внизу а потом отправляй свой email на проверку. Я начислю тебе 10 000 коинов.`)
-        ctx.answerCbQuery(`Не хватает ${3000 - balance} коинов`)
+        await ctx.reply(`Desafortunadamente, no tienes suficientes coins ${3000 - balance}`)
+        ctx.answerCbQuery()
     }
 })
 handler.action('5', async (ctx) => {
     let balance: number = await getBalance(ctx)
 
     if (balance > 3000) {
-        ctx.answerCbQuery('Отличный выбор!')
-        await ctx.reply('Отличный выбор! Лови стратегию')
+        ctx.answerCbQuery()
+        await ctx.reply('Gran elección! Toma la estrategia')
         await ctx.replyWithDocument({ source: './src/assets/Estrategia 3.pdf' })
         await lose_coins(ctx.from, 3000, false)
     } else {
-        await ctx.reply(`К сожалению, тебе не хватает ${3000 - balance} коинов. Но это не беда, ты можешь заработать 10000 коинов всего лишь пополнив депозит. Нажимай на кнопку внизу а потом отправляй свой email на проверку. Я начислю тебе 10 000 коинов.`)
-        ctx.answerCbQuery(`Не хватает ${3000 - balance} коинов`)
+        await ctx.reply(`Desafortunadamente, no tienes suficientes coins ${3000 - balance}`)
+        ctx.answerCbQuery()
     }
 })
 

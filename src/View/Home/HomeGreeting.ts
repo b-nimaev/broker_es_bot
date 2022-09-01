@@ -27,7 +27,7 @@ export async function greeting(ctx: MyContext) {
             inline_keyboard: [
                 [
                     {
-                        text: 'Давай попроубем',
+                        text: 'Probemos',
                         callback_data: 'letsgo'
                     }
                 ]
@@ -37,7 +37,7 @@ export async function greeting(ctx: MyContext) {
 
     // return await messageRenderFunction(ctx)
 
-    const message = `Привет, меня зовут Eva - я бот и я твой помощник в мире трейдинга. Я приготовила для тебя увлекательную обучающую игру, которая даст тебе основы для торговли бинарными опционами. Полученные знания ты сможешь применять на практике и зарабатывать с их помощью реальные деньги. Сыграешь со мной? \nПРЕДУПРЕЖДЕНИЕ: Ваши средства могут быть подвержены риску.`
+    const message = `Hola, mi nombre es Eva - Soy un bot y soy tu asistente en el mundo del trading. Te he preparado un emocionante juego educativo que te dará los fundamentos para el trading de opciones binarias. Podrás aplicar los conocimientos adquiridos en la práctica y ganar dinero real con su ayuda. ¿Jugarás conmigo? \nADVERTENCIA: Sus fondos pueden estar en riesgo.`
 
     await ctx.replyWithSticker("CAACAgIAAxkBAAIeUGLyKvzcAj3CTjzoT_24XSmvBIDsAAI3BAACP5XMCkLU7Ai1u05wKQQ")
     // @ts-ignore

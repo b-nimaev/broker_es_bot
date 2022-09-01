@@ -79,13 +79,13 @@ bot.command("/profile", async (ctx) => {
 
     if (user) {
         if (user.balance) {
-            message += `Ваш баланс: ${user.balance} IQCoins\n`
+            message += `Mi cuenta: ${user.balance} IQCoins\n`
         }
 
         if (user.email) {
-            message += `Ваш e-mail: ${user.email}\n`
+            message += `Mi email: ${user.email}\n`
         } else {
-            message += `Ваш E-mail: не указан \n\nЧтобы указать e-mail наберите /set`
+            message += `Mi email: no especificado \n\nPara especificar un correo electrónico, escriba /set`
         }
     }
 
@@ -93,7 +93,7 @@ bot.command("/profile", async (ctx) => {
 })
 
 bot.command("/check", async (ctx) => {
-    const message = 'Уже сособираюсь на встречу в платформой, чтобы проверить твой депозит. Мне потребуется время. Знаешь, платформа такая занятая, я постоянно жду не дождусь, чтобы пообщаться. Но трейдеры для нее на первом месте. Иногда я ревную...Но как только мы встретимся, я вернусь с твоими IQ Coins'
+    const message = '¡Recibido! Ya voy a una reunión con la plataforma para comprobar tu depósito. Necesitaré tiempo. Ya sabes, la plataforma está tan ocupada, siempre tengo que esperar para charlar. Pero los traders son mas importantes para ella. A veces me pongo celosa... Pero tan pronto como nos encontremos, estaré de vuelta con tus IQ Coins'
     await ctx.replyWithSticker("CAACAgIAAxkBAAINkGLw4KY1njQpI5sm8nt94oewD_3-AAJlBAACP5XMClzVsXn7vWCCKQQ")
 
     // запись заявки депозита
@@ -106,7 +106,7 @@ bot.command("/check", async (ctx) => {
 })
 
 bot.hears("/additional", async (ctx) => {
-    await ctx.reply(`1. Риск менеджмнет \n2. Как выбрать время экспирации \n3. Типы трейдеров (психология торговли)`)
+    await ctx.reply(`1. Manejo de riesgo \n2. Cómo elejir el tiempo de expiración \n3. Tipos de traders (psicología de trading)`)
     await ctx.replyWithDocument({ source: './src/assets/Estrategia 1.pdf' })
     await ctx.replyWithDocument({ source: './src/assets/Estrategia 2.pdf' })
     await ctx.replyWithDocument({ source: './src/assets/Estrategia 3.pdf' })
@@ -119,7 +119,7 @@ bot.hears("/getapp", async (ctx) => {
             inline_keyboard: [
                 [
                     {
-                        text: 'Скачать',
+                        text: 'descargar',
                         url: 'https://app.appsflyer.com/com.iqoption.x-install?af_r=https%3A%2F%2Fstatic.cdnpub.info%2Ffiles%2Fstorage%2Fpublic%2F5a%2Fe3%2F5de74a883.apk'
                     }
                 ]
@@ -128,7 +128,7 @@ bot.hears("/getapp", async (ctx) => {
     }
 
     // @ts-ignore
-    ctx.reply(`Для андроид`, extra)
+    ctx.reply(`para Android`, extra)
 })
 
 bot.command("/deposit", async (ctx) => {
@@ -138,7 +138,7 @@ bot.command("/deposit", async (ctx) => {
             inline_keyboard: [
                 [
                     {
-                        text: 'Пополнить депозит',
+                        text: 'Hacer depósito',
                         url: 'https://iqoption.com/es/counting/'
                     }
                 ]
@@ -146,7 +146,7 @@ bot.command("/deposit", async (ctx) => {
         }
     }
 
-    const message = "Переходи на платформу, и пополняй свой счёт. \nСделай первый шаг на пути к реальной торговле."
+    const message = "Vaya a la plataforma y recargue su cuenta. \nDé el primer paso hacia el comercio real"
 
     // @ts-ignore
     await ctx.reply(message, extra)

@@ -16,34 +16,36 @@ const registration = new Scenes.WizardScene(
         if (ctx.update["message"]) {
 
 
-            if (ctx.update["message"].text == "Спасибо!") {
+            if (ctx.update["message"].text == "¡Gracias!") {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Здорово']],
+                        keyboard: [['¡Cool!']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
+                const message = `Quiero contarte un poco más de teoría para que puedas entender cómo funcionan las opciones binarias. Y este conocimiento en el futuro agregará claridad sobre cómo elegir la dirección correcta de la cotización y ganar.`
+
                 // @ts-ignore
-                await ctx.reply('Хочу тебе рассказать еще немного теории, чтобы тебе было понятно как устроены бинарные опционы. А это знание в будущем добавит ясности как выбирать правильное направление котировки и зарабатывать.', extra)
+                await ctx.reply(message, extra)
 
             }
 
-            if (ctx.update["message"].text == "Здорово") {
+            if (ctx.update["message"].text == "¡Cool!") {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['А подробнее?']],
+                        keyboard: [['Más detalles?']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = 'На платформе IQ Option есть разные виды бинарных опционов: на валютные пары, на акции, на товары, на индексы. Самые популярные бинарные опционы у трейдеров на валютные пары, а самая популярная валютная пара или актив в мире EUR/USD. '
+                const message = 'Hay diferentes tipos de opciones binarias en la plataforma IQ Option: por pares de divisas, por acciones, por materias primas, por índices. Las opciones binarias más populares entre los traders son los pares de divisas, y el par de divisas o activo más popular en el mundo es el EUR/ USD.'
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
@@ -51,16 +53,17 @@ const registration = new Scenes.WizardScene(
             }
 
 
-            if (ctx.update["message"].text == "А подробнее?") {
+            if (ctx.update["message"].text == "Más detalles?") {
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Понятно!', 'Сложно...']],
+                        keyboard: [['¡Esta claro!', 'Es difícil...']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
-                const message = `Валютная пара - это отношение цен двух валют. При покупке одной валюты продается другая. Например: EUR/USD \nEUR – базовая валюта, USD – котируемая. Движение графика происходит за счет изменения отношения базовой валюты и котируемой и величина которая влияет на движение графика называется котировкой. \nВалютная пара означает, что за USD – доллар США, мы покупаем EUR – евро.`
+
+                const message = `Un par de divisas es la relación de los precios de dos monedas. Al comprar una moneda, se vende otra. Por ejemplo: \nEUR/USD \nEUR es la moneda base, USD es la moneda de cotización. El movimiento del gráfico se produce debido a un cambio en la relación de la moneda base y la cotizada, y el valor que afecta el movimiento del gráfico se llama la cotización.\n\nPar de divisas significa que por USD - dólar estadounidense, compramos EUR - euro.`
 
                 await ctx.replyWithSticker("CAACAgIAAxkBAAIK6GLwmMzjKT42FwVxott3Uvff8tQ8AAJRBAACP5XMCuERUT38lNp6KQQ")
                 // @ts-ignore
@@ -68,120 +71,120 @@ const registration = new Scenes.WizardScene(
 
             }
 
-            if (ctx.update["message"].text == "Понятно!") {
+            if (ctx.update["message"].text == "¡Esta claro!") {
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Здорово, давай  уже играть!']],
+                        keyboard: [['Bueno, vamos a jugar ya!']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = `Здорово, тогда тебе будет легко пройти игру, в ней тоже будет своя пара, как на счет чая и кофе? Назовем ее TEA/CFF. Мне нравиться название нашей игровой пары, все как по-настоящему!`
+                const message = `Genial, entonces será fácil para ti completar el juego, también tendrá su propio par, ¿qué tal té y café? Llamémoslo TEA/CFF. Me gusta el nombre de nuestro par de juego, ¡todo es real!`
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
 
             }
 
-            if (ctx.update["message"].text == "Сложно...") {
+            if (ctx.update["message"].text == "Es difícil...") {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Здорово, давай  уже играть!']],
+                        keyboard: [['Bueno, vamos a jugar ya!']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = `Не волнуйся, ты сможешь лучше понять как все устроено в моей игре, в ней тоже будет своя пара, как на счет чая и кофе? Назовем ее TEA/CFF. Мне нравиться название нашей игровой пары, все как по-настоящему!`
+                const message = `No te preocupes, puedes entender mejor cómo funciona todo en mi juego, también tendrá su propio par, ¿qué tal té y café? Llamémoslo TEA/CFF. Me gusta el nombre de nuestro par de juego, ¡todo es real!`
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
 
             }
 
-            if (ctx.update["message"].text == "Здорово, давай  уже играть!") {
+            if (ctx.update["message"].text == "Bueno, vamos a jugar ya!") {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Хочу узнать']],
+                        keyboard: [['Quiero saber']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = `Недавно ты открывал свою первую сделку, но направление ты вибирал без каких либо знаний. В таком случае твой результат зависит от случая, а случай это 50/50. Так как же сделать вероятность получения прибыли выше?`
+                const message = `Recientemente abriste tu primera posición, pero elegiste la dirección sin ningún conocimiento. En este caso, tu resultado es casualidad, y casualidad es 50/50. Entonces, ¿cómo aumentar tus posibilidades de obtener una ganancia?`
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
 
             }
 
-            if (ctx.update["message"].text == "Хочу узнать") {
+            if (ctx.update["message"].text == "Quiero saber") {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Слышал о них', 'Ничего не знаю об этом']],
+                        keyboard: [['He oído hablar de él', 'No sé nada al respecto']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = `Я очень рада твоей любознательности и все тебе расскажу! Есть два вида анализа,  которые помогают большинству трейдеров принимать решение о выборе направления движения актива - технический и фундаментальный. ?`
+                const message = `¡Estoy muy contenta con tu curiosidad y te lo contaré todo! Hay dos tipos de análisis que ayudan a la mayoría de los traders a decidir sobre la dirección del movimiento de un activo - técnico y fundamental.`
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
 
             }
 
-            if (ctx.update["message"].text == "Слышал о них") {
+            if (ctx.update["message"].text == "He oído hablar de él") {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['А можно пример?']],
+                        keyboard: [['¿Qué tal un ejemplo?']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = `Тогда тебе будет проще! Технический анализ - это анализ цены актива, которая представлена графиком изменения ее во времени. Фундаментальный анализ - это анализ рыночной/экономической/политической ситуации влияющей на актив.`
+                const message = `¡Entonces será más fácil para ti! El análisis técnico es un análisis del precio de un activo, que está representado por un gráfico de su cambio en el tiempo. El análisis fundamental es un análisis de la situación de mercado/economía/política que afecta a un activo.`
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
 
             }
 
-            if (ctx.update["message"].text == "Ничего не знаю об этом") {
+            if (ctx.update["message"].text == "No sé nada al respecto") {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['А можно пример?']],
+                        keyboard: [['¿Qué tal un ejemplo?']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = `Тогда я тебе расскажу! Технический анализ - это анализ цены актива, которая представлена графиком изменения ее во времени. Фундаментальный анализ - это анализ рыночной/экономической/политической ситуации влияющей на актив.`
+                const message = `¡Entonces te contaré! El análisis técnico es un análisis del precio de un activo, que está representado por un gráfico de su cambio en el tiempo. El análisis fundamental es un análisis de la situación de mercado/economía/política que afecta a un activo.`
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
 
             }
 
-            if (ctx.update["message"].text == "А можно пример?") {
+            if (ctx.update["message"].text == "¿Qué tal un ejemplo?") {
 
-                const message = `Конечно! Давай разберемся подробнее с техническим анализом. Как я уже говорила, это анализ цены актива, которая представлена графиком. График можно отобразить линейным или так свечным. Для анализа чаще всего используют свечной график. Кстати, на платформе ты можешь изменить отображение графика в любой момент с линейного на свечной и наоборот. Давай попробуем сделать это прямо сейчас! Заходи на платформу и смени график, как показано на изображении. А потом загрузи скриншот с измененным графиком, и заработай еще 500 IQ coins. Помни, что в конце игры ты сможешь обменять игровые монеты на реальные призы! И даже выиграть $1000 на свой реальный счет в IQ option!`
+                const message = `¡Por supuesto! Echemos un vistazo más de cerca al análisis técnico. Como he dicho, este es un análisis del precio de un activo, que está representado por un gráfico. El gráfico se puede mostrar como una línea o como una vela. Para el análisis, los gráficos de velas se utilizan con mayor frecuencia. Por cierto, en la plataforma se puede cambiar la visualización del gráfico en cualquier momento de lineal al de velas y viceversa. ¡Vamos a intentarlo ahora mismo! Inicia sesión en la plataforma y cambia el horario como se muestra en la imagen. Y luego sube una captura de pantalla con un horario modificado, y gana otras 500 monedas IQ coins. ¡Recuerda que al final del juego puedes intercambiar monedas de juego por premios reales!`
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Загрузить скриншот']],
+                        keyboard: [['Subir captura de pantalla']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
@@ -205,13 +208,13 @@ const registration = new Scenes.WizardScene(
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Спасибо!']],
+                        keyboard: [['¡Gracias!']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = 'Какой красивый этот свечной график! Лови еще 500 IQ coins'
+                const message = '¡Qué hermoso gráfico de velas! Toma otras 500  IQ coins'
                 await add_coins(ctx.from, 500, false)
                 await ctx.replyWithSticker("CAACAgIAAxkBAAIK7GLwmPeBoVq6Bwc1mbdg7Vvg6caBAAJGBAACP5XMCstXCFgVL57DKQQ")
                 // @ts-ignore
@@ -219,26 +222,26 @@ const registration = new Scenes.WizardScene(
 
                 ctx.wizard.next()
             } else {
-                await ctx.reply("Нет, нет, такое не подойдет")
-                await ctx.reply("Загрузи скриншот с измененным графиком")
+                await ctx.reply("No, no, eso no funcionará.")
+                await ctx.reply("Sube una captura de pantalla del gráfico modificado")
             }
         }
     }),
 
     (async (ctx) => {
         if (ctx.update["message"]) {
-            if (ctx.update["message"].text == 'Спасибо!') {
+            if (ctx.update["message"].text == '¡Gracias!') {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Посмотрел, что дальше?']],
+                        keyboard: [['¿Qué sigue?']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = 'А теперь я расскажу тебе, какую информацию могут дать тебе японские свечи, да да, именно так они называются. Посмотри это видео и возвращайся'
+                const message = 'Y ahora te diré qué información pueden darte las velas japonesas, sí, sí, así es como se llaman. Ve este video y regresa:'
 
                 await ctx.replyWithVideo({ source: "./src/assets/3.mp4" })
                 // @ts-ignore
@@ -250,18 +253,18 @@ const registration = new Scenes.WizardScene(
 
     (async (ctx) => {
         if (ctx.update["message"]) {
-            if (ctx.update["message"].text == 'Посмотрел, что дальше?') {
+            if (ctx.update["message"].text == '¿Qué sigue?') {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Посмотрел, хочу скорее увидеть на практике, как это работает!']],
+                        keyboard: [['Ya lo vi, ¡quiero ver en la práctica cómo funciona!']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = 'Ты быстро двигаешся! Самый популярный метод технического анализа - торговля по тренду. Для этого тебе нужно знать, что такое тренд, линия сопротивления, линия поддержки и пробой. Подготовила для тебя подробное видео тут'
+                const message = '¡Vas muy rápido! El método más popular de análisis técnico es el trading de tendencias. Para hacerlo, necesitas saber qué es una tendencia, una línea de resistencia, una línea de soporte y una ruptura. He preparado un video detallado para ti aquí:'
                 await ctx.replyWithVideo({ source: "./src/assets/4.mp4" })
                 // @ts-ignore
                 await ctx.reply(message, extra)
@@ -272,18 +275,18 @@ const registration = new Scenes.WizardScene(
 
     (async (ctx) => {
         if (ctx.update["message"]) {
-            if (ctx.update["message"].text == 'Посмотрел, хочу скорее увидеть на практике, как это работает!') {
+            if (ctx.update["message"].text == 'Ya lo vi, ¡quiero ver en la práctica cómo funciona!') {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Да, точно']],
+                        keyboard: [['Exactamente']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = 'Конечно! Ведь именно для этого ты и проходишь эту игру) Ну что, пришло время нашей пары TEA/CFF. Посмотри на этот график и на известную уже тебе линию поддержки, как ты думаешь куда пойдет график? Но постой, помнишь что тебе нужно выбрать время экспирации (через какое время сделка закроется с прогнозируемым результатом) и сумму на которую ты хочешь совершить сделку.'
+                const message = '¡Por supuesto! Después de todo, esto es exactamente por qué estás jugando este juego. Bien, es hora de nuestro par de TEA/CFF. Mira este gráfico y la línea de soporte que ya conoces, ¿hacia dónde crees que irá el gráfico? Pero espera, recuerda que debes elegir el tiempo de expiración (después de qué tiempo se cerrará la toperación con el resultado previsto) y la cantidad por la que desea realizar la operación.'
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
@@ -295,18 +298,18 @@ const registration = new Scenes.WizardScene(
 
     (async (ctx) => {
         if (ctx.update["message"]) {
-            if (ctx.update["message"].text == 'Да, точно') {
+            if (ctx.update["message"].text == 'Exactamente') {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['А почему не более чем 5%']],
+                        keyboard: [['¿Por qué no más del 5%']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = 'Давай договоримся, что в игре мы будем совершать сделку с минимальным временем 1 мин, а твоя сумма на сделку буде не более чем 5% от твоего общего счета.'
+                const message = 'Nos ponemos de acuerdo en que en el juego vamos a hacer un trading con un tiempo mínimo de 1 minuto, y tu cantidad por operación será no más de 5% de total de tu cuenta.'
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
@@ -317,18 +320,18 @@ const registration = new Scenes.WizardScene(
 
     (async (ctx) => {
         if (ctx.update["message"]) {
-            if (ctx.update["message"].text == 'А почему не более чем 5%') {
+            if (ctx.update["message"].text == '¿Por qué no más del 5%') {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Конечно ознакомлюсь']],
+                        keyboard: [['Claro que voy a echar un vistazo']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = 'Отличный вопрос! Мне нравится твоя любознательность! В трейдинге есть понятие риск-менеджмента. Это набор правил, следование которым помогают сохранить и приумножить капитал трейдера. Одно из понятий риск-менеджмента - риск на сделку. Риск на сделку это максимальный риск в % от твоего депозита на одну сделку. Обычно при торговле бинарными опционами трейдеры рискуют 1-5% от своего капитала. Это лишь малая часть информации о риск-менеджменте, но я приготовила для тебя материал который ты можешь прочитать. Обещай, что обязательно познакомишся с ним.'
+                const message = 'Gran pregunta! Me encanta tu curiosidad! Hay un concepto de gestión de riesgos en el trading. Se trata de un conjunto de normas que ayudan a preservar y aumentar el capital del trader. Uno de los conceptos de gestión de riesgos es el riesgo por operación. El riesgo por operación es el riesgo máximo en % de tu depósito por operación. Típicamente, cuando hacen trading con opciones binarias, los traders arriesgan el 1-5% de su capital. Esta es solo una pequeña parte de la información sobre la gestión de riesgos, pero he preparado material para que lo lees. Prométeme que definitivamente lo estudiarás.'
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
@@ -339,18 +342,18 @@ const registration = new Scenes.WizardScene(
 
     (async (ctx) => {
         if (ctx.update["message"]) {
-            if (ctx.update["message"].text == 'Конечно ознакомлюсь') {
+            if (ctx.update["message"].text == 'Claro que voy a echar un vistazo') {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Давай, не могу дождаться']],
+                        keyboard: [['Vamos, no puedo esperar']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = 'Ты ведь не обманешь меня? Я хоть и бот, но я еще и девушка, и своим ИИ я понимаю, что ты можешь достичь отличных результатов применяя знания полученные в этой игре! Давай же скорее вернемся к графику и к нашей первой сделке.'
+                const message = 'No me engañarás, ¿verdad? Aunque soy un bot, también soy una chica, y con mi IA entiendo que puedes lograr excelentes resultados aplicando el conocimiento ganado en este juego! Volvamos rápidamente al gráfico y a nuestra primera operación.'
 
                 await ctx.replyWithSticker("CAACAgIAAxkBAAIHRmMAAUmpv50GE1nXerYteTIUJvdsLwACNQQAAj-VzAo8IRZc9lRTiSkE")
                 // @ts-ignore
@@ -362,18 +365,18 @@ const registration = new Scenes.WizardScene(
 
     (async (ctx) => {
         if (ctx.update["message"]) {
-            if (ctx.update["message"].text == 'Давай, не могу дождаться') {
+            if (ctx.update["message"].text == 'Vamos, no puedo esperar') {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Ниже', 'Выше']],
+                        keyboard: [['Hacia arriba', 'Hacia abajo']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = 'Итак, вот тот самый график нашей пары TEA/CFF, я даже нарисовала для тебя линию ПОДДЕРЖКИ. Как ты думаешь куда пойдет график через 1 мин? Попробуй поставить 500 IQ Coins на рост или падение пары TEA/CFF'
+                const message = 'Así que, aquí está el gráfico de nuestro par de TEA/CFF, incluso dibujé una línea de SOPORTE para ti. ¿Haciadónde crees que irá el gráfico después de 1 minuto? Prueba a apostar 500 IQ coins en subida o bajada de TEA/CFF'
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
@@ -385,18 +388,18 @@ const registration = new Scenes.WizardScene(
 
     (async (ctx) => {
         if (ctx.update["message"]) {
-            if (ctx.update["message"].text == 'Выше') {
+            if (ctx.update["message"].text == 'Hacia arriba') {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Забрать 455 IQ Coins']],
+                        keyboard: [['Toma 455 IQ Coins']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
                 await add_coins(ctx.from, 500, true)
-                const message = 'Поздравляю! Ты сам выбрал правильное направление и заработал первые деньги на бинарных опционах. Да, они виртуальные, но ты можешь перенести свои знания на реальную торговлю и реальный счет. А знаешь почему ты заработал? Потому что ты использовал полученные знания. Теперь в твоем арсенале есть первая торговая стратения - Торговля по тренду.'
+                const message = '¡Felicidades! Tu mismo elijiste la dirección correcta y ganaste el primer dinero en opciones binarias. Sí, es virtual, pero puedes transferir tus conocimientos a operaciones reales y una cuenta real. ¿Sabes por qué hiciste dinero? Porque usaste lo que aprendiste. Ahora tienes la primera estrategia de trading en tu arsenal - Trading por la tendencia.'
 
 
                 await ctx.reply(message)
@@ -406,18 +409,18 @@ const registration = new Scenes.WizardScene(
                 ctx.wizard.next()
             }
 
-            if (ctx.update["message"].text == 'Ниже') {
+            if (ctx.update["message"].text == 'Hacia abajo') {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Давай еще тренироваться']],
+                        keyboard: [['Vamos a seguir practicando']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = 'Вероятнее всего график пошел бы вверх потому как он встретил линию поддержки. Твой прогноз оказался не верным. На твоем счету ХХХ. Видишь как здорово, что твоя сделка была открыта на сумму не более 5% от  счета. Ты потерял совсем немного и это всего лишь виртуальные сделки. Зато приобрел опыт. Не расстраивайся мы еще потренеруемся.'
+                const message = 'Lo más probable es que el gráfico suba porque tocó la línea de soporte. Tu predicción era incorrecta. En tu cuenta XXX. Ves lo genial que es que tu posición se abrió para no más del 5% de la cuenta. Perdiste bastante y estas son solo operaciones virtuales. Pero has ganado experiencia. No te preocupes, seguiremos practicando.'
                 await lose_coins(ctx.from, 500, false)
                 // @ts-ignore
                 await ctx.reply(message, extra)
@@ -434,13 +437,13 @@ const registration = new Scenes.WizardScene(
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['А как это сделать?']],
+                        keyboard: [['¿Cómo se hace esto?']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = 'Как на счет того, чтобы попробовать открыть сделку по тренду на демо счете на платформе?'
+                const message = '¿Qué tal si abrimos una operación utilizando el conocimiento de la tendencia en una cuenta de demostración?'
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
@@ -451,18 +454,18 @@ const registration = new Scenes.WizardScene(
 
     (async (ctx) => {
         if (ctx.update["message"]) {
-            if (ctx.update["message"].text == 'А как это сделать?') {
+            if (ctx.update["message"].text == '¿Cómo se hace esto?') {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Сейчас попробую', 'Не помню как это делать']],
+                        keyboard: [['Lo intentaré ahora', 'No recuerdo cómo hacerlo']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = 'Не беспокойся, я тебе помогу! Давай откроем знакомую нам пару EUR/USD. Если ты видишь линейный график, то смени его на свечной. Затем ты можешь изменить время одной свечи, допустим на 1 мин. и таймфрейм, допустим на 30 мин., чтобы найти тренд и линию сопротивления или поддержки.'
+                const message = '¡No te preocupes, te ayudaré! Abramos el familiar par EUR/USD. Si ves un gráfico de líneas, cámbialo por un gráfico de velas. A continuación, puedes cambiar el tiempo de una vela, digamos 1 minuto. y un marco de tiempo, digamos 30 minutos, para encontrar una tendencia y una línea de resistencia o apoyo.'
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
@@ -473,18 +476,18 @@ const registration = new Scenes.WizardScene(
 
     (async (ctx) => {
         if (ctx.update["message"]) {
-            if (ctx.update["message"].text == 'Сейчас попробую' || ctx.update["message"].text == 'Понял, сейчас попробую') {
+            if (ctx.update["message"].text == 'Lo tengo, lo probaré ahora' || ctx.update["message"].text == 'Lo intentaré ahora') {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Загрузить скриншот']],
+                        keyboard: [['Sube captura de pantalla']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = 'Здорово! Теперь используя инструмент луч проведи линию сопротивления или поддержки на графике. Как сделаешь это загрузи скриншот и я начислю тебе еще 500  IQ Coins ;)'
+                const message = '¡Genial! Ahora, usando la herramienta de rayos, dibuja una línea de resistencia o soporte en el gráfico. ¿Cuando lo hagas sube una captura de pantalla y te daré otras 500 IQ coins'
 
                 await ctx.replyWithPhoto({ url: "https://telegra.ph/file/4ffb2c0e06a0fc25d3786.jpg" })
                 // @ts-ignore
@@ -492,18 +495,18 @@ const registration = new Scenes.WizardScene(
                 ctx.wizard.next()
             }
 
-            if (ctx.update["message"].text == 'Не помню как это делать') {
+            if (ctx.update["message"].text == 'No recuerdo cómo hacerlo') {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Понял, сейчас попробую']],
+                        keyboard: [['Lo tengo, lo probaré ahora']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = 'Посмотри еще раз видео про свечи'
+                const message = 'Ve el video sobre las velas de nuevo:'
 
                 await ctx.replyWithVideo({ source: "./src/assets/5.mp4" })
                 // @ts-ignore
@@ -521,21 +524,21 @@ const registration = new Scenes.WizardScene(
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Я заработал!', 'Я потерял :(']],
+                        keyboard: [['¡He ganado!', 'He perdido']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = 'Лови еще 500 IQCoins, ты отлично двигаешься!'
+                const message = 'Toma otras 500 IQCoins, ¡vas genial!'
 
                 await add_coins(ctx.from, 500, false)
                 // @ts-ignore
                 await ctx.reply(message, extra)
-                await ctx.reply("Здорово! Ты быстро учишься. Давай теперь попробуем открыть сделку на демо счете на платформе, опираясь на полученную тобой информацию. Выбери актив: EUR/USD \nВыбери размер позиции: $100 \nВыбери время экспирации: 5 min \nВыбери выше или ниже.Возвращайся как получишь результат.")
+                await ctx.reply("¡Genial! Eres un aprende rápido. Ahora vamos a tratar de abrir una operación en una cuenta demo en la plataforma, basado en la información que recibiste. Elije activo: EUR/USD \nElije la cantidad: $100 \nElije el tiempo de expiración: 5 min \nElije hacia arriba o hacia abajo.Vuelve cuando lo tengas")
                 ctx.wizard.next()
             } else {
-                await ctx.reply("Загрузи скриншот")
+                await ctx.reply("Sube captura de pantalla")
             }
         }
     }),
@@ -543,18 +546,18 @@ const registration = new Scenes.WizardScene(
     (async (ctx) => {
         if (ctx.update["message"]) {
 
-            if (ctx.update["message"].text == 'Я заработал!') {
+            if (ctx.update["message"].text == '¡He ganado!') {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Пополнить депозит', 'Я ещё потренируюсь']],
+                        keyboard: [['Recargar el depósito', 'Seguiré practicando']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = 'Вау! Ты все схватываешь на лету! Ты смог заработать на демо счете, а ведь он устроен так же как и реальная торговля. Только деньги с демо счета ты не можешь вывести. Зато если ты перенесешь полученные знания на реальный счет ты сможешь торговать на реальные деньги и сможешь их выводить. Предлагаю не медлить и пополнить депозит. Кстати, за пополнение депозита я начислю тебе сразу 10000 IQ Coins, и это значит что ты сможешь участвовать в розыгрыше $1000! И ксати лови 500 за совершение сделки на демо счете ;)'
+                const message = '¡Guau! ¡Eres muy pila! Pudiste hacer el dinero en una cuenta de demostración, y de hecho funciona de la misma manera que el trading real. No puedes retirar dinero de una cuenta demo. Pero si transfieres el conocimiento adquirido a una cuenta real, serás capaz de hacer trading con dinero real y de retirarlo. Sugiero no dudar y reponer el depósito. Por cierto, por reponer el depósito, voy a depositarte de inmediato 10.000 IQ coins, lo que significa que puedes elegir el premio más caro en el juego! Y por cierto, obtén 500 por hacer unaoperación en una cuenta de demostración;)'
 
                 await add_coins(ctx.from, 500, false)
                 await ctx.replyWithSticker("CAACAgIAAxkBAAINiGLw3mZJj-9vT1F9_KRyVN_hw454AAJDBAACP5XMCrPB96QaJA_TKQQ")
@@ -563,25 +566,25 @@ const registration = new Scenes.WizardScene(
                 ctx.wizard.next()
             }
 
-            if (ctx.update["message"].text == 'Я потерял :(') {
+            if (ctx.update["message"].text == 'He perdido') {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
-                        keyboard: [['Посмотреть видео про тренд', 'Играть дальше']],
+                        keyboard: [['Ver vídeo de tendencia', 'Jugar siguiente']],
                         one_time_keyboard: true,
                         resize_keyboard: true
                     }
                 }
 
-                const message = 'Не беда, ты только учишся! Запомни, нет ни одной стратегии которая бы давала 100% результат. Иногда может произойти пробой линии сопротивления или поддержки, может смениться тренд.  Дальше я расскажу, почему это может происходит. Тренируйся еще и ты получишь получишь лучшие результаты.  И ксати лови 500 за совершение сделки на демо счете :)'
+                const message = '¡No te preocupes, apenas estás aprendiendo! Recuerda, no hay ninguna estrategia que daría resultados del 100%. A veces puede haber una ruptura de la línea de resistencia o de apoyo, la tendencia puede cambiar. A continuación, explicaré por qué esto podría estar sucediendo. Entrena más y obtendrás mejores resultados. Y por cierto, toma 500 por hacer unaoperación en una cuenta demo.'
                 await ctx.replyWithSticker("CAACAgIAAxkBAAINjGLw4FsIsWDIECUejo7RaAvreJElAAI-BAACP5XMCmXGbS9Z4RFmKQQ")
                 await add_coins(ctx.from, 500, false)
                 // @ts-ignore
                 await ctx.reply(message, extra)
             }
 
-            if (ctx.update["message"].text == 'Посмотреть видео про тренд') {
+            if (ctx.update["message"].text == 'Ver vídeo de tendencia') {
 
                 const extra = {
                     parse_mode: 'HTML',
@@ -592,20 +595,20 @@ const registration = new Scenes.WizardScene(
                     }
                 }
 
-                const message = 'Посмотри видео еще раз, а потом можешь потренироваться на демо счете'
+                const message = 'Ver el video de nuevo, y luego puedes practicar en una cuenta de demostración'
                 await ctx.replyWithVideo({ source: "./src/assets/50.mp4" })
                 // @ts-ignore
                 await ctx.reply(message, extra)
             }
 
-            if (ctx.update["message"].text == 'Играть дальше') {
+            if (ctx.update["message"].text == 'Jugar siguiente') {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
                         keyboard: [
                             [
-                                'Интересно, а как с его помощью можно заработать?'
+                                '¿Cómo puedes ganar dinero con él?'
                             ]
                         ],
                         one_time_keyboard: true,
@@ -613,7 +616,7 @@ const registration = new Scenes.WizardScene(
                     }
                 }
 
-                const message = 'Здорово! Давай продолжать. И так теперь ты знаешь, что можешь использовать для принятия решений куда пойдет цена технический анализ и самую популярную стратегию торговлю по тренду.  Теперь давай разберемся как можно применять Фундаментальный анализ в торговле. Фундаментальный анализ - это анализ на основе новостей  и данных.'
+                const message = '¡Bien! ¡Tienes un enfoque sólido y con razón! Cuanto más práctica, mejor es el resultado'
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
@@ -626,7 +629,7 @@ const registration = new Scenes.WizardScene(
     (async (ctx) => {
         if (ctx.update["message"]) {
 
-            if (ctx.update["message"].text == 'Пополнить депозит') {
+            if (ctx.update["message"].text == 'Recargar el depósito') {
 
                 const extra = {
                     parse_mode: 'HTML',
@@ -634,7 +637,7 @@ const registration = new Scenes.WizardScene(
                         inline_keyboard: [
                             [
                                 {
-                                    text: 'Готово',
+                                    text: 'Listo',
                                     callback_data: 'send_to_check'
                                 }
                             ]
@@ -642,21 +645,21 @@ const registration = new Scenes.WizardScene(
                     }
                 }
 
-                const message = 'Ты не теряешь время зря. Посмотри это видео, которое подробнее рассказывает о том, как пополнить твой счет. Как только пополнишь депозит возвращайся и проверь на пополнение депозита. Я все проверю и начислю тебе 10000 IQ Coins'
+                const message = 'No estás perdiendo tu tiempo. Ve este video para obtener más detalles sobre cómo financiar tu cuenta. Tan pronto como repongas el depósito, regresa e ingresa tu correo electrónico que utilizaste durante lainscripción. Voy a comprobar todo y te daré 10000 IQ Coins'
 
                 await ctx.replyWithVideo({ source: './src/assets/1.mp4' })
                 // @ts-ignore
                 await ctx.reply(message, extra)
-            }
+            }   
 
-            if (ctx.update["message"].text == 'Играть дальше' || (ctx.update['message'].text == 'Я ещё потренируюсь')) {
+            if (ctx.update["message"].text == 'Играть дальше' || (ctx.update['message'].text == 'Seguiré practicando')) {
 
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
                         keyboard: [
                             [
-                                'Интересно, а как с его помощью можно заработать?'
+                                '¿Cómo puedes ganar dinero con él?'
                             ]
                         ],
                         one_time_keyboard: true,
@@ -664,7 +667,7 @@ const registration = new Scenes.WizardScene(
                     }
                 }
 
-                const message = 'Здорово! Давай продолжать. И так теперь ты знаешь, что можешь использовать для принятия решений куда пойдет цена технический анализ и самую популярную стратегию торговлю по тренду.  Теперь давай разберемся как можно применять Фундаментальный анализ в торговле. Фундаментальный анализ - это анализ на основе новостей  и данных.'
+                const message = '¡Genial! Vamos a continuar.Y así ahora sabes que puedes utilizar el análisis técnico y la más popular estrategia de trading de tendencia para tomar decisiones sobre dónde irá el precio.Ahora veamos cómo puedes aplicar el Análisis Fundamental en el trading.El análisis fundamental es un análisis basado en noticias y datos.'
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
@@ -690,7 +693,7 @@ const registration = new Scenes.WizardScene(
                         inline_keyboard: [
                             [
                                 {
-                                    text: 'Проверить статус',
+                                    text: 'Comprobar estado',
                                     callback_data: 'check_deposit'
                                 }
                             ]
@@ -698,7 +701,7 @@ const registration = new Scenes.WizardScene(
                     }
                 }
 
-                const message = 'Ты не теряешь время зря. Посмотри это видео, которое подробнее рассказывает о том, как пополнить твой счет. Как только пополнишь депозит возвращайся и проверь на пополнение депозита. Я все проверю и начислю тебе 10000 IQ Coins'
+                const message = 'No estás perdiendo tu tiempo. Ve este video para obtener más detalles sobre cómo financiar tu cuenta. Tan pronto como repongas el depósito, regresa e ingresa tu correo electrónico que utilizaste durante lainscripción. Voy a comprobar todo y te daré 10000 IQ Coins'
                 // const message = 'Уже сособираюсь на встречу в платформой, чтобы проверить твой депозит. Мне потребуется время. Знаешь, платформа такая занятая, я постоянно жду не дождусь, чтобы пообщаться. Но трейдеры для нее на первом месте. Иногда я ревную...Но как только мы встретимся, я вернусь с твоими IQ Coins'
 
                 // await ctx.replyWithSticker("CAACAgIAAxkBAAINkGLw4KY1njQpI5sm8nt94oewD_3-AAJlBAACP5XMClzVsXn7vWCCKQQ")
@@ -711,7 +714,7 @@ const registration = new Scenes.WizardScene(
             if (ctx.update["callback_query"].data == 'check_deposit') {
                 ctx.answerCbQuery()
 
-                const message = 'Получила! Уже сособираюсь на встречу в платформой, чтобы проверить твой депозит. Мне потребуется время. Знаешь, платформа такая занятая, я постоянно жду не дождусь, чтобы пообщаться. Но трейдеры для нее на первом месте. Иногда я ревную...Но как только мы встретимся, я вернусь с твоими IQ Coins'
+                const message = '¡Recibido! Ya voy a una reunión en la plataforma para comprobar tu depósito. Necesitaré tiempo. Ya sabes, la plataforma está tan ocupada, no puedo esperar para charlar. Pero los traders son mas importantes para ella. A veces me pongo celosa... Pero tan pronto como nos encontremos, estaré de vuelta con tus IQ Coins'
                 await ctx.replyWithSticker("CAACAgIAAxkBAAINkGLw4KY1njQpI5sm8nt94oewD_3-AAJlBAACP5XMClzVsXn7vWCCKQQ")
                 // @ts-ignore
                 await ctx.editMessageText(message)
@@ -723,14 +726,14 @@ const registration = new Scenes.WizardScene(
 
     (async (ctx) => {
         if (ctx.update["message"]) {
-            if (ctx.update["message"].text == "Интересно, а как с его помощью можно заработать?") {
-                const message = "Сейчас расскажу. Значительные экономические,  финансовые, политические новости а так же публикация финансовых отчетов так же влияют на стоимость активов. Ты можешь успешно практиковать технический анализ, но всегда нужно учитывать выход новостей по торгуемому тобой активу. Хочешь пример?"
+            if (ctx.update["message"].text == "¿Cómo puedes ganar dinero con él?") {
+                const message = "¡Genial! Vamos a continuar. Y así ahora sabes que puedes utilizar el análisis técnico y la más popular estrategia de trading de tendencia para tomar decisiones sobre dónde irá el precio. Ahora veamos cómo puedes aplicar el Análisis Fundamental en el trading. El análisis fundamental es un análisis basado en noticias y datos."
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
                         keyboard: [
                             [
-                                'Да, конечно'
+                                'Seguro'
                             ]
                         ],
                         one_time_keyboard: true,
@@ -742,14 +745,14 @@ const registration = new Scenes.WizardScene(
                 await ctx.reply(message, extra)
             }
 
-            if (ctx.update["message"].text == "Да, конечно") {
-                const message = `Давай представим что выходит новость по нашей паре TEA/CFF. "Внимание экстренные новости. Крупнейший поставщик в Китае сообщает о небывалом уражае чая в этом году, склады с чаем заполнены на 75%"`
+            if (ctx.update["message"].text == "Seguro") {
+                const message = `Imaginemos que hay noticias sobre nuestro par TEA/CFF. Noticias de última hora. El proveedor más grande de China informa la siembra más grande de té este año, almacenes de té 75% llenos"`
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
                         keyboard: [
                             [
-                                'И как это повлияет на стоимость пары?'
+                                '¿Y cómo afectará esto el valor del par?'
                             ]
                         ],
                         one_time_keyboard: true,
@@ -761,15 +764,14 @@ const registration = new Scenes.WizardScene(
                 await ctx.reply(message, extra)
             }
 
-            if (ctx.update["message"].text == "И как это повлияет на стоимость пары?") {
-                const message = `Давай разбираться. Итак TEA в нашей паре базовый товар, что означает, что стоимость актива прямопропорциональна стоимости базового товара. Если стоимость чая растет, то растет весь актив, если стоимость чая падает, то падает весь актив. В новости говориться о том, что на рынке избыток чая, да еще и склады почти заполнены. Когда чего то в избытке, то стоимость на товар будет падать, чтобы компенсировать перекос. Давай вернемся к нашей первой сделке с парой TEA/CFF. Вот так выглядел график. Теперь давай представим, что в момент выбора направления вышла та самая новость. Давай откроем позицию на 500 IQ Coins и выберем направление.`
+            if (ctx.update["message"].text == "¿Y cómo afectará esto el valor del par?") {
+                const message = `Vamos a verlo. Asi que TEA en nuestro par es el producto subyacente, lo que significa que el valor del activo es directamente proporcional al valor del producto subyacente. Si el precio del té sube, entonces todo el activo sube; si el precio del té cae, entonces todo el activo cae. Las noticias dicen que hay un exceso de té en el mercado, e incluso los almacenes están casi llenos. Cuando algo está en exceso, el costo del producto caerá para compensar el sesgo. Volvamos a nuestra primeraoperación de TEA/CFF. Así se veía el gráfico. Ahora imaginemos que en el momento de elegir la dirección, salieron las mismas noticias. Vamos a abrir una posición en 500 IQ Coins y elegir una dirección.`
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
                         keyboard: [
                             [
-                                'Выше',
-                                'Ниже'
+                                'Hacia arriba', 'Hacia abajo'
                             ]
                         ],
                         one_time_keyboard: true,
@@ -784,14 +786,14 @@ const registration = new Scenes.WizardScene(
             }
 
 
-            if (ctx.update["message"].text == "Выше") {
-                const message = `Ты был близок! Но к сожалению выбрал не верное направление(. Да, исходя из технического анализа, с высокой вероятнойстью котировка нашей пары должна была отскочить от линии поддержки и пойти выше. Но в момент заключения сделки вышла новость, которая свидетельствовала о том, что на рынке избыток чая (нашего базового товара), а соответственно котировка нашей пары устремилась вниз. Произошел пробой линии сопротивления. Ты потерял 500 IQ Coins, но не беспокойся ты сможешь восполнить потери в следующих этапах игры.`
+            if (ctx.update["message"].text == "Hacia arriba") {
+                const message = `¡Estabas cerca! Pero por desgracia elegíste la dirección equivocada. Sí, basado en el análisis técnico, con una alta probabilidad, la cotización de nuestro par debería haber rebotado de la línea de soporte y aumentado. Pero en el momento de la transacción, salieron noticias que indicaban que había un exceso de té (nuestro producto base) en el mercado, y, en consecuencia, la cotización de nuestro par se derrumbó. Hubo una ruptura en la línea de resistencia. Has perdido 500 IQcoin, pero no te preocupes, puedes recuperar tus pérdidas en las siguientes etapas del juego.`
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
                         keyboard: [
                             [
-                                'Хорошо'
+                                'Bien'
                             ]
                         ],
                         one_time_keyboard: true,
@@ -805,14 +807,14 @@ const registration = new Scenes.WizardScene(
                 ctx.wizard.next()
             }
 
-            if (ctx.update["message"].text == "Ниже") {
-                const message = `Это верное напрвление! Забирай свои 425 IQ Coins. Да, котировка нашей пары подшла к линии поддержки, и исходя из технического анализа, с высокой вероятнойстью она должна была отскочить от линии поддержки и пойти выше. Однако, в этот момент вышла новость, которая свидетельствовала о том, что на рынке избыток чая (нашего базового товара), а соответственно котировка нашей пары устремилась вниз. Произошел пробой линии сопротивления.`
+            if (ctx.update["message"].text == "Hacia abajo") {
+                const message = `¡Esta es la dirección correcta! Reclama tus 455 IQ Coins. Sí, la cotización de nuestro par se acercó a la línea de soporte, y basado en el análisis técnico, con una alta probabilidad debería haber rebotado de la línea de soporte y haber ido más alto. Sin embargo, en ese momento, salieron noticias que indicaban que había un exceso de té (nuestra materia prima base) en el mercado, y, en consecuencia, la cotización de nuestro par se derrumbó. Hubo una ruptura de la línea de resistencia.`
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
                         keyboard: [
                             [
-                                'Здорово!'
+                                '¡Cool!'
                             ]
                         ],
                         one_time_keyboard: true,
@@ -831,16 +833,56 @@ const registration = new Scenes.WizardScene(
 
     (async (ctx) => {
         if (ctx.update["message"]) {
-            if (ctx.update["message"].text == "Хорошо" || ctx.update["message"].text == "Здорово!") {
-                const message = "Теперь ты знаешь, что оба вида анализа - и технический и фундаментальный могут быть очень полезными в твоей торговле. Как насчет небольшого тестирования и возможности еще подзаработать IQ Coins?"
+            const message = "Ahora sabes que ambos tipos de análisis - tanto técnico como fundamental - pueden ser muy útiles en tu trading. ¿Qué tal una prueba pequeña y una oportunidad para ganar monedas IQ extra?"
+            const extra = {
+                parse_mode: 'HTML',
+                reply_markup: {
+                    keyboard: [
+                        [
+                            '¡Quiero ganar!', 'Más tarde'
+                        ]
+                    ],
+                    one_time_keyboard: true,
+                    resize_keyboard: true
+                }
+            }
+            // @ts-ignore
+            await ctx.reply(message, extra)
+            ctx.wizard.next()
+        }
+    }),
+
+    (async (ctx) => {
+        if (ctx.update["message"]) {
+            if (ctx.update["message"].text == "¡Quiero ganar!") {
+                const message = "¡Me encanta tu entusiasmo!"
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
                         keyboard: [
                             [
-                                'Хочу заработать!',
-                                'Позже'
+                                'Jugar'
                             ]
+                        ],
+                        one_time_keyboard: true,
+                        resize_keyboard: true
+                    }
+                }
+                // @ts-ignore
+                await ctx.reply(message, extra)
+                ctx.wizard.next()
+            }
+
+            if (ctx.update["message"].text == "Más tarde") {
+                const message = "Vale, te recuerdo que continúes. ¿Cuándo necesitas que te lo recuerde?"
+                const extra = {
+                    parse_mode: 'HTML',
+                    reply_markup: {
+                        keyboard: [
+                            ['Después de 1 hora'],
+                            ['Después de 8 horas'],
+                            ['Después de 12 horas'],
+                            ['Después de 24 horas']
                         ],
                         one_time_keyboard: true,
                         resize_keyboard: true
@@ -855,63 +897,18 @@ const registration = new Scenes.WizardScene(
 
     (async (ctx) => {
         if (ctx.update["message"]) {
-            if (ctx.update["message"].text == "Хочу заработать!") {
-                const message = "Мне нравится твой энтузиазм!"
-                const extra = {
-                    parse_mode: 'HTML',
-                    reply_markup: {
-                        keyboard: [
-                            [
-                                'Играть'
-                            ]
-                        ],
-                        one_time_keyboard: true,
-                        resize_keyboard: true
-                    }
-                }
-                // @ts-ignore
-                await ctx.reply(message, extra)
-                ctx.wizard.next()
-            }
-
-            if (ctx.update["message"].text == "Позже") {
-                const message = "Хорошо, я напомню, что нужно продолжить. Когда тебе напомнить?"
-                const extra = {
-                    parse_mode: 'HTML',
-                    reply_markup: {
-                        keyboard: [
-                            [
-                                'Через 1 час',
-                                'Через 8 часов',
-                                'Через 12 часов',
-                                'Через 24 часа'
-                            ]
-                        ],
-                        one_time_keyboard: true,
-                        resize_keyboard: true
-                    }
-                }
-                // @ts-ignore
-                await ctx.reply(message, extra)
-                ctx.wizard.next()
-            }
-        }
-    }),
-
-    (async (ctx) => {
-        if (ctx.update["message"]) {
-            if (ctx.update["message"].text == "Играть") {
+            if (ctx.update["message"].text == "Jugar") {
                 await ctx.scene.enter("game")
             }
 
-            if (ctx.update["message"].text == "Через 1 час" || ctx.update["message"].text == "Через 8 часов" || ctx.update["message"].text == "Через 12 часов" || ctx.update["message"].text == "Через 24 часа") {
-                const message = 'Скорее возвращайся в игру, пора зарабатывать!';
+            if (ctx.update["message"].text == "Después de 1 hora" || ctx.update["message"].text == "Después de 8 horas" || ctx.update["message"].text == "Después de 12 horas" || ctx.update["message"].text == "Después de 24 horas") {
+                const message = 'Date prisa en volver al juego, es hora de ganar!';
                 const extra = {
                     parse_mode: 'HTML',
                     reply_markup: {
                         keyboard: [
                             [
-                                'Играть'
+                                'Jugar'
                             ]
                         ],
                         one_time_keyboard: true,
@@ -943,24 +940,29 @@ handler.on("message", async (ctx) => {
         const extra = {
             parse_mode: 'HTML',
             reply_markup: {
-                keyboard: [['Спасибо!']],
+                keyboard: [['¡Gracias!']],
                 one_time_keyboard: true,
                 resize_keyboard: true
             }
         }
+
+        // win first deal
         // @ts-ignore
-        if (ctx.update["message"].text == "Я заработал!") {
+        if (ctx.update["message"].text == "¡He ganado!") {
             await add_coins(ctx.from, 500, false)
+
+            const message = "¡Felicidades, tu primera operación exitosa que te trajo beneficio virtual! Sin embargo, recuerda que ahora solo tuviste suerte. El trading no es un casino o apuestas, es principalmente una actividad financiera basada en el conocimiento. Es el conocimiento que te voy a dar en el juego que te ayudará a analizar el movimiento de la grafica y elegir la dirección correcta. Y ahora toma otras 500 monedas IQ coins por completar la tarea y hacer la primera operación."
             // @ts-ignore
-            await ctx.reply('Поздравляю, твоя первая успешная сделка, которая принесла тебе виртуальную прибыль! Однако понми, что сейчас тебе просто повезло. Торговля это не казино и не азартная игра, это прежде всего финансовая деятельность основанная на знаниях. Именно знания я дам тебе в игре, которые помогут тебе анализировать движение графика и выбирать правильное направление. А сейчас лови еще 500 IQ coins за выполнение задания и совершение первой сделки.', extra)
+            await ctx.reply(message, extra)
             await ctx.replyWithSticker("CAACAgIAAxkBAAIK4GLwmG_f9q6hNqLRAX_mNYI_NMopAAJVBAACP5XMCi-iLW04pRSXKQQ")
             ctx.wizard.next()
         }
         // @ts-ignore
-        if (ctx.update["message"].text == "Я потерял :(") {
+        if (ctx.update["message"].text == "He perdido") {
             await add_coins(ctx.from, 500, false)
+            const message = "Sucede, es porque el trading no es un casino o apuestas, es principalmente una actividad financiera basada en el conocimiento. Muchas personas pierden en el trading porque abren posiciones sin analizar la situación, gráficas, sin tener en cuenta la información - sin conocimiento. Es el conocimiento que te voy a dar en el juego que te ayudará a analizar el movimiento de la gráfica y elegir la dirección correcta. Y ahora toma otras 500 IQ coins por completar la tarea y hacer la primera operación."
             // @ts-ignore
-            await ctx.reply("Так бывает, все потому, что торговля это не казино и не азартная игра, это прежде всего финансовая деятельность основанная на знаниях. Многие теряют в торговле, потому что открывают сделки без анализа ситуации, графика, без учета информации - без знаний. Именно знания я дам тебе в игре, которые помогут тебе анализировать движение графика и выбирать правильное направление. А сейчас лови еще 500 IQ coins за выполнение задания и совершение первой сделки.", extra)
+            await ctx.reply(message, extra)
             await ctx.replyWithSticker("CAACAgIAAxkBAAIK5GLwmKEuwfKrr95QderXWhJeSDjOAAJSBAACP5XMCk0qTC6hfBCAKQQ")
             ctx.wizard.next()
         }
