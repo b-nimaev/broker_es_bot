@@ -66,7 +66,7 @@ if (process.env.mode === "development") {
             console.error(err)
         })
 } else {
-    bot.telegram.setWebhook(`https://45.143.95.183${secretPath}`)
+    bot.telegram.setWebhook(`https://say-an.ru${secretPath}`)
         .then((status) => console.log('Webhook setted: ' + status))
     console.log(secretPath)
 }
@@ -152,26 +152,6 @@ bot.command("/deposit", async (ctx) => {
     await ctx.reply(message, extra)
 })
 
-// bot.command("/trophies", async (ctx) => {
-//     const extra = {
-//         parse_mdoe: 'HTML',
-//         reply_markup: {
-//             inline_keyboard: [
-//                 [
-//                     {
-//                         text: 'Пополнить депозит',
-//                         url: 'https://iqoption.com/es/counting/'
-//                     }
-//                 ]
-//             ]
-//         }
-//     }
-
-//     const message = "Переходи на платформу, и пополняй свой счёт. \nСделай первый шаг на пути к реальной торговле."
-
-//     // @ts-ignore
-//     await ctx.reply(message, extra)
-// })
 
 bot.use(session())
 bot.use((ctx, next) => {
