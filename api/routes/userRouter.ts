@@ -66,7 +66,7 @@ function getRandomIntInclusive(min, max) {
         return false
     }
 
-})();
+});
 userRouter.use("/getdb", async function (req, res) {
     try {
         return mongoClient.connect(async function (err, client) {
