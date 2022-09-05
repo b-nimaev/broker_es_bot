@@ -165,7 +165,7 @@ let cosrOptions = {
     allowedHeaders: ['Content-Type'],
     optionsSuccessStatus: 200
 }
-app.use(cors());
+app.use(cors(cosrOptions));
 app.use(BodyParser.json());
 app.use(
     BodyParser.urlencoded({
