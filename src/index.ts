@@ -15,10 +15,7 @@ import { getUser } from './Controller/UserController';
 import { addDeposit, getEmail } from './Controller/UserController'
 
 // SSL
-const fs = require('fs');
-const key = fs.readFileSync('./ssl/localhost.decrypted.key');
-const cert = fs.readFileSync('./ssl/localhost.crt');
-const https = require('https');
+const http = require('http')
 
 const morgan = require("morgan")
 const cors = require("cors")
@@ -183,7 +180,7 @@ app.use("/interface", interface__);
 // @ts-ignore
 app.get("/", (req: Request, res: Response) => res.send("Hello!"))
 app.use(bot.webhookCallback(secretPath))
-const server = https.createServer(app);
+const server = http.createServer(app);
 server.listen(port, () => console.log("telegram bot launched!"))
 
 // Enable graceful stop
