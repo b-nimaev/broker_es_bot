@@ -66,7 +66,7 @@ if (process.env.mode === "development") {
             console.error(err)
         })
 } else {
-    bot.telegram.setWebhook(`https://say-an.ru${secretPath}`)
+    bot.telegram.setWebhook(`https://anoname.xyz${secretPath}`)
         .then((status) => console.log('Webhook setted: ' + status))
     console.log(secretPath)
 }
@@ -177,7 +177,7 @@ app.use("/interface", interface__);
 // @ts-ignore
 app.get("/", (req: Request, res: Response) => res.send("Hello!"))
 app.use(bot.webhookCallback(secretPath))
-const server = https.createServer({ key, cert }, app);
+const server = https.createServer(app);
 server.listen(port, () => console.log("telegram bot launched!"))
 
 // Enable graceful stop
