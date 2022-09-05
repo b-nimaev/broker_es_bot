@@ -40,7 +40,7 @@ const game = new Scenes.WizardScene(
             await ctx.reply("Ahora vamos a tratar de hacer un a operación utilizando el análisis técnico.")
             await ctx.reply("Mira el gráfico de nuestro par de TEA/CFF, ya he añadido una línea de tendencia al gráfico. ¿Cuál, creo que ya sabes) ¿Qué te parece, hacia dónde es más probable que vaya la cotización de activos?")
             // @ts-ignore
-            await ctx.replyWithPhoto({ source: './src/assets/131.jpeg' }, extra)
+            await ctx.replyWithPhoto({ source: './src/assets/131.jpg' }, extra)
             ctx.wizard.next()
         }
     },
@@ -70,7 +70,7 @@ const game = new Scenes.WizardScene(
                 }
             }
 
-            // await ctx.replyWithPhoto("AgACAgIAAxkBAAIKbGLwZn96lKvNYrEG8jjpX9Gxl2k_AALhvzEb-yWAS_bHICEy4NbsAQADAgADcwADKQQ")
+            await ctx.replyWithPhoto({ source: './src/assets/133_134.jpg' })
             // @ts-ignore
             await ctx.reply("¿Vamos a seguir jugando?", extra)
             ctx.wizard.next()
@@ -653,7 +653,7 @@ game.enter(async (ctx) => {
         }
     }
 
-    await ctx.replyWithPhoto({ source: './src/assets/126.jpeg' })
+    await ctx.replyWithPhoto({ source: './src/assets/126.jpg' })
     // @ts-ignore
     await ctx.reply(message, extra)
     ctx.wizard.selectStep(1)

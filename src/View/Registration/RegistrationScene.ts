@@ -489,7 +489,7 @@ const registration = new Scenes.WizardScene(
 
                 const message = '¡Genial! Ahora, usando la herramienta de rayos, dibuja una línea de resistencia o soporte en el gráfico. ¿Cuando lo hagas sube una captura de pantalla y te daré otras 500 IQ coins'
 
-                await ctx.replyWithPhoto({ url: "https://telegra.ph/file/4ffb2c0e06a0fc25d3786.jpg" })
+                await ctx.replyWithPhoto({ source: "./src/assets/84.jpeg" })
                 // @ts-ignore
                 await ctx.reply(message, extra)
                 ctx.wizard.next()

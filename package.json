@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@a2seven/yoo-checkout": "^1.1.2",
+    "@faker-js/faker": "^7.5.0",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
