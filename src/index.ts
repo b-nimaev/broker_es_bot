@@ -162,6 +162,12 @@ bot.use((ctx, next) => {
     return next()
 })
 bot.use(stage.middleware())
+let cosrOptions = {
+    credentials: true,
+    origin: 'https://iqevagame.com/',  // сменил на http://<имя моего домена>
+    allowedHeaders: ['Content-Type'],
+    optionsSuccessStatus: 200
+}
 app.use(cors());
 app.use(BodyParser.json());
 app.use(
