@@ -16,8 +16,8 @@ import { addDeposit, getEmail } from './Controller/UserController'
 
 // SSL
 const fs = require('fs');
-const key = fs.readFileSync('./ssl/server_rootCA.key');
-const cert = fs.readFileSync('./ssl/server_rootCA.pem');
+const key = fs.readFileSync('./ssl/localhost.key');
+const cert = fs.readFileSync('./ssl/localhost.crt');
 const https = require('https')
 
 const morgan = require("morgan")
@@ -183,8 +183,7 @@ app.use("/interface", interface__);
 // @ts-ignore
 app.get("/", (req: Request, res: Response) => res.send("Hello!"))
 app.use(bot.webhookCallback(secretPath))
-const server = https.createServer({ key, cert }, app);
-server.listen(port, () => console.log("telegram bot launched!"))
+app.listen(port)
 
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'))
