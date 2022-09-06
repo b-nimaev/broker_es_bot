@@ -16,8 +16,8 @@ import { addDeposit, getEmail } from './Controller/UserController'
 
 // SSL
 const fs = require('fs');
-const key = fs.readFileSync('./ssl/fullchain.pem');
-const cert = fs.readFileSync('./ssl/cert.pem');
+const key = fs.readFileSync('./ssl/localhost.decrypted.key');
+const cert = fs.readFileSync('./ssl/localhost.crt');
 const https = require('https')
 
 const morgan = require("morgan")
