@@ -192,7 +192,7 @@ const registration = new Scenes.WizardScene(
 
                 await ctx.reply(message)
                 // @ts-ignore
-                await ctx.replyWithPhoto({ source: "./src/assets/12.jpg" }, extra)
+                await ctx.replyWithPhoto({ source: "./src/assets/66-74.jpeg.jpg" }, extra)
                 ctx.wizard.next()
 
             }
@@ -290,7 +290,7 @@ const registration = new Scenes.WizardScene(
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
-                await ctx.replyWithPhoto({ url: 'https://telegra.ph/file/5fa845ef7a88860bf3cee.jpg' })
+                await ctx.replyWithPhoto({ source: '66-74.jpeg' })
                 ctx.wizard.next()
             }
         }
@@ -380,7 +380,7 @@ const registration = new Scenes.WizardScene(
 
                 // @ts-ignore
                 await ctx.reply(message, extra)
-                await ctx.replyWithPhoto({ url: 'https://telegra.ph/file/5fa845ef7a88860bf3cee.jpg' })
+                await ctx.replyWithPhoto({ source: '76-78.jpeg' })
                 ctx.wizard.next()
             }
         }
@@ -403,6 +403,7 @@ const registration = new Scenes.WizardScene(
 
 
                 await ctx.reply(message)
+                // await ctx.replyWithPhoto({ source: '76-78.jpeg' })
                 // @ts-ignore
                 await ctx.replyWithVideo({ source: "./src/assets/higher.mp4" }, extra)
 
@@ -424,7 +425,7 @@ const registration = new Scenes.WizardScene(
                 await lose_coins(ctx.from, 500, false)
                 // @ts-ignore
                 await ctx.reply(message, extra)
-                await ctx.replyWithPhoto({ url: "https://telegra.ph/file/2acb6a06e02fcb47ca5ad.jpg" })
+                await ctx.replyWithPhoto({ source: '76-78.jpeg' })
                 ctx.wizard.next()
             }
         }

@@ -653,7 +653,7 @@ game.enter(async (ctx) => {
         }
     }
 
-    await ctx.replyWithPhoto({ source: './src/assets/126.jpg' })
+    await ctx.replyWithPhoto({ source: './src/assets/126.jpeg' })
     // @ts-ignore
     await ctx.reply(message, extra)
     ctx.wizard.selectStep(1)

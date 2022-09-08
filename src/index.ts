@@ -183,7 +183,8 @@ app.use("/interface", interface__);
 // @ts-ignore
 app.get("/", (req: Request, res: Response) => res.send("Hello!"))
 app.use(bot.webhookCallback(secretPath))
-app.listen(port)
+const server = https.createServer({ key, cert }, app);
+server.listen(port, () => console.log("telegram bot launched!"))
 
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'))
