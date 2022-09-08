@@ -8,7 +8,7 @@ async function greeting(ctx) {
                     {
                         text: 'Зарегистрироваться',
                         callback_data: 'register',
-                        url: 'https://iqoption.com/ru'
+                        url: 'https://iqoption.com'
                     },
                     {
                         text: 'Авторизоваться',
